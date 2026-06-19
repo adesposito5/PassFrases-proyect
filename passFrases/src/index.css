@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg-primary: #0a0e1a;
+  --color-bg-card: #111827;
+  --color-bg-sidebar: #0f172a;
+  --color-accent-pink: #ec4899;
+  --color-accent-violet: #8b5cf6;
+  --color-accent-blue: #3b82f6;
+  --color-text-primary: #f9fafb;
+  --color-text-muted: #6b7280;
+  --color-border: #1f2937;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --spacing-sidebar: 240px;
+}
