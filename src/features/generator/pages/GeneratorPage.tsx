@@ -1,7 +1,10 @@
+import { AppLayout } from '@/shared/components/ui/AppLayout'
+import GeneratorPanel from '@/features/generator/components/GeneratorPanel'
+
 export default function GeneratorPage() {
   return (
-    <main>
-      <h1>Generador</h1>
-    </main>
+    <AppLayout>
+      <GeneratorPanel />
+    </AppLayout>
   )
 }
