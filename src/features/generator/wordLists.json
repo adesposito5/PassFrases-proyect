@@ -1,0 +1,7 @@
+{
+  "animales": ["gato","perro","tigre","oso","lobo","zorro","puma","ciervo","delfín","águila","búho","jaguar","pato","cobra","mono"],
+  "naturaleza": ["sol","luna","río","mar","viento","nube","roca","selva","bosque","lluvia","volcán","isla","lago","duna","niebla"],
+  "verbos": ["corre","salta","vuela","nada","brilla","trepa","baila","canta","pinta","explora","construye","descubre","imagina","escucha","navega"],
+  "colores": ["rojo","azul","verde","dorado","plateado","violeta","turquesa","escarlata","índigo","carmesí","ámbar","esmeralda","zafiro","coral","jade"],
+  "lugares": ["playa","montaña","ciudad","aldea","desierto","castillo","templo","jardín","cueva","faro","mercado","museo","parque","puerto","cumbre"]
+}

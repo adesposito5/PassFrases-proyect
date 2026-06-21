@@ -1,6 +1,4 @@
-import objects from './data/words-objects.json'
-import actions from './data/words-actions.json'
-import places from './data/words-places.json'
+import wordLists from './wordLists.json'
 import type { PasswordConfig, PasswordResult, StrengthLevel } from './types'
 
 /**
@@ -35,7 +33,8 @@ export function calculateEntropy(
   }
 
   // Factor in word pool size
-  const wordPoolSize = objects.length + actions.length + places.length
+  const allWords = Object.values(wordLists).flat()
+  const wordPoolSize = allWords.length
   const wordEntropy = Math.log2(wordPoolSize) * config.wordCount
 
   // Entropy from separator and any appended numbers/symbols
@@ -112,12 +111,11 @@ export function getRecommendations(
  * Generates a password based on the provided configuration
  */
 export function generatePassword(config: PasswordConfig): PasswordResult {
-  const allWords = [...objects, ...actions, ...places]
-  const categories = [
-    { words: objects, name: 'objects' },
-    { words: actions, name: 'actions' },
-    { words: places, name: 'places' },
-  ]
+  const allWords = Object.values(wordLists).flat()
+  const categories = Object.entries(wordLists).map(([name, words]) => ({
+    words,
+    name,
+  }))
 
   let selectedWords: string[] = []
   let lastCategory: string | null = null
