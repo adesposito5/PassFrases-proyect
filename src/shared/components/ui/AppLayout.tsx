@@ -12,8 +12,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         display: 'flex',
         flexDirection: 'column',
         minHeight: '100vh',
-        backgroundColor: 'var(--bg)',
-        color: 'var(--text)',
+        backgroundColor: 'var(--color-surface)',
+        color: '#e2e2f0',
       }}
     >
       {/* Navbar */}
@@ -21,15 +21,15 @@ export function AppLayout({ children }: AppLayoutProps) {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: 'var(--space-3)',
-          padding: 'var(--space-4) var(--space-6)',
-          borderBottom: `1px solid var(--border)`,
-          backgroundColor: 'var(--bg)',
+          gap: '0.75rem',
+          padding: '1rem 1.5rem',
+          borderBottom: `1px solid var(--color-border)`,
+          backgroundColor: 'var(--color-surface)',
         }}
       >
         <Shield
           size={24}
-          style={{ color: 'var(--accent)' }}
+          style={{ color: 'var(--color-accent)' }}
         />
         <span
           style={{
@@ -48,7 +48,7 @@ export function AppLayout({ children }: AppLayoutProps) {
           flex: 1,
           display: 'flex',
           justifyContent: 'center',
-          padding: 'var(--space-6)',
+          padding: '1.5rem',
         }}
       >
         <div
