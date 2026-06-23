@@ -33,7 +33,7 @@ interface PasswordState {
   clearHistory: () => void
 }
 
-export const usePasswordStore = create<PasswordState>(
+export const usePasswordStore = create<PasswordState>()(
   persist(
     (set, get) => ({
       config: defaultConfig,
