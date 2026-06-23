@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePasswordStore } from '@/features/generator/store'
 import { WizardLayout } from '@/features/generator/components/WizardLayout'
@@ -23,6 +24,10 @@ const BENEFITS = [
 export default function WizardStartPage() {
   const navigate  = useNavigate()
   const setStep   = usePasswordStore((state) => state.setStep)
+
+  useEffect(() => {
+    setStep(1)
+  }, [setStep])
 
   function handleStart() {
     setStep(2)
