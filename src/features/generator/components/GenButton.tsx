@@ -22,7 +22,7 @@ export function GenButton() {
         fontSize: '1.05rem',
         fontWeight: 700,
         fontFamily: 'var(--font-sans)',
-        transition: 'all var(--duration-fast) var(--ease-out)',
+        transition: `all var(--duration-fast) var(--ease-out)`,
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-2px)'
