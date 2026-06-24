@@ -1,27 +1,12 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePasswordStore } from '@/features/generator/store'
 import { PasswordDisplay } from './PasswordDisplay'
-import { GenButton } from './GenButton'
 
 const SEPARATORS = [
   { value: '-', label: '-' },
   { value: '.', label: '.' },
   { value: '_', label: '_' },
 ] as const
-
-const LEVELS = [
-  { label: 'Básica',   words: 2 },
-  { label: 'Media',    words: 4 },
-  { label: 'Alta',     words: 6 },
-] as const
-
-const TOGGLES = [
-  { icon: '⬆️', label: 'Mayúscula inicial',  key: 'capitalize' as const },
-  { icon: '🔢', label: 'Incluir número',     key: 'includeNumbers' as const },
-  { icon: '🔣', label: 'Símbolo especial',   key: 'includeSymbols' as const },
-  { icon: '🧠', label: 'Palabras memorables', key: 'memorable' as const },
-]
 
 export default function GeneratorPanel() {
   const config = usePasswordStore((state) => state.config)
@@ -31,41 +16,13 @@ export default function GeneratorPanel() {
   const toggleNumbers = usePasswordStore((state) => state.toggleNumbers)
   const toggleSymbols = usePasswordStore((state) => state.toggleSymbols)
   const toggleCapitalize = usePasswordStore((state) => state.toggleCapitalize)
-  const toggleMemorable = usePasswordStore((state) => state.toggleMemorable)
   const generate = usePasswordStore((state) => state.generate)
   const setStep = usePasswordStore((state) => state.setStep)
   const navigate = useNavigate()
-  const [copied, setCopied] = useState(false)
-
-  const toggleMap: Record<string, () => void> = {
-    capitalize: toggleCapitalize,
-    includeNumbers: toggleNumbers,
-    includeSymbols: toggleSymbols,
-    memorable: toggleMemorable,
-  }
-
-  const toggleValues: Record<string, boolean> = {
-    capitalize: config.capitalize,
-    includeNumbers: config.includeNumbers,
-    includeSymbols: config.includeSymbols,
-    memorable: config.memorable,
-  }
 
   function handleGenerate() {
     generate()
     setStep(3)
-  }
-
-  async function handleCopy() {
-    const result = usePasswordStore.getState().currentResult
-    if (!result) return
-    try {
-      await navigator.clipboard.writeText(result.password)
-      setCopied(true)
-      setTimeout(() => setCopied(false), 2000)
-    } catch {
-      setCopied(false)
-    }
   }
 
   function handleBackToStep2() {
@@ -76,8 +33,6 @@ export default function GeneratorPanel() {
     setStep(1)
     navigate('/')
   }
-
-  const currentResult = usePasswordStore((state) => state.currentResult)
 
   /* ═══════════════ STEP 2: PERSONALIZAR ═══════════════ */
   if (currentStep === 2) {
@@ -100,58 +55,25 @@ export default function GeneratorPanel() {
           <input
             type="range"
             min={2}
-            max={8}
+            max={6}
             step={1}
             value={config.wordCount}
             aria-label="Cantidad de palabras"
             aria-valuenow={config.wordCount}
             aria-valuemin={2}
-            aria-valuemax={8}
+            aria-valuemax={6}
             onChange={(e) => setWordCount(Number(e.target.value))}
             style={{
               width: '100%',
               height: '5px',
               appearance: 'none',
               WebkitAppearance: 'none',
-              background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${((config.wordCount - 2) / 6) * 100}%, var(--color-border) ${((config.wordCount - 2) / 6) * 100}%, var(--color-border) 100%)`,
+              background: `linear-gradient(to right, var(--color-accent) 0%, var(--color-accent) ${((config.wordCount - 2) / 4) * 100}%, var(--color-border) ${((config.wordCount - 2) / 4) * 100}%, var(--color-border) 100%)`,
               borderRadius: '99px',
               outline: 'none',
               cursor: 'pointer',
             }}
           />
-        </div>
-
-        {/* ── Nivel de seguridad ── */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          <span style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--color-text)' }}>
-            Nivel de seguridad
-          </span>
-          <div role="radiogroup" aria-label="Nivel de seguridad" style={{ display: 'flex', gap: '0.5rem' }}>
-            {LEVELS.map((level) => (
-              <button
-                key={level.words}
-                role="radio"
-                aria-checked={config.wordCount === level.words}
-                onClick={() => setWordCount(level.words)}
-                style={{
-                  flex: 1,
-                  padding: '0.65rem 0.5rem',
-                  border: `1px solid ${config.wordCount === level.words ? 'var(--color-accent)' : 'var(--color-border)'}`,
-                  borderRadius: 'var(--radius-md)',
-                  background: config.wordCount === level.words ? 'var(--color-accent-soft)' : 'transparent',
-                  color: config.wordCount === level.words ? 'var(--color-accent)' : 'var(--color-text-tertiary)',
-                  fontSize: '0.82rem',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  fontFamily: 'var(--font-sans)',
-                  transition: 'all var(--duration-fast) var(--ease-out)',
-                  boxShadow: config.wordCount === level.words ? '0 0 20px rgba(99,102,241,0.1)' : 'none',
-                }}
-              >
-                {level.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* ── Separador ── */}
@@ -186,11 +108,15 @@ export default function GeneratorPanel() {
           </div>
         </div>
 
-        {/* ── Toggles (2x2 grid) ── */}
+        {/* ── Toggles ── */}
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.6rem' }}>
-          {TOGGLES.map((item) => (
+          {[
+            { label: '123', desc: 'Números',    value: config.includeNumbers,  toggle: toggleNumbers },
+            { label: 'Aa',  desc: 'Mayúsculas', value: config.capitalize,      toggle: toggleCapitalize },
+            { label: '!@#', desc: 'Símbolos',   value: config.includeSymbols,  toggle: toggleSymbols },
+          ].map((item) => (
             <div
-              key={item.key}
+              key={item.desc}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -201,29 +127,34 @@ export default function GeneratorPanel() {
                 borderRadius: 'var(--radius-md)',
               }}
             >
-              <label style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                cursor: 'pointer',
-                fontSize: '0.8rem',
-                color: 'var(--color-text)',
-                userSelect: 'none',
-              }}>
-                <span style={{ fontSize: '1rem' }}>{item.icon}</span>
-                {item.label}
+              <label
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  cursor: 'pointer',
+                  fontSize: '0.8rem',
+                  color: 'var(--color-text)',
+                  userSelect: 'none',
+                }}
+              >
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--color-text-secondary)' }}>
+                  {item.label}
+                </span>
+                {item.desc}
               </label>
+
               <button
                 role="switch"
-                aria-checked={toggleValues[item.key]}
-                aria-label={item.label}
-                onClick={toggleMap[item.key]}
+                aria-checked={item.value}
+                aria-label={item.desc}
+                onClick={item.toggle}
                 style={{
                   all: 'unset',
                   cursor: 'pointer',
                   width: '38px',
                   height: '22px',
-                  background: toggleValues[item.key] ? 'var(--gradient-blue)' : 'var(--color-border)',
+                  background: item.value ? 'var(--gradient-blue)' : 'var(--color-border)',
                   borderRadius: '99px',
                   position: 'relative',
                   transition: 'background var(--duration-fast) var(--ease-out)',
@@ -233,10 +164,10 @@ export default function GeneratorPanel() {
                 <span style={{
                   position: 'absolute',
                   top: '2px',
-                  left: toggleValues[item.key] ? '18px' : '2px',
+                  left: item.value ? '18px' : '2px',
                   width: '18px',
                   height: '18px',
-                  background: toggleValues[item.key] ? '#fff' : 'var(--color-text-tertiary)',
+                  background: item.value ? '#fff' : 'var(--color-text-tertiary)',
                   borderRadius: '50%',
                   transition: 'all var(--duration-fast) var(--ease-out)',
                 }} />
@@ -246,7 +177,37 @@ export default function GeneratorPanel() {
         </div>
 
         {/* ── Botón generar ── */}
-        <GenButton onClick={handleGenerate} label="✨ Generar nueva contraseña" />
+        <button
+          onClick={handleGenerate}
+          aria-label="Generar nueva contraseña"
+          style={{
+            all: 'unset',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.5rem',
+            width: '100%',
+            padding: '1rem',
+            borderRadius: '14px',
+            background: 'var(--gradient-blue)',
+            color: '#fff',
+            fontSize: '1.05rem',
+            fontWeight: 700,
+            fontFamily: 'var(--font-sans)',
+            transition: 'all var(--duration-fast) var(--ease-out)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)'
+            e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.35)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.transform = ''
+            e.currentTarget.style.boxShadow = ''
+          }}
+        >
+          ✨ Generar nueva
+        </button>
 
         {/* ── Volver a inicio ── */}
         <button
@@ -280,69 +241,38 @@ export default function GeneratorPanel() {
 
       <PasswordDisplay />
 
-      {currentResult && (
-        <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
-          <button
-            onClick={handleGenerate}
-            style={{
-              all: 'unset',
-              cursor: 'pointer',
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.4rem',
-              padding: '0.85rem',
-              borderRadius: '12px',
-              background: 'var(--gradient-blue)',
-              color: '#fff',
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              fontFamily: 'var(--font-sans)',
-              transition: 'all var(--duration-fast) var(--ease-out)',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.boxShadow = '0 4px 20px rgba(99,102,241,0.3)'
-              e.currentTarget.style.transform = 'translateY(-1px)'
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.boxShadow = ''
-              e.currentTarget.style.transform = ''
-            }}
-          >
-            🔄 Generar nueva
-          </button>
-          <button
-            onClick={handleCopy}
-            style={{
-              all: 'unset',
-              cursor: 'pointer',
-              flex: 1,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '0.4rem',
-              padding: '0.85rem',
-              borderRadius: '12px',
-              background: copied ? 'var(--color-success-soft)' : 'var(--color-accent-soft)',
-              color: copied ? 'var(--color-success)' : 'var(--color-text)',
-              border: `1px solid ${copied ? 'rgba(34,197,94,0.2)' : 'var(--color-border)'}`,
-              fontSize: '0.9rem',
-              fontWeight: 600,
-              fontFamily: 'var(--font-sans)',
-              transition: 'all var(--duration-fast) var(--ease-out)',
-            }}
-            onMouseEnter={(e) => {
-              if (!copied) e.currentTarget.style.background = 'rgba(99,102,241,0.2)'
-            }}
-            onMouseLeave={(e) => {
-              if (!copied) e.currentTarget.style.background = 'var(--color-accent-soft)'
-            }}
-          >
-            {copied ? '✅ Copiado!' : '📋 Copiar'}
-          </button>
-        </div>
-      )}
+      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
+        <button
+          onClick={handleGenerate}
+          style={{
+            all: 'unset',
+            cursor: 'pointer',
+            flex: 1,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: '0.4rem',
+            padding: '0.85rem',
+            borderRadius: '12px',
+            background: 'var(--gradient-blue)',
+            color: '#fff',
+            fontSize: '0.9rem',
+            fontWeight: 600,
+            fontFamily: 'var(--font-sans)',
+            transition: 'all var(--duration-fast) var(--ease-out)',
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.boxShadow = '0 4px 20px rgba(99,102,241,0.3)'
+            e.currentTarget.style.transform = 'translateY(-1px)'
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = ''
+            e.currentTarget.style.transform = ''
+          }}
+        >
+          🔄 Generar nueva
+        </button>
+      </div>
 
       <button
         onClick={handleBackToStep2}

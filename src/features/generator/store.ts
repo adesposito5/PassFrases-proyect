@@ -9,7 +9,6 @@ const defaultConfig: PasswordConfig = {
   includeNumbers: true,
   includeSymbols: false,
   capitalize: true,
-  memorable: true,
   category: 'mixed',
   wordLength: 'medium',
 }
@@ -32,7 +31,6 @@ interface PasswordState {
   toggleNumbers: () => void
   toggleSymbols: () => void
   toggleCapitalize: () => void
-  toggleMemorable: () => void
   setCategory: (c: string) => void
   setWordLength: (l: string) => void
 
@@ -58,7 +56,7 @@ export const usePasswordStore = create<PasswordState>()(
       toggleHistory: () => set((state) => ({ historyOpen: !state.historyOpen })),
 
       setWordCount: (n) =>
-        set((state) => ({ config: { ...state.config, wordCount: n as PasswordConfig['wordCount'] } })),
+        set((state) => ({ config: { ...state.config, wordCount: n as 2 | 3 | 4 | 5 | 6 } })),
       setSeparator: (s) =>
         set((state) => ({ config: { ...state.config, separator: s as '-' | '.' | '_' } })),
       toggleNumbers: () =>
@@ -67,8 +65,6 @@ export const usePasswordStore = create<PasswordState>()(
         set((state) => ({ config: { ...state.config, includeSymbols: !state.config.includeSymbols } })),
       toggleCapitalize: () =>
         set((state) => ({ config: { ...state.config, capitalize: !state.config.capitalize } })),
-      toggleMemorable: () =>
-        set((state) => ({ config: { ...state.config, memorable: !state.config.memorable } })),
       setCategory: (c) =>
         set((state) => ({ config: { ...state.config, category: c as any } })),
       setWordLength: (l) =>
