@@ -7,59 +7,78 @@ interface AppLayoutProps {
 
 export function AppLayout({ children }: AppLayoutProps) {
   return (
-    <div
-      style={{
+    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', position: 'relative', zIndex: 1 }}>
+
+      {/* Skip link accesibilidad */}
+      <a href="#main-content" className="skip-link">Saltar al contenido</a>
+
+      {/* Header */}
+      <header style={{
         display: 'flex',
-        flexDirection: 'column',
-        minHeight: '100vh',
-        backgroundColor: 'var(--color-surface)',
-        color: '#e2e2f0',
-      }}
-    >
-      {/* Navbar */}
-      <nav
-        style={{
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '1rem 1.5rem',
+        borderBottom: '1px solid var(--color-border)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        background: 'rgba(6,11,24,0.7)',
+        position: 'sticky',
+        top: 0,
+        zIndex: 10,
+      }}>
+        {/* Logo */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+          <Shield size={22} style={{ color: 'var(--color-accent)' }} />
+          <span style={{
+            fontSize: '1.1rem',
+            fontWeight: 800,
+            letterSpacing: '-0.03em',
+            background: 'linear-gradient(135deg, #e2e2f0, #a78bfa)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}>
+            PassFrases
+          </span>
+        </div>
+
+        {/* Badge seguridad */}
+        <div style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '0.75rem',
-          padding: '1rem 1.5rem',
-          borderBottom: `1px solid var(--color-border)`,
-          backgroundColor: 'var(--color-surface)',
-        }}
-      >
-        <Shield
-          size={24}
-          style={{ color: 'var(--color-accent)' }}
-        />
-        <span
-          style={{
-            fontSize: '1.125rem',
-            fontWeight: 600,
-            letterSpacing: '-0.02em',
-          }}
-        >
-          PassFrases
-        </span>
-      </nav>
-
-      {/* Content Area */}
-      <main
-        style={{
-          flex: 1,
-          display: 'flex',
-          justifyContent: 'center',
-          padding: '1.5rem',
-        }}
-      >
-        <div
-          style={{
-            width: '100%',
-            maxWidth: 'min(100%, 960px)',
-          }}
-        >
-          {children}
+          gap: '0.4rem',
+          padding: '0.35rem 0.8rem',
+          background: 'var(--color-success-soft)',
+          border: '1px solid rgba(34,197,94,0.2)',
+          borderRadius: '99px',
+          fontSize: '0.75rem',
+          fontWeight: 500,
+          color: 'var(--color-success)',
+        }}>
+          <span aria-hidden="true">🔒</span>
+          100% local
         </div>
+      </header>
+
+      {/* Main */}
+      <main
+        id="main-content"
+        style={{ flex: 1 }}
+      >
+        {children}
       </main>
+
+      {/* Footer */}
+      <footer style={{
+        textAlign: 'center',
+        padding: '1.25rem',
+        borderTop: '1px solid var(--color-border)',
+        fontSize: '0.75rem',
+        color: 'var(--color-text-tertiary)',
+      }}>
+        PassFrases · Contraseñas generadas localmente, nunca enviadas a servidores
+      </footer>
+
     </div>
   )
 }

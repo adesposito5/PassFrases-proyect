@@ -18,6 +18,8 @@ interface PasswordState {
   config: PasswordConfig
   currentResult: PasswordResult | null
   sessionHistory: SessionEntry[]
+  currentStep: 1 | 2 | 3;
+  setStep: (step: 1 | 2 | 3) => void;
   // Config actions (for D2)
   setWordCount: (n: number) => void
   setSeparator: (s: string) => void
@@ -31,12 +33,14 @@ interface PasswordState {
   clearHistory: () => void
 }
 
-export const usePasswordStore = create<PasswordState>(
+export const usePasswordStore = create<PasswordState>()(
   persist(
     (set, get) => ({
       config: defaultConfig,
       currentResult: null,
       sessionHistory: [],
+      currentStep: 1 as const,
+      setStep: (step) => set({ currentStep: step }),
 
       setWordCount: (n) =>
         set((state) => ({ config: { ...state.config, wordCount: n as 2 | 3 | 4 | 5 | 6 } })),
