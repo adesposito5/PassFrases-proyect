@@ -3,15 +3,7 @@ import { persist } from 'zustand/middleware'
 import type { PasswordConfig, PasswordResult, SessionEntry, BatchResult, ReuseWarning } from './types'
 import { generatePassword, generateBatch, checkReuseWarnings } from './utils'
 
-const defaultConfig: PasswordConfig = {
-  wordCount: 4,
-  separator: '-',
-  includeNumbers: true,
-  includeSymbols: false,
-  capitalize: true,
-  category: 'mixed',
-  wordLength: 'medium',
-}
+const defaultConfig: PasswordConfig = {}
 
 interface PasswordState {
   config: PasswordConfig
@@ -25,14 +17,6 @@ interface PasswordState {
 
   setStep: (step: 1 | 2 | 3) => void
   toggleHistory: () => void
-
-  setWordCount: (n: number) => void
-  setSeparator: (s: string) => void
-  toggleNumbers: () => void
-  toggleSymbols: () => void
-  toggleCapitalize: () => void
-  setCategory: (c: string) => void
-  setWordLength: (l: string) => void
 
   generate: () => void
   generateBatch: () => void
@@ -55,28 +39,12 @@ export const usePasswordStore = create<PasswordState>()(
       setStep: (step) => set({ currentStep: step }),
       toggleHistory: () => set((state) => ({ historyOpen: !state.historyOpen })),
 
-      setWordCount: (n) =>
-        set((state) => ({ config: { ...state.config, wordCount: n as 2 | 3 | 4 | 5 | 6 } })),
-      setSeparator: (s) =>
-        set((state) => ({ config: { ...state.config, separator: s as '-' | '.' | '_' } })),
-      toggleNumbers: () =>
-        set((state) => ({ config: { ...state.config, includeNumbers: !state.config.includeNumbers } })),
-      toggleSymbols: () =>
-        set((state) => ({ config: { ...state.config, includeSymbols: !state.config.includeSymbols } })),
-      toggleCapitalize: () =>
-        set((state) => ({ config: { ...state.config, capitalize: !state.config.capitalize } })),
-      setCategory: (c) =>
-        set((state) => ({ config: { ...state.config, category: c as any } })),
-      setWordLength: (l) =>
-        set((state) => ({ config: { ...state.config, wordLength: l as 'short' | 'medium' | 'long' } })),
-
       generate: () => {
         const state = get()
-        const result = generatePassword(state.config)
+        const result = generatePassword()
         const entry: SessionEntry = {
           id: crypto.randomUUID(),
           password: result.password,
-          bits: result.bits,
           timestamp: Date.now(),
         }
         set({
@@ -87,12 +55,11 @@ export const usePasswordStore = create<PasswordState>()(
 
       generateBatch: () => {
         const state = get()
-        const results = generateBatch(state.config, state.batchCount)
+        const results = generateBatch(state.batchCount)
 
         const entries: SessionEntry[] = results.map((r) => ({
           id: crypto.randomUUID(),
           password: r.password,
-          bits: r.bits,
           timestamp: Date.now(),
         }))
 

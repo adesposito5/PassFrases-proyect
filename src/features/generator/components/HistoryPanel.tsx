@@ -242,19 +242,6 @@ export default function HistoryPanel() {
                       {entry.password}
                     </span>
 
-                    {/* Bits */}
-                    <span style={{
-                      fontSize: '0.65rem',
-                      color: 'var(--color-cyan)',
-                      fontFamily: 'var(--font-mono)',
-                      fontWeight: 600,
-                      whiteSpace: 'nowrap',
-                      minWidth: '2.5rem',
-                      textAlign: 'right',
-                    }}>
-                      {entry.bits}b
-                    </span>
-
                     {/* Time */}
                     <span style={{
                       fontSize: '0.6rem',

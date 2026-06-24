@@ -1,20 +1,6 @@
 import { useState } from 'react'
 import { usePasswordStore } from '@/features/generator/store'
 
-const STRENGTH_LABELS: Record<string, string> = {
-  weak: 'Débil',
-  medium: 'Media',
-  strong: 'Fuerte',
-  'very-strong': 'Muy fuerte',
-}
-
-const STRENGTH_COLORS: Record<string, string> = {
-  weak: 'var(--color-error)',
-  medium: 'var(--color-warning)',
-  strong: 'var(--color-success)',
-  'very-strong': 'var(--color-cyan)',
-}
-
 export default function BatchGenerator() {
   const batchResults = usePasswordStore((state) => state.batchResults)
   const batchCount = usePasswordStore((state) => state.batchCount)
@@ -214,33 +200,6 @@ export default function BatchGenerator() {
                     userSelect: 'all',
                   }}>
                     {result.password}
-                  </span>
-
-                  {/* Bits */}
-                  <span style={{
-                    fontSize: '0.7rem',
-                    fontWeight: 600,
-                    color: 'var(--color-cyan)',
-                    fontFamily: 'var(--font-mono)',
-                    whiteSpace: 'nowrap',
-                    minWidth: '3.5rem',
-                    textAlign: 'right',
-                  }}>
-                    {result.bits} bits
-                  </span>
-
-                  {/* Strength tag */}
-                  <span style={{
-                    fontSize: '0.65rem',
-                    fontWeight: 500,
-                    padding: '0.15rem 0.5rem',
-                    borderRadius: '99px',
-                    background: `${STRENGTH_COLORS[result.strength]}18`,
-                    border: `1px solid ${STRENGTH_COLORS[result.strength]}33`,
-                    color: STRENGTH_COLORS[result.strength],
-                    whiteSpace: 'nowrap',
-                  }}>
-                    {STRENGTH_LABELS[result.strength]}
                   </span>
 
                   {/* Copy */}
