@@ -1,5 +1,5 @@
 import wordLists from './wordLists.json'
-import type { PasswordConfig, PasswordResult, StrengthLevel } from './types'
+import type { PasswordConfig, PasswordResult, StrengthLevel, ReuseWarning } from './types'
 
 /**
  * Returns a cryptographically random element from an array
@@ -18,7 +18,7 @@ export function calculateEntropy(
   password: string,
   config: PasswordConfig,
 ): number {
-  let alphabetSize = 26 // lowercase letters always present
+  let alphabetSize = 26
 
   if (config.capitalize) {
     alphabetSize += 26
@@ -32,18 +32,16 @@ export function calculateEntropy(
     alphabetSize += 32
   }
 
-  // Factor in word pool size
   const allWords = Object.values(wordLists).flat()
   const wordPoolSize = allWords.length
   const wordEntropy = Math.log2(wordPoolSize) * config.wordCount
 
-  // Entropy from separator and any appended numbers/symbols
   let extraBits = 0
   if (config.includeNumbers) {
-    extraBits += Math.log2(90) // 10–99 range
+    extraBits += Math.log2(90)
   }
   if (config.includeSymbols) {
-    extraBits += Math.log2(7) // 7 symbols
+    extraBits += Math.log2(7)
   }
 
   const result = Math.log2(alphabetSize) + wordEntropy + extraBits
@@ -105,6 +103,78 @@ export function getRecommendations(
   }
 
   return recommendations
+}
+
+let _uniqueId = 0
+
+/**
+ * Generates a unique sequential ID for batch results
+ */
+export function batchId(): string {
+  return `b_${++_uniqueId}`
+}
+
+/**
+ * Computes a simple character-level similarity ratio (0–1) between two strings.
+ * Uses dice coefficient on bigrams.
+ */
+export function phraseSimilarity(a: string, b: string): number {
+  const bigrams = (s: string) => {
+    const map = new Map<string, number>()
+    for (let i = 0; i < s.length - 1; i++) {
+      const bg = s.slice(i, i + 2)
+      map.set(bg, (map.get(bg) ?? 0) + 1)
+    }
+    return map
+  }
+
+  const bgA = bigrams(a.toLowerCase())
+  const bgB = bigrams(b.toLowerCase())
+  let intersect = 0
+
+  for (const [bg, count] of bgA) {
+    intersect += Math.min(count, bgB.get(bg) ?? 0)
+  }
+
+  const total = [...bgA.values()].reduce((s, c) => s + c, 0) +
+                [...bgB.values()].reduce((s, c) => s + c, 0)
+
+  return total === 0 ? 0 : (2 * intersect) / total
+}
+
+/**
+ * Checks a list of passwords against history for reuse warnings
+ */
+export function checkReuseWarnings(
+  passwords: string[],
+  history: string[],
+  threshold = 0.6,
+): ReuseWarning[] {
+  const warnings: ReuseWarning[] = []
+
+  for (let i = 0; i < passwords.length; i++) {
+    for (const historic of history) {
+      const sim = phraseSimilarity(passwords[i], historic)
+      if (sim >= threshold) {
+        warnings.push({
+          index: i,
+          password: passwords[i],
+          similarTo: historic,
+          similarity: Math.round(sim * 100),
+        })
+        break
+      }
+    }
+  }
+
+  return warnings
+}
+
+/**
+ * Generates a batch of passwords
+ */
+export function generateBatch(config: PasswordConfig, count: number): PasswordResult[] {
+  return Array.from({ length: count }, () => generatePassword(config))
 }
 
 /**

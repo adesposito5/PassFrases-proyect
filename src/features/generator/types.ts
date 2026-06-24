@@ -22,4 +22,16 @@ export interface SessionEntry {
   timestamp: number;
 }
 
+export interface BatchResult {
+  results: PasswordResult[];
+  generatedAt: number;
+}
+
+export interface ReuseWarning {
+  index: number
+  password: string
+  similarTo: string
+  similarity: number
+}
+
 export type StrengthLevel = PasswordResult['strength'];
