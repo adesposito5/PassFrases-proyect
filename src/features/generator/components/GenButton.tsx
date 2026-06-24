@@ -1,12 +1,13 @@
-import { usePasswordStore } from '@/features/generator/store'
+interface GenButtonProps {
+  onClick: () => void
+  label: string
+}
 
-export function GenButton() {
-  const generate = usePasswordStore((state) => state.generate)
-
+export function GenButton({ onClick, label }: GenButtonProps) {
   return (
     <button
-      onClick={generate}
-      aria-label="Generar nueva contraseña"
+      onClick={onClick}
+      aria-label={label}
       style={{
         all: 'unset',
         cursor: 'pointer',
@@ -22,7 +23,8 @@ export function GenButton() {
         fontSize: '1.05rem',
         fontWeight: 700,
         fontFamily: 'var(--font-sans)',
-        transition: `all var(--duration-fast) var(--ease-out)`,
+        transition: 'all var(--duration-fast) var(--ease-out)',
+        marginTop: '0.25rem',
       }}
       onMouseEnter={(e) => {
         e.currentTarget.style.transform = 'translateY(-2px)'
@@ -33,7 +35,7 @@ export function GenButton() {
         e.currentTarget.style.boxShadow = ''
       }}
     >
-      ✨ Generar nueva
+      {label}
     </button>
   )
 }
