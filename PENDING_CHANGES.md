@@ -54,11 +54,7 @@ Los siguientes errores fueron **revertidos** por D5 para que cada integrante los
 - **Qué hacer:** Agregar control UI o eliminar del type si no se implementó
 
 ### I4. `wordCount` limitado a 6 vs VariantG (hasta 8)
-- **Archivo:** `src/features/generator/types.ts:2`
-- **Problema:** `wordCount: 2 | 3 | 4 | 5 | 6` (máx 6)
-- **Variante G:** slider 2–8
-- **Responsable:** D2
-- **Qué hacer:** Extender type a `2 | 3 | 4 | 5 | 6 | 7 | 8`
+- **Estado:** ✅ Corregido por D5 — type extendido a `2 | 3 | 4 | 5 | 6 | 7 | 8`
 
 ---
 
@@ -70,8 +66,7 @@ Los siguientes errores fueron **revertidos** por D5 para que cada integrante los
 - **Responsable:** D4/D5
 
 ### U2. StepProgress no coincide con VariantG
-- **Responsable:** D2/D5
-- **Qué hacer:** Agregar barra gradiente, steps cliqueables, active/done/pending
+- **Estado:** ✅ Corregido por D5 — barra gradiente, steps cliqueables, active/done/pending
 
 ### U5. `index.html` en inglés
 - **Archivo:** `index.html:2,7`
@@ -98,6 +93,13 @@ Los siguientes errores fueron **revertidos** por D5 para que cada integrante los
 | Types: `BatchResult`, `ReuseWarning` | `src/features/generator/types.ts` | ✅ |
 | HistoryPanel global en providers | `src/app/providers.tsx` | ✅ |
 | Animación `@keyframes fadeIn` | `src/index.css` | ✅ |
+| Wizard: StepProgress con barra gradiente | `src/features/generator/components/StepProgress.tsx` | ✅ |
+| Wizard: Step2 (personalizar) separado de Step3 (resultado) | `src/features/generator/components/GeneratorPanel.tsx` | ✅ |
+| Wizard: security level (Básica/Media/Alta) | `src/features/generator/components/GeneratorPanel.tsx` | ✅ |
+| Wizard: toggle "Palabras memorables" | `src/features/generator/components/GeneratorPanel.tsx` | ✅ |
+| Wizard: wordCount slider 2–8 | `src/features/generator/store.ts`, `types.ts` | ✅ |
+| Wizard: sin auto-generate en paso 2 | `src/features/generator/pages/GeneratorPage.tsx` | ✅ |
+| Wizard: navegación fluida entre pasos | `src/features/generator/components/GeneratorPanel.tsx` | ✅ |
 
 ---
 
