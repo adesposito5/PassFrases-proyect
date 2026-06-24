@@ -4,12 +4,11 @@ import { WizardLayout } from '@/features/generator/components/WizardLayout'
 import GeneratorPanel from '@/features/generator/components/GeneratorPanel'
 
 export default function GeneratorPage() {
-  const generate = usePasswordStore((state) => state.generate)
+  const setStep = usePasswordStore((state) => state.setStep)
 
-  // Genera una contraseña al entrar a esta pantalla
   useEffect(() => {
-    generate()
-  }, [generate])
+    setStep(2)
+  }, [setStep])
 
   return (
     <WizardLayout>
