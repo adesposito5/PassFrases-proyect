@@ -1,9 +1,10 @@
 export interface PasswordConfig {
-  wordCount: 2 | 3 | 4 | 5 | 6;
+  wordCount: 2 | 3 | 4 | 5 | 6 | 7 | 8;
   separator: '-' | '.' | '_';
   includeNumbers: boolean;
   includeSymbols: boolean;
   capitalize: boolean;
+  memorable: boolean;
   category: 'mixed' | 'animals' | 'nature' | 'actions' | 'food' | 'places' | 'colors';
   wordLength: 'short' | 'medium' | 'long';
 }
