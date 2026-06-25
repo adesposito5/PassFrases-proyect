@@ -1,5 +1,6 @@
 // src/features/generator/components/GeneratorForm.tsx
 
+import { useState } from "react";
 import { usePasswordStore } from "../store";
 import type { PasswordConfig } from "../types";
 
@@ -8,6 +9,7 @@ export function GeneratorForm() {
 	const config = usePasswordStore((state) => state.config);
 	const generate = usePasswordStore((state) => state.generate);
 
+	const [isGenerating, setIsGenerating] = useState(false);
 	// ── Helper: actualiza la config global directamente ──
 	// Como I1 no creó una acción específica para actualizar la config,
 	// usamos setState nativo de Zustand para mutar el store sin romper nada.
@@ -20,9 +22,15 @@ export function GeneratorForm() {
 		}));
 	};
 
+	// <-- 3. Reemplazá tu handleGenerate actual por este:
 	const handleGenerate = () => {
-		// La función de I1 ya no recibe parámetros, usa la config global.
-		generate();
+		setIsGenerating(true);
+
+		// Simulamos un retraso de 800ms
+		setTimeout(() => {
+			generate();
+			setIsGenerating(false);
+		}, 800);
 	};
 
 	return (
@@ -108,13 +116,15 @@ export function GeneratorForm() {
 			</div>
 
 			{/* ── BOTÓN: Generar ── */}
+			{/* <-- 4. Reemplazá el botón actual por este: */}
 			<button
 				type="button"
 				onClick={handleGenerate}
-				className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+				disabled={isGenerating}
+				className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
 				aria-label="Generar contraseña con las opciones seleccionadas"
 			>
-				✨ Generar frase mágica
+				{isGenerating ? "Generando..." : "✨ Generar frase mágica"}
 			</button>
 		</div>
 	);
