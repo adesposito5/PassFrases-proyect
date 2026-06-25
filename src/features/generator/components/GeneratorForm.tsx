@@ -1,41 +1,28 @@
 // src/features/generator/components/GeneratorForm.tsx
 
-import { useState } from "react";
+import { usePasswordStore } from "../store";
+import type { PasswordConfig } from "../types";
 
-// ─── 1. TIPO LOCAL (Aislado de types.ts para no romper el trabajo de I1) ───
-export interface PasswordOptions {
-	wordCount: number;
-	separator: string;
-	includeNumbers: boolean;
-	includeSymbols: boolean;
-	capitalize: boolean;
-}
-
-// ─── 2. Valores por defecto ──────────────────────────────────────────────────
-const DEFAULT_OPTIONS: PasswordOptions = {
-	wordCount: 4,
-	separator: "-",
-	includeNumbers: true,
-	includeSymbols: false,
-	capitalize: true,
-};
-
-// ─── 3. Componente Principal ─────────────────────────────────────────────────
 export function GeneratorForm() {
-	// Estado LOCAL: Maneja las opciones en este componente
-	const [options, setOptions] = useState<PasswordOptions>(DEFAULT_OPTIONS);
+	// ── Conexión con el STORE GLOBAL de Zustand de I1 ──
+	const config = usePasswordStore((state) => state.config);
+	const generate = usePasswordStore((state) => state.generate);
 
-	// Helper para actualizar opciones sin mutar el estado directamente
-	const updateOption = <K extends keyof PasswordOptions>(
+	// ── Helper: actualiza la config global directamente ──
+	// Como I1 no creó una acción específica para actualizar la config,
+	// usamos setState nativo de Zustand para mutar el store sin romper nada.
+	const updateOption = <K extends keyof PasswordConfig>(
 		key: K,
-		value: PasswordOptions[K],
+		value: PasswordConfig[K],
 	) => {
-		setOptions((prev) => ({ ...prev, [key]: value }));
+		usePasswordStore.setState((state) => ({
+			config: { ...state.config, [key]: value },
+		}));
 	};
 
-	// Handler temporal hasta que I1 adapte el store de Zustand
 	const handleGenerate = () => {
-		// TODO (Fase 3): Conectar con store.generate(options) cuando I1 lo habilite
+		// La función de I1 ya no recibe parámetros, usa la config global.
+		generate();
 	};
 
 	return (
@@ -51,7 +38,7 @@ export function GeneratorForm() {
 					className="mb-1 flex items-center justify-between text-sm font-medium text-gray-700"
 				>
 					<span>Cantidad de palabras</span>
-					<span className="font-bold text-indigo-600">{options.wordCount}</span>
+					<span className="font-bold text-indigo-600">{config.wordCount}</span>
 				</label>
 				<input
 					id="wordCount"
@@ -59,7 +46,7 @@ export function GeneratorForm() {
 					min={2}
 					max={6}
 					step={1}
-					value={options.wordCount}
+					value={config.wordCount}
 					onChange={(e) => updateOption("wordCount", Number(e.target.value))}
 					className="h-2 w-full cursor-pointer accent-indigo-500"
 				/>
@@ -82,7 +69,7 @@ export function GeneratorForm() {
 				</label>
 				<select
 					id="separator"
-					value={options.separator}
+					value={config.separator}
 					onChange={(e) => updateOption("separator", e.target.value)}
 					className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
 				>
@@ -101,21 +88,21 @@ export function GeneratorForm() {
 					id="includeNumbers"
 					label="Incluir números"
 					description="Agrega un número al final (ej: 42)"
-					checked={options.includeNumbers}
+					checked={config.includeNumbers}
 					onChange={(val) => updateOption("includeNumbers", val)}
 				/>
 				<ToggleOption
 					id="includeSymbols"
 					label="Incluir símbolos"
 					description="Agrega un símbolo especial (ej: !)"
-					checked={options.includeSymbols}
+					checked={config.includeSymbols}
 					onChange={(val) => updateOption("includeSymbols", val)}
 				/>
 				<ToggleOption
 					id="capitalize"
 					label="Capitalizar"
 					description="Primera letra de cada palabra en mayúscula"
-					checked={options.capitalize}
+					checked={config.capitalize}
 					onChange={(val) => updateOption("capitalize", val)}
 				/>
 			</div>
@@ -133,7 +120,7 @@ export function GeneratorForm() {
 	);
 }
 
-// ─── 4. Subcomponente reutilizable para cada toggle ──────────────────────────
+// ─── Subcomponente reutilizable ──────────────────────────
 interface ToggleOptionProps {
 	id: string;
 	label: string;
