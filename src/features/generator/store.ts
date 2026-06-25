@@ -3,8 +3,13 @@ import { persist } from 'zustand/middleware'
 import type { PasswordConfig, PasswordResult, SessionEntry, BatchResult, ReuseWarning } from './types'
 import { generatePassword, generateBatch, checkReuseWarnings } from './utils'
 
-const defaultConfig: PasswordConfig = {}
-
+const defaultConfig: PasswordConfig = {
+  wordCount: 4,
+  separator: '-',
+  includeNumbers: true,
+  includeSymbols: false,
+  capitalize: true,
+}
 interface PasswordState {
   config: PasswordConfig
   currentResult: PasswordResult | null

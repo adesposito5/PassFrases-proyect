@@ -1,5 +1,10 @@
-export interface PasswordConfig {}
-
+export interface PasswordConfig {
+  wordCount: number;
+  separator: string;
+  includeNumbers: boolean;
+  includeSymbols: boolean;
+  capitalize: boolean;
+}
 export interface PasswordResult {
   password: string;
 }
