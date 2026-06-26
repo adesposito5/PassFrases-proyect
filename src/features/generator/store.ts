@@ -46,7 +46,7 @@ export const usePasswordStore = create<PasswordState>()(
 
       generate: () => {
         const state = get()
-        const result = generatePassword()
+        const result = generatePassword(state.config)
         const entry: SessionEntry = {
           id: crypto.randomUUID(),
           password: result.password,
@@ -60,7 +60,7 @@ export const usePasswordStore = create<PasswordState>()(
 
       generateBatch: () => {
         const state = get()
-        const results = generateBatch(state.batchCount)
+        const results = generateBatch(state.batchCount, state.config)
 
         const entries: SessionEntry[] = results.map((r) => ({
           id: crypto.randomUUID(),

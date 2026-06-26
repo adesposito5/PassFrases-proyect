@@ -1,5 +1,6 @@
 import wordLists from './wordLists.json'
 import type { PasswordResult, ReuseWarning } from './types'
+import type { PasswordConfig } from './types'
 
 export function pickRandom<T>(list: T[]): T {
   const randomArray = new Uint32Array(1)
@@ -63,18 +64,33 @@ export function checkReuseWarnings(
   return warnings
 }
 
-export function generateBatch(count: number): PasswordResult[] {
-  return Array.from({ length: count }, () => generatePassword())
+export function generateBatch(count: number, options: PasswordConfig): PasswordResult[] {
+  return Array.from({ length: count }, () => generatePassword(options))
 }
 
-export function generatePassword(): PasswordResult {
+export function generatePassword(options: PasswordConfig): PasswordResult {
   const allWords = Object.values(wordLists).flat()
   const selectedWords: string[] = []
-  for (let i = 0; i < 4; i++) {
-    selectedWords.push(pickRandom(allWords))
+  for (let i = 0; i < options.wordCount; i++) {
+    let word = pickRandom(allWords)
+    if (options.capitalize) {
+      word = word.charAt(0).toUpperCase() + word.slice(1)
+    }
+    selectedWords.push(word)
   }
-  const randomArr = new Uint32Array(1)
-  crypto.getRandomValues(randomArr)
-  const number = 10 + (randomArr[0] % 90)
-  return { password: selectedWords.join('-') + '-' + number }
+
+  const parts = [...selectedWords]
+
+  if (options.includeSymbols) {
+    const symbols = ['!', '@', '#', '$', '%', '&', '*']
+    parts.push(pickRandom(symbols))
+  }
+
+  if (options.includeNumbers) {
+    const randomArr = new Uint32Array(1)
+    crypto.getRandomValues(randomArr)
+    parts.push(String(10 + (randomArr[0] % 90)))
+  }
+
+  return { password: parts.join(options.separator) }
 }
