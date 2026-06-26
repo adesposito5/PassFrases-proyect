@@ -3,9 +3,10 @@ import { Copy, Check } from 'lucide-react'
 
 interface CopyButtonProps {
   text: string
+  full?: boolean
 }
 
-export function CopyButton({ text }: CopyButtonProps) {
+export function CopyButton({ text, full }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(async () => {
@@ -30,7 +31,9 @@ export function CopyButton({ text }: CopyButtonProps) {
         alignItems: 'center',
         justifyContent: 'center',
         gap: '0.4rem',
-        padding: '0.85rem 1.2rem',
+        padding: full ? '0.85rem' : '0.85rem 1.2rem',
+        flex: full ? 1 : undefined,
+        width: full ? 'auto' : undefined,
         borderRadius: '12px',
         border: '1px solid var(--color-border)',
         background: copied ? 'var(--color-success-soft)' : 'transparent',
@@ -41,6 +44,7 @@ export function CopyButton({ text }: CopyButtonProps) {
         transition: 'all var(--duration-fast) var(--ease-out)',
         opacity: !text ? 0.5 : 1,
       }}
+      
       onMouseEnter={(e) => {
         if (text) {
           e.currentTarget.style.borderColor = 'var(--color-accent)'

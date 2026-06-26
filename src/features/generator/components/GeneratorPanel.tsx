@@ -156,7 +156,7 @@ export default function GeneratorPanel() {
         >
           🔄 Generar nueva
         </button>
-        <CopyButton text={currentResult?.password ?? ''} />
+        <CopyButton text={currentResult?.password ?? ''} full />
       </div>
 
       <button
