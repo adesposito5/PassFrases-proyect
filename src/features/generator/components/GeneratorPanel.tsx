@@ -159,6 +159,61 @@ export default function GeneratorPanel() {
         <CopyButton text={currentResult?.password ?? ''} full />
       </div>
 
+      {currentResult?.analysis ? (
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '1rem',
+          padding: '1rem',
+          border: '1px solid var(--color-border)',
+          borderRadius: '16px',
+          background: 'rgba(255,255,255,0.04)',
+          color: 'var(--color-text)',
+          textAlign: 'left',
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', gap: '1rem', flexWrap: 'wrap' }}>
+            <div>
+              <p style={{ margin: 0, fontSize: '0.95rem', fontWeight: 700 }}>Análisis de seguridad</p>
+              <p style={{ margin: '0.35rem 0 0', fontSize: '0.85rem', color: 'var(--color-text-tertiary)' }}>
+                Recomendaciones basadas en la contraseña generada.
+              </p>
+            </div>
+            <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+              <span style={{ padding: '0.45rem 0.75rem', borderRadius: '999px', background: 'rgba(99,102,241,0.12)', color: 'var(--color-text)', fontSize: '0.8rem', fontWeight: 700 }}>
+                Entropía: {currentResult.analysis.entropy === null ? 'No disponible' : `${currentResult.analysis.entropy.toFixed(1)} bits`}
+              </span>
+              <span style={{ padding: '0.45rem 0.75rem', borderRadius: '999px', background: 'rgba(34,197,94,0.12)', color: 'var(--color-success)', fontSize: '0.8rem', fontWeight: 700 }}>
+                {currentResult.analysis.recommendations.length} recomendación{currentResult.analysis.recommendations.length === 1 ? '' : 'es'}
+              </span>
+            </div>
+          </div>
+
+          {currentResult.analysis.recommendations.length > 0 ? (
+            <div style={{ display: 'grid', gap: '0.75rem' }}>
+              {currentResult.analysis.recommendations.map((recommendation) => (
+                <div key={recommendation.id} style={{
+                  padding: '1rem',
+                  borderRadius: '12px',
+                  border: '1px solid var(--color-border)',
+                  background: recommendation.severity === 'high'
+                    ? 'rgba(239,68,68,0.08)'
+                    : recommendation.severity === 'medium'
+                      ? 'rgba(245,158,11,0.08)'
+                      : 'rgba(34,197,94,0.08)',
+                }}>
+                  <p style={{ margin: 0, fontWeight: 700, color: 'var(--color-text)' }}>{recommendation.title}</p>
+                  <p style={{ margin: '0.35rem 0 0', fontSize: '0.9rem', color: 'var(--color-text-tertiary)' }}>{recommendation.detail}</p>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div style={{ padding: '1rem', borderRadius: '12px', background: 'rgba(34,197,94,0.08)', color: 'var(--color-success)', fontWeight: 600 }}>
+              ¡Excelente! No hay recomendaciones adicionales para esta contraseña.
+            </div>
+          )}
+        </div>
+      ) : null}
+
       <button
         onClick={handleBackToStep2}
         style={{
