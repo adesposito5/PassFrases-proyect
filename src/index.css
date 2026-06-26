@@ -65,76 +65,82 @@
 *,
 *::before,
 *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
 }
 
 body {
-  font-family: var(--font-sans);
-  background: var(--color-surface);
-  color: var(--color-text);
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
+	font-family: var(--font-sans);
+	background: var(--color-surface);
+	color: var(--color-text);
+	min-height: 100vh;
+	position: relative;
+	overflow-x: hidden;
 }
 
 /* Gradiente radial superior (glow de acento) */
 body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background: radial-gradient(
-    ellipse 80% 60% at 50% 0%,
-    rgba(99, 102, 241, 0.08) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
+	content: "";
+	position: fixed;
+	inset: 0;
+	background: radial-gradient(
+		ellipse 80% 60% at 50% 0%,
+		rgba(99, 102, 241, 0.08) 0%,
+		transparent 70%
+	);
+	pointer-events: none;
+	z-index: 0;
 }
 
 /* Grilla sutil de fondo */
 body::after {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image:
-    linear-gradient(rgba(99, 102, 241, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-  z-index: 0;
+	content: "";
+	position: fixed;
+	inset: 0;
+	background-image:
+		linear-gradient(rgba(99, 102, 241, 0.025) 1px, transparent 1px),
+		linear-gradient(90deg, rgba(99, 102, 241, 0.025) 1px, transparent 1px);
+	background-size: 60px 60px;
+	pointer-events: none;
+	z-index: 0;
 }
 
 /* ─── Accessibility ─────────────────────────────────────────── */
 .skip-link {
-  position: absolute;
-  top: -100%;
-  left: 8px;
-  padding: 8px 16px;
-  background: var(--color-accent);
-  color: #fff;
-  border-radius: var(--radius-sm);
-  z-index: 9999;
-  font-weight: 600;
-  font-size: 0.875rem;
+	position: absolute;
+	top: -100%;
+	left: 8px;
+	padding: 8px 16px;
+	background: var(--color-accent);
+	color: #fff;
+	border-radius: var(--radius-sm);
+	z-index: 9999;
+	font-weight: 600;
+	font-size: 0.875rem;
 }
 .skip-link:focus {
-  top: 8px;
+	top: 8px;
 }
 
 /* ─── Animations ──────────────────────────────────────────── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
 
 /* ─── Reduced motion ────────────────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    transition-duration: 0.01ms !important;
-  }
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		transition-duration: 0.01ms !important;
+	}
 }
