@@ -1,14 +1,27 @@
 // src/features/generator/components/GeneratorForm.tsx
+import { useState, useEffect } from "react";
 import { usePasswordStore } from "../store";
 import type { PasswordConfig } from "../types";
 
 export function GeneratorForm() {
-  // ── Conexión con el store global ──
   const config = usePasswordStore((state) => state.config);
   const generate = usePasswordStore((state) => state.generate);
   const setConfig = usePasswordStore((state) => state.setConfig);
 
-  // Actualiza un campo de config a través de la acción del store (pacto D1)
+  // D2-10: Estado local para el renderizado condicional de controles
+  const [showAdvanced, setShowAdvanced] = useState(false);
+
+  // INT-07: Manejo del evento de teclado Escape
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setShowAdvanced(false); // Cierra las opciones avanzadas por UX
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   const updateOption = <K extends keyof PasswordConfig>(
     key: K,
     value: PasswordConfig[K],
@@ -77,29 +90,41 @@ export function GeneratorForm() {
 
       <div className="my-5 h-px bg-gray-200" />
 
-      {/* ── TOGGLES: Opciones booleanas ── */}
-      <div className="mb-6 space-y-3">
-        <ToggleOption
-          id="includeNumbers"
-          label="Incluir números"
-          description="Agrega un número al final (ej: 42)"
-          checked={config.includeNumbers}
-          onChange={(val) => updateOption("includeNumbers", val)}
-        />
-        <ToggleOption
-          id="includeSymbols"
-          label="Incluir símbolos"
-          description="Agrega un símbolo especial (ej: !)"
-          checked={config.includeSymbols}
-          onChange={(val) => updateOption("includeSymbols", val)}
-        />
-        <ToggleOption
-          id="capitalize"
-          label="Capitalizar"
-          description="Primera letra de cada palabra en mayúscula"
-          checked={config.capitalize}
-          onChange={(val) => updateOption("capitalize", val)}
-        />
+      {/* ── D2-10: Renderizado Condicional de Opciones Avanzadas ── */}
+      <div className="mb-6">
+        <button
+          type="button"
+          onClick={() => setShowAdvanced(!showAdvanced)}
+          className="mb-3 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+        >
+          {showAdvanced ? "Ocultar opciones avanzadas ↑" : "Ver opciones avanzadas ↓"}
+        </button>
+
+        {showAdvanced && (
+          <div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+            <ToggleOption
+              id="includeNumbers"
+              label="Incluir números"
+              description="Agrega un número al final (ej: 42)"
+              checked={config.includeNumbers}
+              onChange={(val) => updateOption("includeNumbers", val)}
+            />
+            <ToggleOption
+              id="includeSymbols"
+              label="Incluir símbolos"
+              description="Agrega un símbolo especial (ej: !)"
+              checked={config.includeSymbols}
+              onChange={(val) => updateOption("includeSymbols", val)}
+            />
+            <ToggleOption
+              id="capitalize"
+              label="Capitalizar"
+              description="Primera letra en mayúscula"
+              checked={config.capitalize}
+              onChange={(val) => updateOption("capitalize", val)}
+            />
+          </div>
+        )}
       </div>
 
       {/* ── BOTÓN: Generar ── */}

@@ -7,6 +7,8 @@ export interface PasswordConfig {
 }
 export interface PasswordResult {
   password: string;
+  words: string[];
+  phrase: string;
 }
 
 export interface SessionEntry {

@@ -92,5 +92,48 @@ export function generatePassword(options: PasswordConfig): PasswordResult {
     parts.push(String(10 + (randomArr[0] % 90)))
   }
 
-  return { password: parts.join(options.separator) }
+  return {
+  password: parts.join(options.separator),
+  words: selectedWords,
+  phrase: selectedWords.join(" "),
+};
+}
+// src/features/generator/utils.ts
+
+/**
+ * D2-06 y D2-07: Aplica el formato, separadores e inyecciones a las palabras base.
+ * Exporta esto para que I1 lo use dentro de su generatePassword()
+ */
+export function applyFormatting(
+  words: string[],
+  config: {
+    separator: string;
+    includeNumbers: boolean;
+    includeSymbols: boolean;
+    capitalize: boolean;
+  }
+): string {
+  // 1. D2-07: Capitalización
+  let processedWords = config.capitalize
+    ? words.map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+    : [...words];
+
+  // 2. D2-06: Aplicar el separador elegido
+  let finalPassword = processedWords.join(config.separator);
+
+  // 3. D2-07: Inyección de números (al final, precedido por el separador)
+  if (config.includeNumbers) {
+    // Genera un número aleatorio entre 10 y 99
+    const randomNumber = Math.floor(Math.random() * 90) + 10;
+    finalPassword += `${config.separator}${randomNumber}`;
+  }
+
+  // 4. D2-07: Inyección de símbolos (al final de la cadena)
+  if (config.includeSymbols) {
+    const symbols = ["!", "@", "#", "$", "%", "&", "*", "?"];
+    const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+    finalPassword += randomSymbol;
+  }
+
+  return finalPassword;
 }
