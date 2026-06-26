@@ -1,16 +1,16 @@
-import type { ReactNode } from "react";
-import { BrowserRouter } from "react-router-dom";
-import HistoryPanel from "@/features/generator/components/HistoryPanel";
+import { BrowserRouter } from 'react-router-dom'
+import type { ReactNode } from 'react'
+import HistoryPanel from '@/features/generator/components/HistoryPanel'
 
 interface ProvidersProps {
-	children: ReactNode;
+  children: ReactNode
 }
 
 export function Providers({ children }: ProvidersProps) {
-	return (
-		<BrowserRouter>
-			{children}
-			<HistoryPanel />
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      {children}
+      <HistoryPanel />
+    </BrowserRouter>
+  )
 }
