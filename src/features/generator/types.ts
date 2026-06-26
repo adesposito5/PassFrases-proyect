@@ -1,7 +1,21 @@
 export interface PasswordConfig {}
 
+export interface PasswordRecommendation {
+  id: string
+  title: string
+  detail: string
+  severity: 'low' | 'medium' | 'high'
+}
+
+export interface PasswordAnalysis {
+  password: string
+  recommendations: PasswordRecommendation[]
+  entropy: number | null
+}
+
 export interface PasswordResult {
   password: string;
+  analysis?: PasswordAnalysis
 }
 
 export interface SessionEntry {
