@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import { usePasswordStore } from '@/features/generator/store'
+import { CopyButton } from '@/features/generator/components/CopyButton'
 
 export default function GeneratorPanel() {
   const currentResult = usePasswordStore((state) => state.currentResult)
@@ -155,6 +156,7 @@ export default function GeneratorPanel() {
         >
           🔄 Generar nueva
         </button>
+        <CopyButton text={currentResult?.password ?? ''} />
       </div>
 
       <button
