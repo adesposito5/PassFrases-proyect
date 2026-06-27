@@ -6,6 +6,7 @@ import type { PasswordConfig } from "../types";
 export function GeneratorForm() {
 	const config = usePasswordStore((state) => state.config);
 	const generate = usePasswordStore((state) => state.generate);
+	const setStep = usePasswordStore((state) => state.setStep);
 	const setConfig = usePasswordStore((state) => state.setConfig);
 
 	// D2-10: Estado local para el renderizado condicional de controles
@@ -31,6 +32,7 @@ export function GeneratorForm() {
 
 	const handleGenerate = () => {
 		generate();
+		setStep(3);
 	};
 
 	return (
