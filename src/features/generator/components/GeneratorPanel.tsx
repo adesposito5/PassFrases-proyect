@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import { GeneratorForm } from './GeneratorForm'
 import { usePasswordStore } from '@/features/generator/store'
 import { CopyButton } from '@/features/generator/components/CopyButton'
 
@@ -27,52 +28,8 @@ export default function GeneratorPanel() {
   if (currentStep === 2) {
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-        <h2 style={{ fontSize: '1.4rem', fontWeight: 700, textAlign: 'center', color: 'var(--color-text)' }}>
-          Personalizá tu contraseña
-        </h2>
-
-        <div style={{
-          textAlign: 'center',
-          padding: '1.5rem',
-          color: 'var(--color-text-tertiary)',
-          fontSize: '0.9rem',
-          border: '1px dashed var(--color-border)',
-          borderRadius: 'var(--radius-md)',
-        }}>
-          <p style={{ margin: 0 }}>Opciones de personalización próximamente</p>
-        </div>
-
-        <button
-          onClick={handleGenerate}
-          aria-label="Generar nueva contraseña"
-          style={{
-            all: 'unset',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem',
-            width: '100%',
-            padding: '1rem',
-            borderRadius: '14px',
-            background: 'var(--gradient-blue)',
-            color: '#fff',
-            fontSize: '1.05rem',
-            fontWeight: 700,
-            fontFamily: 'var(--font-sans)',
-            transition: 'all var(--duration-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)'
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.35)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = ''
-            e.currentTarget.style.boxShadow = ''
-          }}
-        >
-          ✨ Generar nueva
-        </button>
+        {/* GeneratorForm de D2 — maneja config y genera al hacer click */}
+        <GeneratorForm />
 
         <button
           onClick={handleBackToStart}
