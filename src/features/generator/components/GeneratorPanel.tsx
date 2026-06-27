@@ -173,7 +173,10 @@ background: recommendation.severity === "high"
 : "rgba(34,197,94,0.08)",
 }}
 >
-<p style={{ margin: 0, fontWeight: 700, color: "var(--color-text)" }}>{recommendation.title}</p>
+<p style={{ margin: 0, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700, color: "var(--color-text)" }}>
+<span>{recommendation.icon === 'shield' ? '🛡️' : recommendation.icon === 'warning' ? '⚠️' : recommendation.icon === 'info' ? 'ℹ️' : '✨'}</span>
+{recommendation.title}
+</p>
 <p style={{ margin: "0.35rem 0 0", fontSize: "0.9rem", color: "var(--color-text-tertiary)" }}>{recommendation.detail}</p>
 </div>
 ))}
