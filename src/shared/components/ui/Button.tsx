@@ -31,8 +31,8 @@ export function Button({
     primary:
       'bg-[var(--color-accent)] text-white hover:brightness-110',
     secondary:
-      'border border-[var(--color-border)] bg-transparent text-[#e2e2f0] hover:border-[var(--color-accent)]',
-    ghost: 'bg-transparent text-[#e2e2f0] hover:bg-[var(--color-accent-soft)]',
+      'border border-[var(--color-border)] bg-transparent text-[var(--color-text)] hover:border-[var(--color-accent)]',
+    ghost: 'bg-transparent text-[var(--color-text)] hover:bg-[var(--color-accent-soft)]',
   }
 
   return (
