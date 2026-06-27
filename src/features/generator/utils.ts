@@ -77,6 +77,16 @@ options: PasswordConfig,
 return Array.from({ length: count }, () => generatePassword(options));
 }
 
+export function calculateEntropy(config: PasswordConfig): number {
+	const wordList = Object.values(wordLists).flat();
+	const listSize = wordList.length;
+	const wordCombinations = Math.pow(listSize, config.wordCount);
+	const numberRange = config.includeNumbers ? 990 : 1;
+	const symbolCount = config.includeSymbols ? 8 : 1;
+	const totalCombinations = wordCombinations * numberRange * symbolCount;
+	return Math.log2(totalCombinations);
+}
+
 export function analyzePassword(password: string): PasswordAnalysis {
 const normalized = password.trim();
 const words = normalized.split(/[-_ ]+/).filter(Boolean);
