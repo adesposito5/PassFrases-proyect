@@ -4,6 +4,7 @@ PasswordConfig,
 PasswordRecommendation,
 PasswordResult,
 ReuseWarning,
+StrengthLevel,
 } from "./types";
 import wordLists from "./wordLists.json";
 
@@ -85,6 +86,13 @@ export function calculateEntropy(config: PasswordConfig): number {
 	const symbolCount = config.includeSymbols ? 8 : 1;
 	const totalCombinations = wordCombinations * numberRange * symbolCount;
 	return Math.log2(totalCombinations);
+}
+
+export function getStrengthLevel(bits: number): StrengthLevel {
+	if (bits < 40) return 'weak';
+	if (bits < 60) return 'medium';
+	if (bits < 80) return 'strong';
+	return 'very-strong';
 }
 
 export function analyzePassword(password: string): PasswordAnalysis {
@@ -195,18 +203,23 @@ selectedWords.push(word);
 }
 
 const password = applyFormatting(selectedWords, {
-separator: options.separator,
-includeNumbers: options.includeNumbers,
-includeSymbols: options.includeSymbols,
-capitalize: options.capitalize,
-});
+		separator: options.separator,
+		includeNumbers: options.includeNumbers,
+		includeSymbols: options.includeSymbols,
+		capitalize: options.capitalize,
+	});
 
-return {
-password,
-words: selectedWords,
-phrase: selectedWords.join(" "),
-analysis: analyzePassword(password),
-};
+	const bits = calculateEntropy(options);
+	const strength = getStrengthLevel(bits);
+
+	return {
+		password,
+		words: selectedWords,
+		phrase: selectedWords.join(" "),
+		bits,
+		strength,
+		analysis: analyzePassword(password),
+	};
 }
 
 /**

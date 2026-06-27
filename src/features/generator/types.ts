@@ -1,3 +1,12 @@
+export type StrengthLevel = 'weak' | 'medium' | 'strong' | 'very-strong';
+
+export const STRENGTH_CONFIG: Record<StrengthLevel, { label: string; color: string }> = {
+	weak:        { label: 'Débil',       color: '#ef4444' },
+	medium:      { label: 'Moderada',    color: '#f97316' },
+	strong:      { label: 'Fuerte',      color: '#eab308' },
+	'very-strong': { label: 'Muy fuerte', color: '#22c55e' },
+};
+
 export interface PasswordConfig {
 	wordCount: number;
 	separator: string;
@@ -36,12 +45,15 @@ export interface PasswordResult {
 	password: string;
 	words: string[];
 	phrase: string;
+	bits: number;
+	strength: StrengthLevel;
 	analysis?: PasswordAnalysis;
 }
 
 export interface SessionEntry {
 	id: string;
 	password: string;
+	bits: number;
 	timestamp: number;
 }
 
