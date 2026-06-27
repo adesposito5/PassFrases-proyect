@@ -3,10 +3,12 @@ import { GeneratorForm } from "./GeneratorForm";
 import { usePasswordStore } from "@/features/generator/store";
 import { CopyButton } from "@/features/generator/components/CopyButton";
 import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
+import { FunStats } from "@/features/generator/components/FunStats";
 
 export default function GeneratorPanel() {
 const currentResult = usePasswordStore((state) => state.currentResult);
 const currentStep = usePasswordStore((state) => state.currentStep);
+const config = usePasswordStore((state) => state.config);
 const generate = usePasswordStore((state) => state.generate);
 const setStep = usePasswordStore((state) => state.setStep);
 const navigate = useNavigate();
@@ -128,7 +130,15 @@ e.currentTarget.style.transform = "";
 </div>
 
 {currentResult && (
+<>
 <EntropyMeter bits={currentResult.bits} />
+<FunStats
+wordCount={config.wordCount}
+bits={currentResult.bits}
+hasNumbers={config.includeNumbers}
+hasSymbols={config.includeSymbols}
+/>
+</>
 )}
 
 {currentResult?.analysis ? (
