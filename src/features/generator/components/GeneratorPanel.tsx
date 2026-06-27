@@ -25,69 +25,29 @@ export default function GeneratorPanel() {
   /* ═══════════════ STEP 2: PERSONALIZAR ═══════════════ */
   if (currentStep === 2) {
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-        <h2 style={{ fontSize: '1.4rem', fontWeight: 700, textAlign: 'center', color: 'var(--color-text)' }}>
+      <div className="flex flex-col gap-5">
+        <h2 className="text-[1.4rem] font-bold text-center text-[var(--color-text)]">
           Personalizá tu contraseña
         </h2>
 
-        <div style={{
-          textAlign: 'center',
-          padding: '1.5rem',
-          color: 'var(--color-text-tertiary)',
-          fontSize: '0.9rem',
-          border: '1px dashed var(--color-border)',
-          borderRadius: 'var(--radius-md)',
-        }}>
-          <p style={{ margin: 0 }}>Opciones de personalización próximamente</p>
+        <div className="text-center p-6 text-[var(--color-text-tertiary)] text-sm border border-dashed border-[var(--color-border)] rounded-[var(--radius-md)]">
+          <p>Opciones de personalización próximamente</p>
         </div>
 
         <button
+          type="button"
           onClick={handleGenerate}
           aria-label="Generar nueva contraseña"
-          style={{
-            all: 'unset',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.5rem',
-            width: '100%',
-            padding: '1rem',
-            borderRadius: '14px',
-            background: 'var(--gradient-blue)',
-            color: '#fff',
-            fontSize: '1.05rem',
-            fontWeight: 700,
-            fontFamily: 'var(--font-sans)',
-            transition: 'all var(--duration-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)'
-            e.currentTarget.style.boxShadow = '0 8px 32px rgba(99,102,241,0.35)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.transform = ''
-            e.currentTarget.style.boxShadow = ''
-          }}
+          className="w-full flex items-center justify-center gap-2 px-4 py-4 rounded-[14px] text-white text-[1.05rem] font-bold transition-all duration-[var(--duration-fast)] hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(99,102,241,0.35)] cursor-pointer"
+          style={{ background: 'var(--gradient-blue)' }}
         >
           ✨ Generar nueva
         </button>
 
         <button
+          type="button"
           onClick={handleBackToStart}
-          style={{
-            all: 'unset',
-            cursor: 'pointer',
-            textAlign: 'center',
-            marginTop: '0.25rem',
-            fontSize: '0.85rem',
-            color: 'var(--color-text-tertiary)',
-            fontFamily: 'var(--font-sans)',
-            padding: '4px 0',
-            transition: 'color var(--duration-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-pink)' }}
-          onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-tertiary)' }}
+          className="text-center text-sm text-[var(--color-text-tertiary)] py-1 transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-pink)] cursor-pointer"
         >
           ← Volver a inicio
         </button>
@@ -97,81 +57,30 @@ export default function GeneratorPanel() {
 
   /* ═══════════════ STEP 3: RESULTADO ═══════════════ */
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', textAlign: 'center' }}>
-      <div style={{ fontSize: '2.8rem', display: 'inline-block', marginBottom: '0.5rem', filter: 'drop-shadow(0 0 24px rgba(99,102,241,0.35))' }}>
+    <div className="flex flex-col gap-5 text-center">
+      <div className="text-[2.8rem] inline-block mb-2 drop-shadow-[0_0_24px_rgba(99,102,241,0.35)]">
         🛡️
       </div>
 
-      <div style={{
-        fontFamily: 'var(--font-mono)',
-        fontSize: '1.4rem',
-        fontWeight: 700,
-        letterSpacing: '-0.01em',
-        padding: '1.25rem 1.5rem',
-        background: 'rgba(0,0,0,0.3)',
-        border: '1px solid var(--color-border)',
-        borderRadius: '14px',
-        wordBreak: 'break-all',
-        lineHeight: 1.5,
-        userSelect: 'all',
-        textAlign: 'center',
-        color: 'var(--color-text)',
-        minHeight: '4rem',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-      }}>
+      <div className="font-mono text-[1.4rem] font-bold tracking-tight px-6 py-5 bg-black/30 border border-[var(--color-border)] rounded-[14px] break-all leading-relaxed select-all text-[var(--color-text)] min-h-16 flex items-center justify-center">
         {currentResult?.password ?? 'Generando…'}
       </div>
 
-      <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.5rem' }}>
+      <div className="flex gap-3 mt-2">
         <button
+          type="button"
           onClick={handleGenerate}
-          style={{
-            all: 'unset',
-            cursor: 'pointer',
-            flex: 1,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '0.4rem',
-            padding: '0.85rem',
-            borderRadius: '12px',
-            background: 'var(--gradient-blue)',
-            color: '#fff',
-            fontSize: '0.9rem',
-            fontWeight: 600,
-            fontFamily: 'var(--font-sans)',
-            transition: 'all var(--duration-fast) var(--ease-out)',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.boxShadow = '0 4px 20px rgba(99,102,241,0.3)'
-            e.currentTarget.style.transform = 'translateY(-1px)'
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.boxShadow = ''
-            e.currentTarget.style.transform = ''
-          }}
+          className="flex-1 flex items-center justify-center gap-1.5 py-3.5 rounded-[12px] text-white text-sm font-semibold transition-all duration-[var(--duration-fast)] hover:shadow-[0_4px_20px_rgba(99,102,241,0.3)] hover:-translate-y-px cursor-pointer"
+          style={{ background: 'var(--gradient-blue)' }}
         >
           🔄 Generar nueva
         </button>
       </div>
 
       <button
+        type="button"
         onClick={handleBackToStep2}
-        style={{
-          all: 'unset',
-          cursor: 'pointer',
-          textAlign: 'center',
-          marginTop: '0.25rem',
-          fontSize: '0.85rem',
-          color: 'var(--color-text-tertiary)',
-          fontFamily: 'var(--font-sans)',
-          padding: '4px 0',
-          transition: 'color var(--duration-fast) var(--ease-out)',
-        }}
-        onMouseEnter={(e) => { e.currentTarget.style.color = 'var(--color-pink)' }}
-        onMouseLeave={(e) => { e.currentTarget.style.color = 'var(--color-text-tertiary)' }}
+        className="text-center text-sm text-[var(--color-text-tertiary)] py-1 transition-colors duration-[var(--duration-fast)] hover:text-[var(--color-pink)] cursor-pointer"
       >
         ← Personalizar
       </button>
