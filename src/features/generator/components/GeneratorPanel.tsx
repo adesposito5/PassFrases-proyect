@@ -2,6 +2,7 @@
 import { GeneratorForm } from "./GeneratorForm";
 import { usePasswordStore } from "@/features/generator/store";
 import { CopyButton } from "@/features/generator/components/CopyButton";
+import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
 
 export default function GeneratorPanel() {
 const currentResult = usePasswordStore((state) => state.currentResult);
@@ -126,6 +127,10 @@ e.currentTarget.style.transform = "";
 <CopyButton text={currentResult?.password ?? ""} full />
 </div>
 
+{currentResult && (
+<EntropyMeter bits={currentResult.bits} />
+)}
+
 {currentResult?.analysis ? (
 <div
 style={{
@@ -140,21 +145,16 @@ color: "var(--color-text)",
 textAlign: "left",
 }}
 >
-<div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap" }}>
+<div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", alignItems: "flex-start" }}>
 <div>
 <p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700 }}>Análisis de seguridad</p>
 <p style={{ margin: "0.35rem 0 0", fontSize: "0.85rem", color: "var(--color-text-tertiary)" }}>
 Recomendaciones basadas en la contraseña generada.
 </p>
 </div>
-<div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", alignItems: "center" }}>
-<span style={{ padding: "0.45rem 0.75rem", borderRadius: "999px", background: "rgba(99,102,241,0.12)", color: "var(--color-text)", fontSize: "0.8rem", fontWeight: 700 }}>
-Entropía: {currentResult.analysis.entropy === null ? "No disponible" : `${currentResult.analysis.entropy.toFixed(1)} bits`}
-</span>
-<span style={{ padding: "0.45rem 0.75rem", borderRadius: "999px", background: "rgba(34,197,94,0.12)", color: "var(--color-success)", fontSize: "0.8rem", fontWeight: 700 }}>
+<span style={{ padding: "0.45rem 0.75rem", borderRadius: "999px", background: "rgba(34,197,94,0.12)", color: "var(--color-success)", fontSize: "0.8rem", fontWeight: 700, whiteSpace: "nowrap" }}>
 {currentResult.analysis.recommendations.length} recomendación{currentResult.analysis.recommendations.length === 1 ? "" : "es"}
 </span>
-</div>
 </div>
 
 {currentResult.analysis.recommendations.length > 0 ? (
