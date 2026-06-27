@@ -10,11 +10,25 @@ export function CopyButton({ text, full }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(async () => {
+    if (!text) {
+      return
+    }
+
     try {
+      if (!navigator.clipboard?.writeText) {
+        throw new Error("Portapapeles no disponible en este navegador")
+      }
+
       await navigator.clipboard.writeText(text)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
-    } catch {
+    } catch (error) {
+      console.error("Error al copiar al portapapeles:", error)
+      const message =
+        error instanceof Error && error.message
+          ? `No se pudo copiar al portapapeles: ${error.message}`
+          : "No se pudo copiar al portapapeles. Verifica los permisos del navegador."
+      alert(message)
       setCopied(false)
     }
   }, [text])
