@@ -37,7 +37,6 @@ export default function BatchGenerator() {
 
 	return (
 		<div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-			{/* Controls */}
 			<div
 				style={{
 					display: "flex",
@@ -120,7 +119,6 @@ export default function BatchGenerator() {
 				</button>
 			</div>
 
-			{/* Results */}
 			{!batchResults && (
 				<div
 					style={{
@@ -143,7 +141,6 @@ export default function BatchGenerator() {
 
 			{batchResults && batchResults.results.length > 0 && (
 				<>
-					{/* Copy all button */}
 					<button
 						type="button"
 						onClick={handleCopyAll}
@@ -169,7 +166,6 @@ export default function BatchGenerator() {
 						{copiedAll ? "✅ Copiadas todas" : "📋 Copiar todas"}
 					</button>
 
-					{/* Warning banner */}
 					{batchWarnings.length > 0 && (
 						<div
 							style={{
@@ -194,7 +190,6 @@ export default function BatchGenerator() {
 						</div>
 					)}
 
-					{/* List */}
 					<div
 						style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}
 					>
@@ -216,7 +211,6 @@ export default function BatchGenerator() {
 										transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 									}}
 								>
-									{/* Number */}
 									<span
 										style={{
 											fontSize: "0.75rem",
@@ -230,7 +224,6 @@ export default function BatchGenerator() {
 										#{i + 1}
 									</span>
 
-									{/* Password */}
 									<span
 										style={{
 											flex: 1,
@@ -245,7 +238,6 @@ export default function BatchGenerator() {
 										{result.password}
 									</span>
 
-									{/* Copy */}
 									<button
 										type="button"
 										onClick={() => handleCopy(result.password, i)}
@@ -267,7 +259,6 @@ export default function BatchGenerator() {
 										{copiedIndex === i ? "✅" : "📋"}
 									</button>
 
-									{/* Warning icon */}
 									{isWarned && (
 										<span
 											style={{ fontSize: "0.9rem", flexShrink: 0 }}

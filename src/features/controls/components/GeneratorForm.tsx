@@ -1,7 +1,6 @@
-// src/features/generator/components/GeneratorForm.tsx
 import { useEffect, useState } from "react";
-import { usePasswordStore } from "../store";
-import type { PasswordConfig } from "../types";
+import { usePasswordStore } from "@/features/generator/store";
+import type { PasswordConfig } from "@/features/generator/types";
 
 export function GeneratorForm() {
 	const config = usePasswordStore((state) => state.config);
@@ -9,10 +8,8 @@ export function GeneratorForm() {
 	const setStep = usePasswordStore((state) => state.setStep);
 	const setConfig = usePasswordStore((state) => state.setConfig);
 
-	// D2-10: Estado local para el renderizado condicional de controles
 	const [showAdvanced, setShowAdvanced] = useState(false);
 
-	// INT-07: Manejo del evento de teclado Escape
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") {
@@ -57,7 +54,6 @@ export function GeneratorForm() {
 				Personalizá tu contraseña
 			</h2>
 
-			{/* ── SLIDER: Cantidad de palabras ── */}
 			<div style={{ marginBottom: "1.25rem" }}>
 				<label
 					htmlFor="wordCount"
@@ -108,7 +104,6 @@ export function GeneratorForm() {
 				</div>
 			</div>
 
-			{/* Divisor */}
 			<div
 				style={{
 					margin: "1.25rem 0",
@@ -117,7 +112,6 @@ export function GeneratorForm() {
 				}}
 			/>
 
-			{/* ── SELECT: Separador ── */}
 			<div style={{ marginBottom: "1.25rem" }}>
 				<label
 					htmlFor="separator"
@@ -163,7 +157,6 @@ export function GeneratorForm() {
 				</select>
 			</div>
 
-			{/* Divisor */}
 			<div
 				style={{
 					margin: "1.25rem 0",
@@ -172,7 +165,6 @@ export function GeneratorForm() {
 				}}
 			/>
 
-			{/* ── D2-10: Renderizado Condicional de Opciones Avanzadas ── */}
 			<div style={{ marginBottom: "1.5rem" }}>
 				<button
 					type="button"
@@ -226,7 +218,6 @@ export function GeneratorForm() {
 				)}
 			</div>
 
-			{/* ── BOTÓN: Generar ── */}
 			<button
 				type="button"
 				onClick={handleGenerate}
@@ -263,7 +254,6 @@ export function GeneratorForm() {
 	);
 }
 
-// ─── Subcomponente reutilizable ──────────────────────────
 interface ToggleOptionProps {
 	id: string;
 	label: string;

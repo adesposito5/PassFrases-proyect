@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import GeneratorPanel from "@/features/generator/components/GeneratorPanel";
-import { WizardLayout } from "@/features/generator/components/WizardLayout";
+import { WizardLayout } from "@/features/controls/components/WizardLayout";
 import { usePasswordStore } from "@/features/generator/store";
 
 export default function GeneratorPage() {

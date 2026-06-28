@@ -31,7 +31,6 @@ export default function HistoryPanel() {
 
 	return (
 		<>
-			{/* FAB button */}
 			<button
 				type="button"
 				onClick={toggleHistory}
@@ -89,7 +88,6 @@ export default function HistoryPanel() {
 				)}
 			</button>
 
-			{/* Panel */}
 			{historyOpen && (
 				<div
 					style={{
@@ -113,7 +111,6 @@ export default function HistoryPanel() {
 					role="dialog"
 					aria-label="Historial de sesión"
 				>
-					{/* Header */}
 					<div
 						style={{
 							display: "flex",
@@ -199,7 +196,6 @@ export default function HistoryPanel() {
 						</div>
 					</div>
 
-					{/* Content */}
 					<div
 						style={{
 							flex: 1,
@@ -241,7 +237,6 @@ export default function HistoryPanel() {
 											borderRadius: i === 0 ? "var(--radius-sm)" : undefined,
 										}}
 									>
-										{/* Index */}
 										<span
 											style={{
 												fontSize: "0.65rem",
@@ -254,7 +249,6 @@ export default function HistoryPanel() {
 											#{sessionHistory.length - i}
 										</span>
 
-										{/* Password */}
 										<span
 											style={{
 												flex: 1,
@@ -267,7 +261,6 @@ export default function HistoryPanel() {
 											{entry.password}
 										</span>
 
-										{/* Time */}
 										<span
 											style={{
 												fontSize: "0.6rem",
@@ -280,7 +273,6 @@ export default function HistoryPanel() {
 											{timeAgo(entry.timestamp)}
 										</span>
 
-										{/* Copy */}
 										<button
 											type="button"
 											onClick={() => handleCopy(entry.password, entry.id)}
@@ -305,7 +297,6 @@ export default function HistoryPanel() {
 						)}
 					</div>
 
-					{/* Footer */}
 					<div
 						style={{
 							padding: "0.6rem 1.25rem",

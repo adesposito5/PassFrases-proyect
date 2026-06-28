@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import BatchGenerator from "@/features/generator/components/BatchGenerator";
+import BatchGenerator from "@/features/batch/components/BatchGenerator";
 import { usePasswordStore } from "@/features/generator/store";
 
 export default function BatchPage() {
@@ -25,7 +25,6 @@ export default function BatchPage() {
 			}}
 		>
 			<div style={{ width: "100%", maxWidth: "680px" }}>
-				{/* Header */}
 				<div
 					style={{
 						display: "flex",
@@ -83,7 +82,6 @@ export default function BatchPage() {
 					</a>
 				</div>
 
-				{/* Card */}
 				<div
 					className="glass-card"
 					style={{
@@ -99,7 +97,6 @@ export default function BatchPage() {
 					<BatchGenerator />
 				</div>
 
-				{/* Footer info */}
 				<div
 					style={{
 						marginTop: "1.5rem",

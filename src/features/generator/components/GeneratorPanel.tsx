@@ -1,5 +1,5 @@
 ﻿import { useNavigate } from "react-router-dom";
-import { GeneratorForm } from "./GeneratorForm";
+import { GeneratorForm } from "@/features/controls/components/GeneratorForm";
 import { usePasswordStore } from "@/features/generator/store";
 import { CopyButton } from "@/features/generator/components/CopyButton";
 import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
