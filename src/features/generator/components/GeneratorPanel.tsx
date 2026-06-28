@@ -1,9 +1,11 @@
 ﻿import { useNavigate } from "react-router-dom";
 import { GeneratorForm } from "@/features/controls/components/GeneratorForm";
 import { usePasswordStore } from "@/features/generator/store";
-import { CopyButton } from "@/features/generator/components/CopyButton";
 import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
 import { FunStats } from "@/features/generator/components/FunStats";
+import { PasswordActions } from "@/features/generator/components/PasswordActions";
+import { RecommendationsPanel } from "@/features/generator/components/RecommendationsPanel";
+import { CategoryChips } from "@/features/generator/components/CategoryChips";
 
 export default function GeneratorPanel() {
 const currentResult = usePasswordStore((state) => state.currentResult);
@@ -31,6 +33,7 @@ if (currentStep === 2) {
 return (
 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 <GeneratorForm />
+<CategoryChips />
 
 <button
 					type="button"
@@ -72,64 +75,10 @@ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.35))",
 🛡️
 </div>
 
-<div
-style={{
-fontFamily: "var(--font-mono)",
-fontSize: "1.4rem",
-fontWeight: 700,
-letterSpacing: "-0.01em",
-padding: "1.25rem 1.5rem",
-background: "rgba(0,0,0,0.3)",
-border: "1px solid var(--color-border)",
-borderRadius: "14px",
-wordBreak: "break-all",
-lineHeight: 1.5,
-userSelect: "all",
-textAlign: "center",
-color: "var(--color-text)",
-minHeight: "4rem",
-display: "flex",
-alignItems: "center",
-justifyContent: "center",
-}}
->
-{currentResult?.password ?? "Generando…"}
-</div>
-
-<div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
-<button
-					type="button"
-					onClick={handleGenerate}
-style={{
-all: "unset",
-cursor: "pointer",
-flex: 1,
-display: "flex",
-alignItems: "center",
-justifyContent: "center",
-gap: "0.4rem",
-padding: "0.85rem",
-borderRadius: "12px",
-background: "var(--gradient-blue)",
-color: "#fff",
-fontSize: "0.9rem",
-fontWeight: 600,
-fontFamily: "var(--font-sans)",
-transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
-}}
-onMouseEnter={(e) => {
-e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)";
-e.currentTarget.style.transform = "translateY(-1px)";
-}}
-onMouseLeave={(e) => {
-e.currentTarget.style.boxShadow = "";
-e.currentTarget.style.transform = "";
-}}
->
-🔄 Generar nueva
-</button>
-<CopyButton text={currentResult?.password ?? ""} full />
-</div>
+<PasswordActions
+password={currentResult?.password ?? ""}
+onRegenerate={handleGenerate}
+/>
 
 {currentResult && (
 <>
@@ -144,61 +93,7 @@ hasSymbols={config.includeSymbols}
 )}
 
 {currentResult?.analysis ? (
-<div
-style={{
-display: "flex",
-flexDirection: "column",
-gap: "1rem",
-padding: "1rem",
-border: "1px solid var(--color-border)",
-borderRadius: "16px",
-background: "rgba(255,255,255,0.04)",
-color: "var(--color-text)",
-textAlign: "left",
-}}
->
-<div style={{ display: "flex", justifyContent: "space-between", gap: "1rem", flexWrap: "wrap", alignItems: "flex-start" }}>
-<div>
-<p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700 }}>Análisis de seguridad</p>
-<p style={{ margin: "0.35rem 0 0", fontSize: "0.85rem", color: "var(--color-text-tertiary)" }}>
-Recomendaciones basadas en la contraseña generada.
-</p>
-</div>
-<span style={{ padding: "0.45rem 0.75rem", borderRadius: "999px", background: "rgba(34,197,94,0.12)", color: "var(--color-success)", fontSize: "0.8rem", fontWeight: 700, whiteSpace: "nowrap" }}>
-{currentResult.analysis.recommendations.length} recomendación{currentResult.analysis.recommendations.length === 1 ? "" : "es"}
-</span>
-</div>
-
-{currentResult.analysis.recommendations.length > 0 ? (
-<div style={{ display: "grid", gap: "0.75rem" }}>
-{currentResult.analysis.recommendations.map((recommendation) => (
-<div
-key={recommendation.id}
-style={{
-padding: "1rem",
-borderRadius: "12px",
-border: "1px solid var(--color-border)",
-background: recommendation.severity === "high"
-? "rgba(239,68,68,0.08)"
-: recommendation.severity === "medium"
-? "rgba(245,158,11,0.08)"
-: "rgba(34,197,94,0.08)",
-}}
->
-<p style={{ margin: 0, display: "flex", alignItems: "center", gap: "0.5rem", fontWeight: 700, color: "var(--color-text)" }}>
-<span>{recommendation.icon === 'shield' ? '🛡️' : recommendation.icon === 'warning' ? '⚠️' : recommendation.icon === 'info' ? 'ℹ️' : '✨'}</span>
-{recommendation.title}
-</p>
-<p style={{ margin: "0.35rem 0 0", fontSize: "0.9rem", color: "var(--color-text-tertiary)" }}>{recommendation.detail}</p>
-</div>
-))}
-</div>
-) : (
-<div style={{ padding: "1rem", borderRadius: "12px", background: "rgba(34,197,94,0.08)", color: "var(--color-success)", fontWeight: 600 }}>
-¡Excelente! No hay recomendaciones adicionales para esta contraseña.
-</div>
-)}
-</div>
+<RecommendationsPanel analysis={currentResult.analysis} />
 ) : null}
 
 <button
