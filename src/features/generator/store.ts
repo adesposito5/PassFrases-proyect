@@ -6,7 +6,8 @@ import type {
 	ReuseWarning,
 	SessionEntry,
 } from "./types";
-import { checkReuseWarnings, generateBatch, generatePassword } from "./utils";
+import { checkReuseWarnings } from "./similarity";
+import { generateBatch, generatePassword } from "./generate";
 
 const defaultConfig: PasswordConfig = {
 	wordCount: 4,
@@ -56,6 +57,7 @@ export const usePasswordStore = create<PasswordState>()((set, get) => ({
 		const entry: SessionEntry = {
 			id: crypto.randomUUID(),
 			password: result.password,
+			bits: result.bits,
 			timestamp: Date.now(),
 		};
 		set({
@@ -71,6 +73,7 @@ export const usePasswordStore = create<PasswordState>()((set, get) => ({
 		const entries: SessionEntry[] = results.map((r) => ({
 			id: crypto.randomUUID(),
 			password: r.password,
+			bits: r.bits,
 			timestamp: Date.now(),
 		}));
 
