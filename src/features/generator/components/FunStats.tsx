@@ -1,5 +1,5 @@
 import { STRENGTH_CONFIG } from "@/features/generator/types";
-import { getStrengthLevel } from "@/features/generator/utils";
+import { getStrengthLevel } from "@/features/generator/entropy";
 
 interface FunStatsProps {
 	wordCount: number;

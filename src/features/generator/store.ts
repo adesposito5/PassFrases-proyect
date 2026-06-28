@@ -6,7 +6,8 @@ import type {
 	ReuseWarning,
 	SessionEntry,
 } from "./types";
-import { checkReuseWarnings, generateBatch, generatePassword } from "./utils";
+import { checkReuseWarnings } from "./similarity";
+import { generateBatch, generatePassword } from "./generate";
 
 const defaultConfig: PasswordConfig = {
 	wordCount: 4,
