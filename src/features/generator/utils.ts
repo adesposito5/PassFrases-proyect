@@ -8,20 +8,18 @@ StrengthLevel,
 } from "./types";
 import wordLists from "./wordLists.json";
 
-export function pickRandom<T>(list: T[]): T {
+function pickRandom<T>(list: T[]): T {
 const randomArray = new Uint32Array(1);
 crypto.getRandomValues(randomArray);
 const randomIndex = randomArray[0] % list.length;
 return list[randomIndex];
 }
 
-let _uniqueId = 0;
 
-export function batchId(): string {
-return `b_${++_uniqueId}`;
-}
 
-export function phraseSimilarity(a: string, b: string): number {
+
+
+function phraseSimilarity(a: string, b: string): number {
 const bigrams = (s: string) => {
 const map = new Map<string, number>();
 for (let i = 0; i < s.length - 1; i++) {
@@ -95,7 +93,7 @@ export function getStrengthLevel(bits: number): StrengthLevel {
 	return 'very-strong';
 }
 
-export function analyzePassword(password: string): PasswordAnalysis {
+function analyzePassword(password: string): PasswordAnalysis {
 const normalized = password.trim();
 const words = normalized.split(/[-_ ]+/).filter(Boolean);
 const recommendations: PasswordRecommendation[] = [];
@@ -226,7 +224,7 @@ const password = applyFormatting(selectedWords, {
  * D2-06 y D2-07: Aplica el formato, separadores e inyecciones a las palabras base.
  * Exporta esto para que I1 lo use dentro de su generatePassword()
  */
-export function applyFormatting(
+function applyFormatting(
 words: string[],
 config: {
 separator: string;
