@@ -15,7 +15,7 @@ export function GeneratorForm() {
 	useEffect(() => {
 		const handleKeyDown = (e: KeyboardEvent) => {
 			if (e.key === "Escape") {
-				setShowAdvanced(false); // Cierra las opciones avanzadas por UX
+				setShowAdvanced(false);
 			}
 		};
 		window.addEventListener("keydown", handleKeyDown);
@@ -34,19 +34,51 @@ export function GeneratorForm() {
 	};
 
 	return (
-		<div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-			<h2 className="mb-4 text-lg font-semibold text-gray-800">
+		<div
+			style={{
+				borderRadius: "var(--radius-lg)",
+				border: "1px solid var(--color-border)",
+				background: "var(--color-card)",
+				padding: "1.5rem",
+				boxShadow: "var(--glass-shadow)",
+			}}
+		>
+			<h2
+				style={{
+					marginBottom: "1rem",
+					fontSize: "1.125rem",
+					fontWeight: 600,
+					color: "var(--color-text)",
+					fontFamily: "var(--font-sans)",
+				}}
+			>
 				Personalizá tu contraseña
 			</h2>
 
 			{/* ── SLIDER: Cantidad de palabras ── */}
-			<div className="mb-5">
+			<div style={{ marginBottom: "1.25rem" }}>
 				<label
 					htmlFor="wordCount"
-					className="mb-1 flex items-center justify-between text-sm font-medium text-gray-700"
+					style={{
+						marginBottom: "0.25rem",
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+						fontSize: "0.875rem",
+						fontWeight: 500,
+						color: "var(--color-text-secondary)",
+						fontFamily: "var(--font-sans)",
+					}}
 				>
 					<span>Cantidad de palabras</span>
-					<span className="font-bold text-indigo-600">{config.wordCount}</span>
+					<span
+						style={{
+							fontWeight: 700,
+							color: "var(--color-accent)",
+						}}
+					>
+						{config.wordCount}
+					</span>
 				</label>
 				<input
 					id="wordCount"
@@ -56,22 +88,45 @@ export function GeneratorForm() {
 					step={1}
 					value={config.wordCount}
 					onChange={(e) => updateOption("wordCount", Number(e.target.value))}
-					className="h-2 w-full cursor-pointer accent-indigo-500"
+					style={{ width: "100%", cursor: "pointer", accentColor: "var(--color-accent)" }}
 				/>
-				<div className="mt-1 flex justify-between text-xs text-gray-400">
+				<div
+					style={{
+						marginTop: "0.25rem",
+						display: "flex",
+						justifyContent: "space-between",
+						fontSize: "0.75rem",
+						color: "var(--color-text-tertiary)",
+						fontFamily: "var(--font-sans)",
+					}}
+				>
 					<span>2</span>
 					<span>4</span>
 					<span>6</span>
 				</div>
 			</div>
 
-			<div className="my-5 h-px bg-gray-200" />
+			{/* Divisor */}
+			<div
+				style={{
+					margin: "1.25rem 0",
+					height: "1px",
+					background: "var(--color-border)",
+				}}
+			/>
 
 			{/* ── SELECT: Separador ── */}
-			<div className="mb-5">
+			<div style={{ marginBottom: "1.25rem" }}>
 				<label
 					htmlFor="separator"
-					className="mb-1 block text-sm font-medium text-gray-700"
+					style={{
+						marginBottom: "0.25rem",
+						display: "block",
+						fontSize: "0.875rem",
+						fontWeight: 500,
+						color: "var(--color-text-secondary)",
+						fontFamily: "var(--font-sans)",
+					}}
 				>
 					Separador
 				</label>
@@ -79,7 +134,26 @@ export function GeneratorForm() {
 					id="separator"
 					value={config.separator}
 					onChange={(e) => updateOption("separator", e.target.value)}
-					className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+					style={{
+						width: "100%",
+						borderRadius: "var(--radius-md)",
+						border: "1px solid var(--color-border)",
+						background: "var(--color-card)",
+						color: "var(--color-text)",
+						padding: "0.5rem 0.75rem",
+						fontSize: "0.875rem",
+						fontFamily: "var(--font-sans)",
+						outline: "none",
+						cursor: "pointer",
+					}}
+					onFocus={(e) => {
+						e.currentTarget.style.borderColor = "var(--color-border-focus)";
+						e.currentTarget.style.boxShadow = "0 0 0 1px var(--color-border-focus)";
+					}}
+					onBlur={(e) => {
+						e.currentTarget.style.borderColor = "var(--color-border)";
+						e.currentTarget.style.boxShadow = "none";
+					}}
 				>
 					<option value="-">Guión ( - )</option>
 					<option value=".">Punto ( . )</option>
@@ -88,14 +162,36 @@ export function GeneratorForm() {
 				</select>
 			</div>
 
-			<div className="my-5 h-px bg-gray-200" />
+			{/* Divisor */}
+			<div
+				style={{
+					margin: "1.25rem 0",
+					height: "1px",
+					background: "var(--color-border)",
+				}}
+			/>
 
 			{/* ── D2-10: Renderizado Condicional de Opciones Avanzadas ── */}
-			<div className="mb-6">
+			<div style={{ marginBottom: "1.5rem" }}>
 				<button
 					type="button"
 					onClick={() => setShowAdvanced(!showAdvanced)}
-					className="mb-3 text-sm font-semibold text-indigo-600 hover:text-indigo-800 transition-colors"
+					style={{
+						all: "unset",
+						cursor: "pointer",
+						marginBottom: "0.75rem",
+						fontSize: "0.875rem",
+						fontWeight: 600,
+						color: "var(--color-accent)",
+						fontFamily: "var(--font-sans)",
+						transition: "color var(--duration-fast) var(--ease-out)",
+					}}
+					onMouseEnter={(e) => {
+						e.currentTarget.style.color = "var(--color-accent-hover)";
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.color = "var(--color-accent)";
+					}}
 				>
 					{showAdvanced
 						? "Ocultar opciones avanzadas ↑"
@@ -103,7 +199,7 @@ export function GeneratorForm() {
 				</button>
 
 				{showAdvanced && (
-					<div className="space-y-3 animate-in fade-in slide-in-from-top-2 duration-200">
+					<div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
 						<ToggleOption
 							id="includeNumbers"
 							label="Incluir números"
@@ -133,7 +229,31 @@ export function GeneratorForm() {
 			<button
 				type="button"
 				onClick={handleGenerate}
-				className="w-full rounded-lg bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700"
+				style={{
+					all: "unset",
+					cursor: "pointer",
+					width: "100%",
+					boxSizing: "border-box",
+					display: "flex",
+					alignItems: "center",
+					justifyContent: "center",
+					borderRadius: "var(--radius-md)",
+					background: "var(--gradient-cta)",
+					color: "#fff",
+					padding: "0.85rem 1rem",
+					fontSize: "0.875rem",
+					fontWeight: 600,
+					fontFamily: "var(--font-sans)",
+					transition: "all var(--duration-fast) var(--ease-out)",
+				}}
+				onMouseEnter={(e) => {
+					e.currentTarget.style.boxShadow = "0 4px 20px var(--color-pink-glow)";
+					e.currentTarget.style.transform = "translateY(-1px)";
+				}}
+				onMouseLeave={(e) => {
+					e.currentTarget.style.boxShadow = "none";
+					e.currentTarget.style.transform = "";
+				}}
 				aria-label="Generar contraseña con las opciones seleccionadas"
 			>
 				✨ Generar frase mágica
@@ -159,15 +279,36 @@ function ToggleOption({
 	onChange,
 }: ToggleOptionProps) {
 	return (
-		<div className="flex items-center justify-between">
+		<div
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+			}}
+		>
 			<div>
 				<label
 					htmlFor={id}
-					className="cursor-pointer text-sm font-medium text-gray-700"
+					style={{
+						cursor: "pointer",
+						fontSize: "0.875rem",
+						fontWeight: 500,
+						color: "var(--color-text-secondary)",
+						fontFamily: "var(--font-sans)",
+					}}
 				>
 					{label}
 				</label>
-				<p className="text-xs text-gray-400">{description}</p>
+				<p
+					style={{
+						fontSize: "0.75rem",
+						color: "var(--color-text-tertiary)",
+						fontFamily: "var(--font-sans)",
+						marginTop: "2px",
+					}}
+				>
+					{description}
+				</p>
 			</div>
 			<button
 				id={id}
@@ -175,14 +316,38 @@ function ToggleOption({
 				role="switch"
 				aria-checked={checked}
 				onClick={() => onChange(!checked)}
-				className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 ${
-					checked ? "bg-indigo-600" : "bg-gray-200"
-				}`}
+				style={{
+					position: "relative",
+					display: "inline-flex",
+					height: "1.5rem",
+					width: "2.75rem",
+					flexShrink: 0,
+					alignItems: "center",
+					borderRadius: "var(--radius-pill)",
+					border: "none",
+					cursor: "pointer",
+					outline: "none",
+					transition: "background-color var(--duration-fast) var(--ease-out)",
+					background: checked ? "var(--color-accent)" : "var(--color-text-tertiary)",
+				}}
+				onFocus={(e) => {
+					e.currentTarget.style.boxShadow = `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-accent)`;
+				}}
+				onBlur={(e) => {
+					e.currentTarget.style.boxShadow = "none";
+				}}
 			>
 				<span
-					className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
-						checked ? "translate-x-6" : "translate-x-1"
-					}`}
+					style={{
+						display: "inline-block",
+						height: "1rem",
+						width: "1rem",
+						borderRadius: "50%",
+						background: "#fff",
+						boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
+						transition: "transform var(--duration-fast) var(--ease-out)",
+						transform: checked ? "translateX(1.5rem)" : "translateX(0.25rem)",
+					}}
 				/>
 			</button>
 		</div>

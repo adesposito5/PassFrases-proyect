@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { usePasswordStore } from "@/features/generator/store";
 import { GeneratorForm } from "./GeneratorForm";
+import { PhraseDisplay } from "./PhraseDisplay";
 
 export default function GeneratorPanel() {
 	const currentResult = usePasswordStore((state) => state.currentResult);
@@ -27,10 +28,10 @@ export default function GeneratorPanel() {
 	if (currentStep === 2) {
 		return (
 			<div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-				{/* GeneratorForm de D2 — maneja config y genera al hacer click */}
 				<GeneratorForm />
 
 				<button
+					type="button"
 					onClick={handleBackToStart}
 					style={{
 						all: "unset",
@@ -77,32 +78,12 @@ export default function GeneratorPanel() {
 				🛡️
 			</div>
 
-			<div
-				style={{
-					fontFamily: "var(--font-mono)",
-					fontSize: "1.4rem",
-					fontWeight: 700,
-					letterSpacing: "-0.01em",
-					padding: "1.25rem 1.5rem",
-					background: "rgba(0,0,0,0.3)",
-					border: "1px solid var(--color-border)",
-					borderRadius: "14px",
-					wordBreak: "break-all",
-					lineHeight: 1.5,
-					userSelect: "all",
-					textAlign: "center",
-					color: "var(--color-text)",
-					minHeight: "4rem",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-				}}
-			>
-				{currentResult?.password ?? "Generando…"}
-			</div>
+			{/* ── Componente extraído — D3/D4 pueden importarlo directamente ── */}
+			<PhraseDisplay password={currentResult?.password ?? null} />
 
 			<div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
 				<button
+					type="button"
 					onClick={handleGenerate}
 					style={{
 						all: "unset",
@@ -135,6 +116,7 @@ export default function GeneratorPanel() {
 			</div>
 
 			<button
+				type="button"
 				onClick={handleBackToStep2}
 				style={{
 					all: "unset",
