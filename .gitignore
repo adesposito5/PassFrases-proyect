@@ -23,3 +23,7 @@ dist-ssr
 *.sln
 *.sw?
 AGENTS.md
+
+# Agent config & design docs (not part of source)
+docs/
+.opencode/
