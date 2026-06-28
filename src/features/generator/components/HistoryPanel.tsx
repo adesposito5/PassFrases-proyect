@@ -33,6 +33,7 @@ export default function HistoryPanel() {
 		<>
 			{/* FAB button */}
 			<button
+				type="button"
 				onClick={toggleHistory}
 				aria-label="Abrir historial de sesión"
 				aria-expanded={historyOpen}
@@ -51,7 +52,7 @@ export default function HistoryPanel() {
 					display: "grid",
 					placeItems: "center",
 					boxShadow: "0 4px 24px var(--color-pink-glow)",
-					transition: "all var(--duration-fast) var(--ease-out)",
+					transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
 					zIndex: 999,
 				}}
 				onMouseEnter={(e) => {
@@ -98,8 +99,8 @@ export default function HistoryPanel() {
 						width: "340px",
 						maxHeight: "460px",
 						background: "rgba(8,12,28,0.95)",
-						backdropFilter: "blur(24px)",
-						WebkitBackdropFilter: "blur(24px)",
+						backdropFilter: "blur(8px)",
+						WebkitBackdropFilter: "blur(8px)",
 						border: "1px solid var(--color-border)",
 						borderRadius: "var(--radius-lg)",
 						boxShadow: "0 16px 48px rgba(0,0,0,0.6)",
@@ -146,6 +147,7 @@ export default function HistoryPanel() {
 						<div style={{ display: "flex", gap: "0.35rem" }}>
 							{sessionHistory.length > 0 && (
 								<button
+									type="button"
 									onClick={clearHistory}
 									aria-label="Limpiar historial"
 									style={{
@@ -156,7 +158,7 @@ export default function HistoryPanel() {
 										padding: "0.25rem 0.5rem",
 										borderRadius: "var(--radius-sm)",
 										border: "1px solid var(--color-border)",
-										transition: "all var(--duration-fast) var(--ease-out)",
+										transition: "color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out)",
 									}}
 									onMouseEnter={(e) => {
 										e.currentTarget.style.color = "var(--color-error)";
@@ -171,6 +173,7 @@ export default function HistoryPanel() {
 								</button>
 							)}
 							<button
+								type="button"
 								onClick={toggleHistory}
 								aria-label="Cerrar historial"
 								style={{
@@ -180,7 +183,7 @@ export default function HistoryPanel() {
 									fontSize: "1.1rem",
 									padding: "0.25rem 0.5rem",
 									borderRadius: "var(--radius-sm)",
-									transition: "all var(--duration-fast) var(--ease-out)",
+									transition: "color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 								}}
 								onMouseEnter={(e) => {
 									e.currentTarget.style.color = "var(--color-text)";
@@ -279,6 +282,7 @@ export default function HistoryPanel() {
 
 										{/* Copy */}
 										<button
+											type="button"
 											onClick={() => handleCopy(entry.password, entry.id)}
 											aria-label={`Copiar frase ${sessionHistory.length - i}`}
 											style={{
@@ -289,7 +293,7 @@ export default function HistoryPanel() {
 													copiedIndex === entry.id
 														? "var(--color-success)"
 														: "var(--color-text-tertiary)",
-												transition: "all var(--duration-fast) var(--ease-out)",
+												transition: "color var(--duration-fast) var(--ease-out)",
 												flexShrink: 0,
 											}}
 										>

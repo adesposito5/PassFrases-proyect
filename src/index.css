@@ -5,15 +5,15 @@
 /* ─── Design tokens (Tailwind @theme) ──────────────────────── */
 @theme {
   /* Colors — nombres originales mantenidos para que D2-D5 no se rompan */
-  --color-surface:      #060b18;
-  --color-card:         rgba(12, 18, 40, 0.55);
-  --color-card-hover:   rgba(12, 18, 40, 0.75);
-  --color-border:       rgba(99, 102, 241, 0.12);
-  --color-border-hover: rgba(99, 102, 241, 0.25);
+  --color-surface:      #0b0f1a;
+  --color-card:         rgba(14, 20, 38, 0.6);
+  --color-card-hover:   rgba(18, 24, 46, 0.75);
+  --color-border:       rgba(129, 140, 248, 0.12);
+  --color-border-hover: rgba(129, 140, 248, 0.25);
   --color-border-focus: #818cf8;
-  --color-accent:       #6366f1;
-  --color-accent-hover: #818cf8;
-  --color-accent-soft:  rgba(99, 102, 241, 0.12);
+  --color-accent:       #818cf8;
+  --color-accent-hover: #a5b4fc;
+  --color-accent-soft:  rgba(129, 140, 248, 0.12);
   --color-success:      #22c55e;
   --color-success-soft: rgba(34, 197, 94, 0.12);
   --color-warning:      #f59e0b;
@@ -25,17 +25,17 @@
   --color-orange-glow:  rgba(249, 115, 22, 0.35);
 
   /* Text */
-  --color-text:           #e2e2f0;
-  --color-text-secondary: #7a7aaa;
-  --color-text-tertiary:  #555588;
+  --color-text:           #eeedf5;
+  --color-text-secondary: #9690b8;
+  --color-text-tertiary:  #7a7aaa;
 
   /* Gradients */
-  --gradient-cta:  linear-gradient(135deg, #ec4899, #a855f7);
-  --gradient-blue: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --gradient-cta:  linear-gradient(135deg, #ec4899, #818cf8);
+  --gradient-blue: linear-gradient(135deg, #818cf8, #6d5cf7);
 
   /* Glass */
-  --glass-bg:     rgba(12, 18, 40, 0.55);
-  --glass-border: rgba(99, 102, 241, 0.12);
+  --glass-bg:     rgba(14, 20, 38, 0.6);
+  --glass-border: rgba(129, 140, 248, 0.12);
   --glass-shadow: 0 8px 48px rgba(0, 0, 0, 0.5),
                   inset 0 1px 0 rgba(255, 255, 255, 0.04);
 
@@ -86,7 +86,7 @@ body::before {
   inset: 0;
   background: radial-gradient(
     ellipse 80% 60% at 50% 0%,
-    rgba(99, 102, 241, 0.08) 0%,
+    rgba(129, 140, 248, 0.08) 0%,
     transparent 70%
   );
   pointer-events: none;
@@ -99,8 +99,8 @@ body::after {
   position: fixed;
   inset: 0;
   background-image:
-    linear-gradient(rgba(99, 102, 241, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(99, 102, 241, 0.025) 1px, transparent 1px);
+    linear-gradient(rgba(129, 140, 248, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(129, 140, 248, 0.025) 1px, transparent 1px);
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
@@ -127,6 +127,26 @@ body::after {
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Glass card (VariantG) ──────────────────────────────────── */
+.glass-card {
+  position: relative;
+  overflow: hidden;
+}
+.glass-card::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at 30% 20%,
+    rgba(129, 140, 248, 0.03) 0%,
+    transparent 50%
+  );
+  pointer-events: none;
 }
 
 /* ─── Reduced motion ────────────────────────────────────────── */

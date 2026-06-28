@@ -18,7 +18,6 @@ export default function BatchPage() {
 		<div
 			style={{
 				minHeight: "100vh",
-				background: "var(--color-surface)",
 				display: "flex",
 				flexDirection: "column",
 				alignItems: "center",
@@ -69,7 +68,7 @@ export default function BatchPage() {
 							padding: "0.4rem 0.85rem",
 							borderRadius: "var(--radius-sm)",
 							border: "1px solid var(--color-border)",
-							transition: "all var(--duration-fast) var(--ease-out)",
+							transition: "border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 						}}
 						onMouseEnter={(e) => {
 							e.currentTarget.style.borderColor = "var(--color-accent)";
@@ -86,13 +85,15 @@ export default function BatchPage() {
 
 				{/* Card */}
 				<div
+					className="glass-card"
 					style={{
 						background: "var(--color-card)",
 						border: "1px solid var(--color-border)",
 						borderRadius: "var(--radius-xl)",
-						padding: "2rem",
+						padding: "2.5rem",
 						backdropFilter: "blur(24px)",
 						WebkitBackdropFilter: "blur(24px)",
+						boxShadow: "var(--glass-shadow)",
 					}}
 				>
 					<BatchGenerator />

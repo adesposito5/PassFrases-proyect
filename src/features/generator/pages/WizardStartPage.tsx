@@ -143,6 +143,7 @@ export default function WizardStartPage() {
 
 				{/* CTA */}
 				<button
+					type="button"
 					onClick={handleStart}
 					aria-label="Comenzar a personalizar tu contraseña"
 					style={{
@@ -152,8 +153,9 @@ export default function WizardStartPage() {
 						alignItems: "center",
 						justifyContent: "center",
 						gap: "0.5rem",
-						width: "100%",
-						padding: "1rem",
+						width: "fit-content",
+						margin: "1.5rem auto 0",
+						padding: "1rem 2rem",
 						borderRadius: "14px",
 						background: "var(--gradient-cta)",
 						color: "#fff",

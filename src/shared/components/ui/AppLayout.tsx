@@ -19,8 +19,8 @@ export function AppLayout({ children }: AppLayoutProps) {
         justifyContent: 'space-between',
         padding: '1rem 1.5rem',
         borderBottom: '1px solid var(--color-border)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
+        backdropFilter: 'blur(8px)',
+        WebkitBackdropFilter: 'blur(8px)',
         background: 'rgba(6,11,24,0.7)',
         position: 'sticky',
         top: 0,
@@ -73,6 +73,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         textAlign: 'center',
         padding: '1.25rem',
         borderTop: '1px solid var(--color-border)',
+        background: 'rgba(6,11,24,0.85)',
         fontSize: '0.75rem',
         color: 'var(--color-text-tertiary)',
       }}>
