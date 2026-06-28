@@ -6,6 +6,7 @@ import { FunStats } from "@/features/generator/components/FunStats";
 import { PasswordActions } from "@/features/generator/components/PasswordActions";
 import { RecommendationsPanel } from "@/features/generator/components/RecommendationsPanel";
 import { CategoryChips } from "@/features/generator/components/CategoryChips";
+import { ClippyAssistant } from "@/features/clippy/components/ClippyAssistant";
 
 export default function GeneratorPanel() {
 const currentResult = usePasswordStore((state) => state.currentResult);
@@ -32,6 +33,7 @@ navigate("/");
 if (currentStep === 2) {
 return (
 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+<ClippyAssistant />
 <GeneratorForm />
 <CategoryChips />
 
@@ -74,6 +76,8 @@ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.35))",
 >
 🛡️
 </div>
+
+<ClippyAssistant />
 
 <PasswordActions
 password={currentResult?.password ?? ""}
