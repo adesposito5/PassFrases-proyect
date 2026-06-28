@@ -145,7 +145,6 @@ export function GeneratorForm() {
 						padding: "0.5rem 0.75rem",
 						fontSize: "0.875rem",
 						fontFamily: "var(--font-sans)",
-						outline: "none",
 						cursor: "pointer",
 					}}
 					onFocus={(e) => {
@@ -246,7 +245,7 @@ export function GeneratorForm() {
 					fontSize: "0.875rem",
 					fontWeight: 600,
 					fontFamily: "var(--font-sans)",
-					transition: "all var(--duration-fast) var(--ease-out)",
+					transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
 				}}
 				onMouseEnter={(e) => {
 					e.currentTarget.style.boxShadow = "0 4px 20px var(--color-pink-glow)";
@@ -328,7 +327,6 @@ function ToggleOption({
 					borderRadius: "var(--radius-pill)",
 					border: "none",
 					cursor: "pointer",
-					outline: "none",
 					transition: "background-color var(--duration-fast) var(--ease-out)",
 					background: checked ? "var(--color-accent)" : "var(--color-text-tertiary)",
 				}}

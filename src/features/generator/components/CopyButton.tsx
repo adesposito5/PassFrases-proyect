@@ -35,6 +35,7 @@ export function CopyButton({ text, full }: CopyButtonProps) {
 
   return (
     <button
+      type="button"
       onClick={handleCopy}
       disabled={!text}
       aria-label={copied ? 'Contraseña copiada' : 'Copiar contraseña al portapapeles'}
@@ -55,7 +56,7 @@ export function CopyButton({ text, full }: CopyButtonProps) {
         fontSize: '0.9rem',
         fontWeight: 600,
         fontFamily: 'var(--font-sans)',
-        transition: 'all var(--duration-fast) var(--ease-out)',
+        transition: 'border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
         opacity: !text ? 0.5 : 1,
       }}
       

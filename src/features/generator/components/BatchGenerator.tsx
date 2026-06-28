@@ -60,6 +60,7 @@ export default function BatchGenerator() {
 					<div style={{ display: "flex", gap: "0.35rem" }}>
 						{[3, 5, 10, 20].map((n) => (
 							<button
+								type="button"
 								key={n}
 								onClick={() => setBatchCount(n)}
 								style={{
@@ -78,7 +79,7 @@ export default function BatchGenerator() {
 									fontWeight: 600,
 									cursor: "pointer",
 									fontFamily: "var(--font-mono)",
-									transition: "all var(--duration-fast) var(--ease-out)",
+									transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 								}}
 							>
 								{n}
@@ -88,6 +89,7 @@ export default function BatchGenerator() {
 				</div>
 
 				<button
+					type="button"
 					onClick={generateBatch}
 					style={{
 						all: "unset",
@@ -102,7 +104,7 @@ export default function BatchGenerator() {
 						fontSize: "0.9rem",
 						fontWeight: 700,
 						fontFamily: "var(--font-sans)",
-						transition: "all var(--duration-fast) var(--ease-out)",
+						transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 						whiteSpace: "nowrap",
 					}}
 					onMouseEnter={(e) => {
@@ -143,6 +145,7 @@ export default function BatchGenerator() {
 				<>
 					{/* Copy all button */}
 					<button
+						type="button"
 						onClick={handleCopyAll}
 						style={{
 							all: "unset",
@@ -160,7 +163,7 @@ export default function BatchGenerator() {
 							fontSize: "0.8rem",
 							fontWeight: 500,
 							fontFamily: "var(--font-sans)",
-							transition: "all var(--duration-fast) var(--ease-out)",
+							transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 						}}
 					>
 						{copiedAll ? "✅ Copiadas todas" : "📋 Copiar todas"}
@@ -199,7 +202,7 @@ export default function BatchGenerator() {
 							const isWarned = warnedIndices.has(i);
 							return (
 								<div
-									key={i}
+									key={`${i}-${result.password}`}
 									style={{
 										display: "flex",
 										alignItems: "center",
@@ -210,13 +213,13 @@ export default function BatchGenerator() {
 										background: isWarned
 											? "rgba(249,115,22,0.04)"
 											: "var(--color-accent-soft)",
-										transition: "all var(--duration-fast) var(--ease-out)",
+										transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 									}}
 								>
 									{/* Number */}
 									<span
 										style={{
-											fontSize: "0.7rem",
+											fontSize: "0.75rem",
 											fontWeight: 700,
 											color: "var(--color-text-tertiary)",
 											fontFamily: "var(--font-mono)",
@@ -244,6 +247,7 @@ export default function BatchGenerator() {
 
 									{/* Copy */}
 									<button
+										type="button"
 										onClick={() => handleCopy(result.password, i)}
 										aria-label={`Copiar frase ${i + 1}`}
 										style={{
@@ -256,7 +260,7 @@ export default function BatchGenerator() {
 												copiedIndex === i
 													? "var(--color-success)"
 													: "var(--color-text-tertiary)",
-											transition: "all var(--duration-fast) var(--ease-out)",
+											transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 											flexShrink: 0,
 										}}
 									>

@@ -1,6 +1,5 @@
 ﻿import { useNavigate } from "react-router-dom";
 import { GeneratorForm } from "./GeneratorForm";
-import { PhraseDisplay } from "./PhraseDisplay";
 import { usePasswordStore } from "@/features/generator/store";
 import { CopyButton } from "@/features/generator/components/CopyButton";
 import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
@@ -34,7 +33,8 @@ return (
 <GeneratorForm />
 
 <button
-onClick={handleBackToStart}
+					type="button"
+					onClick={handleBackToStart}
 style={{
 all: "unset",
 cursor: "pointer",
@@ -98,7 +98,8 @@ justifyContent: "center",
 
 <div style={{ display: "flex", gap: "0.75rem", marginTop: "0.5rem" }}>
 <button
-onClick={handleGenerate}
+					type="button"
+					onClick={handleGenerate}
 style={{
 all: "unset",
 cursor: "pointer",
@@ -114,7 +115,7 @@ color: "#fff",
 fontSize: "0.9rem",
 fontWeight: 600,
 fontFamily: "var(--font-sans)",
-transition: "all var(--duration-fast) var(--ease-out)",
+transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
 }}
 onMouseEnter={(e) => {
 e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)";
@@ -201,7 +202,8 @@ background: recommendation.severity === "high"
 ) : null}
 
 <button
-onClick={handleBackToStep2}
+					type="button"
+					onClick={handleBackToStep2}
 style={{
 all: "unset",
 cursor: "pointer",
