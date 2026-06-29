@@ -24,7 +24,8 @@ export type RecommendationApplicability =
 	| 'wordCount'
 	| 'repeatedWords'
 	| 'repeatCharacters'
-	| 'numberSuffix';
+	| 'numberSuffix'
+	| 'low-entropy';
 
 export interface PasswordRecommendation {
 	id: string;

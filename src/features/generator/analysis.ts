@@ -97,7 +97,7 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 			detail: 'La entropía de la contraseña está por debajo de un umbral seguro. Considera agregar más palabras, mayúsculas, números o símbolos para mejorar la resistencia.',
 			severity: 'high',
 			icon: 'shield',
-			applicable: 'symbols',
+			applicable: 'low-entropy',
 		});
 	}
 
