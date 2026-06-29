@@ -172,6 +172,9 @@ export function ClippyAssistant() {
 										bits: currentResult.bits,
 										strength: currentResult.strength,
 										wordCount: currentResult.words.length,
+										label: currentResult.password.length > 30
+											? currentResult.password.slice(0, 27) + "..."
+											: currentResult.password,
 										createdAt: Date.now(),
 										updatedAt: Date.now(),
 									},
@@ -209,7 +212,6 @@ export function ClippyAssistant() {
 					<FavoritesPanel
 						favorites={favorites}
 						onRemove={removeFavorite}
-						onCopy={() => {}}
 						compact
 					/>
 					{favorites.length > 3 && !showAllFavorites && (

@@ -27,6 +27,7 @@ export function PasswordActions({
 				bits,
 				strength: strength as "weak" | "medium" | "strong" | "very-strong",
 				wordCount,
+				label: password.length > 30 ? password.slice(0, 27) + "..." : password,
 				createdAt: Date.now(),
 				updatedAt: Date.now(),
 			});

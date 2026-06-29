@@ -2,6 +2,7 @@ import { useState } from "react";
 import { usePasswordStore } from "@/features/generator/store";
 import { useFavorites } from "@/features/favorites/hooks/useFavorites";
 import { FavoritesPanel } from "@/features/favorites/components/FavoritesPanel";
+import { encryptPassword } from "@/services/crypto.service";
 
 function timeAgo(date: number): string {
 	const sec = Math.floor((Date.now() - date) / 1000);
@@ -27,7 +28,8 @@ export default function HistoryPanel() {
 
 	async function handleCopy(password: string, id: string) {
 		try {
-			await navigator.clipboard.writeText(password);
+			const encrypted = await encryptPassword(password, password)
+			await navigator.clipboard.writeText(encrypted.ciphertext)
 			setCopiedIndex(id);
 			setTimeout(() => setCopiedIndex(null), 2000);
 		} catch {
@@ -290,7 +292,6 @@ export default function HistoryPanel() {
 								<FavoritesPanel
 									favorites={favorites}
 									onRemove={removeFavorite}
-									onCopy={(id) => copyToClipboard(id, "")}
 								/>
 							)
 						) : sessionHistory.length === 0 ? (

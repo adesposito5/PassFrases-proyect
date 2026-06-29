@@ -1,11 +1,9 @@
 import { useState } from "react"
 import type { FavoriteEntry } from "@/features/favorites/types"
-import { useSecureCopy } from "@/features/favorites/hooks/useSecureCopy"
 
 interface FavoritesPanelProps {
   favorites: FavoriteEntry[]
   onRemove: (id: string) => void
-  onCopy: (id: string) => void
   compact?: boolean
 }
 
@@ -14,25 +12,16 @@ export function FavoritesPanel({
   onRemove,
   compact,
 }: FavoritesPanelProps) {
-  const { secureCopy, isCopying, copiedId } = useSecureCopy()
-  const [passphraseInput, setPassphraseInput] = useState<string>("")
-  const [activeId, setActiveId] = useState<string | null>(null)
-  const [error, setError] = useState<string | null>(null)
+  const [copiedId, setCopiedId] = useState<string | null>(null)
 
-  const displayFavorites = compact ? favorites.slice(0, 3) : favorites
-
-  async function handleCopy(id: string) {
-    if (!passphraseInput) {
-      setActiveId(id)
-      return
+  async function handleCopy(id: string, ciphertext: string) {
+    try {
+      await navigator.clipboard.writeText(ciphertext)
+      setCopiedId(id)
+      setTimeout(() => setCopiedId(null), 2000)
+    } catch {
+      // silent
     }
-    setError(null)
-    const ok = await secureCopy(id, passphraseInput)
-    if (!ok) {
-      setError("Passphrase incorrecta. Intenta de nuevo.")
-    }
-    setPassphraseInput("")
-    setActiveId(null)
   }
 
   if (favorites.length === 0) return null
@@ -60,7 +49,7 @@ export function FavoritesPanel({
       </p>
 
       <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
-        {displayFavorites.map((fav) => (
+        {favorites.slice(0, compact ? 3 : undefined).map((fav) => (
           <div
             key={fav.id}
             style={{
@@ -73,6 +62,8 @@ export function FavoritesPanel({
               fontSize: "0.75rem",
             }}
           >
+            <span style={{ fontSize: "0.7rem", flexShrink: 0, opacity: 0.6 }}>🔒</span>
+
             <span
               style={{
                 flex: 1,
@@ -87,41 +78,13 @@ export function FavoritesPanel({
               {fav.metadata.label ?? `Passphrase (${fav.metadata.bits} bits)`}
             </span>
 
-            {activeId === fav.id && (
-              <input
-                type="password"
-                placeholder="Ingresa tu passphrase..."
-                value={passphraseInput}
-                onChange={(e) => setPassphraseInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") handleCopy(fav.id)
-                }}
-                style={{
-                  all: "unset",
-                  width: "100px",
-                  fontSize: "0.7rem",
-                  padding: "0.15rem 0.35rem",
-                  borderRadius: "4px",
-                  border: "1px solid var(--color-border-focus)",
-                  background: "rgba(0,0,0,0.2)",
-                  color: "var(--color-text)",
-                  fontFamily: "var(--font-mono)",
-                }}
-                autoFocus
-              />
-            )}
-
             <span style={{ fontSize: "0.6rem", color: "var(--color-text-tertiary)", whiteSpace: "nowrap" }}>
               {fav.metadata.bits}b
             </span>
 
             <button
               type="button"
-              onClick={() => {
-                if (compact) setActiveId(fav.id)
-                else handleCopy(fav.id)
-              }}
-              disabled={isCopying}
+              onClick={() => handleCopy(fav.id, fav.encrypted.ciphertext)}
               aria-label="Copiar favorita"
               style={{
                 all: "unset",
@@ -164,12 +127,6 @@ export function FavoritesPanel({
           </div>
         ))}
       </div>
-
-      {error && (
-        <p style={{ fontSize: "0.65rem", color: "var(--color-error)", margin: "0.25rem 0 0" }}>
-          {error}
-        </p>
-      )}
     </div>
   )
 }
