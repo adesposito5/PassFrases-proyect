@@ -110,7 +110,7 @@ export default function BatchPage() {
 						Las frases generadas se agregan automáticamente al historial de
 						sesión
 					</p>
-					<p>Usá el botón 📜 (abajo a la derecha) para ver el historial</p>
+					<p>Usá el botón 🤖 (abajo a la derecha) para ver el historial</p>
 				</div>
 			</div>
 		</div>

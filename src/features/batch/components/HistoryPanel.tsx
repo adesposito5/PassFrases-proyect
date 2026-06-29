@@ -71,7 +71,7 @@ export default function HistoryPanel() {
 					e.currentTarget.style.boxShadow = "";
 				}}
 			>
-				{view === "favorites" ? "⭐" : "📜"}
+				{view === "favorites" ? "⭐" : "🤖"}
 				{sessionHistory.length > 0 && view === "history" && (
 					<span
 						style={{
@@ -164,7 +164,7 @@ export default function HistoryPanel() {
 						>
 							{view === "favorites"
 								? "⭐ Favoritos"
-								: "📜 Historial de sesión"}
+								: "🤖 Historial de sesión"}
 							<span
 								style={{
 									fontSize: "0.7rem",
@@ -196,7 +196,7 @@ export default function HistoryPanel() {
 									border: "1px solid var(--color-border)",
 								}}
 							>
-								{view === "favorites" ? "📜 Historial" : "⭐ Favoritos"}
+								{view === "favorites" ? "🤖 Historial" : "⭐ Favoritos"}
 							</button>
 							{view === "history" && sessionHistory.length > 0 && (
 								<button
