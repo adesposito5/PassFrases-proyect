@@ -3,6 +3,7 @@ import { usePasswordStore } from "@/features/generator/store";
 import { useFavorites } from "@/features/favorites/hooks/useFavorites";
 import { FavoritesPanel } from "@/features/favorites/components/FavoritesPanel";
 import { encryptPassword } from "@/services/crypto.service";
+import { STRENGTH_CONFIG } from "@/features/generator/types";
 
 function timeAgo(date: number): string {
 	const sec = Math.floor((Date.now() - date) / 1000);
@@ -21,10 +22,11 @@ export default function HistoryPanel() {
 	const removeFromHistory = usePasswordStore((state) => state.removeFromHistory);
 	const historyOpen = usePasswordStore((state) => state.historyOpen);
 	const toggleHistory = usePasswordStore((state) => state.toggleHistory);
+	const currentResult = usePasswordStore((state) => state.currentResult);
 	const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
 	const [view, setView] = useState<"history" | "favorites">("history");
 
-	const { favorites, removeFavorite, copyToClipboard } = useFavorites();
+	const { favorites, removeFavorite } = useFavorites();
 
 	async function handleCopy(password: string, id: string) {
 		try {
@@ -315,6 +317,123 @@ export default function HistoryPanel() {
 							</div>
 						) : (
 							<div style={{ display: "flex", flexDirection: "column" }}>
+								{currentResult?.analysis?.recommendations &&
+									currentResult.analysis.recommendations.length > 0 && (
+										<div
+											style={{
+												padding: "0.75rem",
+												marginBottom: "0.75rem",
+												borderRadius: "var(--radius-sm)",
+												background:
+													"linear-gradient(135deg, rgba(236,72,153,0.08), rgba(129,140,248,0.08))",
+												border: "1px solid rgba(236,72,153,0.15)",
+											}}
+										>
+											<p
+												style={{
+													margin: "0 0 0.5rem",
+													fontSize: "0.75rem",
+													fontWeight: 700,
+													color: "var(--color-text)",
+													display: "flex",
+													alignItems: "center",
+													gap: "0.4rem",
+												}}
+											>
+												🛡️ Recomendaciones
+												<span
+													style={{
+														fontSize: "0.65rem",
+														color: "var(--color-text-tertiary)",
+														fontWeight: 500,
+													}}
+												>
+													({currentResult.analysis.recommendations.length})
+												</span>
+												{currentResult.bits != null && (
+													<span
+														style={{
+															fontSize: "0.65rem",
+															color: "var(--color-text-tertiary)",
+															fontWeight: 500,
+															marginLeft: "auto",
+														}}
+													>
+														{currentResult.bits} bits ·{" "}
+														<span
+															style={{
+																fontWeight: 700,
+																color: STRENGTH_CONFIG[currentResult.strength ?? "medium"]?.color ?? "var(--color-text)",
+															}}
+														>
+															{STRENGTH_CONFIG[currentResult.strength ?? "medium"]?.label ?? "Media"}
+														</span>
+													</span>
+												)}
+											</p>
+											<div
+												style={{
+													display: "flex",
+													flexDirection: "column",
+													gap: "0.5rem",
+												}}
+											>
+												{currentResult.analysis.recommendations.map((rec) => (
+													<div
+														key={rec.id}
+														style={{
+															padding: "0.65rem",
+															borderRadius: "var(--radius-sm)",
+															border: "1px solid var(--color-border)",
+															background:
+																rec.severity === "high"
+																	? "rgba(239,68,68,0.08)"
+																	: rec.severity === "medium"
+																		? "rgba(245,158,11,0.08)"
+																		: "rgba(34,197,94,0.08)",
+														}}
+													>
+														<p
+															style={{
+																margin: 0,
+																fontSize: "0.72rem",
+																fontWeight: 700,
+																color: "var(--color-text)",
+																display: "flex",
+																alignItems: "center",
+																gap: "0.35rem",
+															}}
+														>
+															<span
+																style={{
+																	fontSize: "0.85rem",
+																}}
+															>
+																{rec.icon === "shield"
+																	? "🛡️"
+																	: rec.icon === "warning"
+																		? "⚠️"
+																		: "ℹ️"}
+															</span>
+															{rec.title}
+														</p>
+														{rec.detail && (
+															<p
+																style={{
+																	margin: "0.25rem 0 0",
+																	fontSize: "0.68rem",
+																	color: "var(--color-text-tertiary)",
+																	lineHeight: 1.4,
+																}}
+															>
+																{rec.detail}
+															</p>
+														)}
+													</div>
+												))}
+											</div>
+										</div>
+									)}
 								{sessionHistory.map((entry, i) => (
 									<div
 										key={entry.id}
