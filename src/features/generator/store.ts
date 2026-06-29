@@ -16,6 +16,7 @@ const defaultConfig: PasswordConfig = {
 	includeSymbols: false,
 	capitalize: true,
 };
+
 interface PasswordState {
 	config: PasswordConfig;
 	currentResult: PasswordResult | null;
@@ -34,6 +35,7 @@ interface PasswordState {
 	generateBatch: () => void;
 	setBatchCount: (n: number) => void;
 	clearHistory: () => void;
+	removeFromHistory: (id: string) => void;
 }
 
 export const usePasswordStore = create<PasswordState>()((set, get) => ({
@@ -91,6 +93,11 @@ export const usePasswordStore = create<PasswordState>()((set, get) => ({
 	setBatchCount: (n) => set({ batchCount: n }),
 	clearHistory: () =>
 		set({ sessionHistory: [], batchResults: null, batchWarnings: [] }),
+
+	removeFromHistory: (id) =>
+		set((state) => ({
+			sessionHistory: state.sessionHistory.filter((e) => e.id !== id),
+		})),
 }));
 
 export type { PasswordState };

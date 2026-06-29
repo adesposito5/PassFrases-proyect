@@ -47,6 +47,7 @@ export interface PasswordResult {
 	phrase: string;
 	bits: number;
 	strength: StrengthLevel;
+	isFavorite?: boolean;
 	analysis?: PasswordAnalysis;
 }
 
