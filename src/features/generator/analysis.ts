@@ -1,6 +1,7 @@
-import type { PasswordAnalysis, PasswordRecommendation } from "./types";
+import type { PasswordAnalysis, PasswordRecommendation, PasswordConfig } from "./types";
+import { calculateEntropy } from "./entropy";
 
-export function analyzePassword(password: string): PasswordAnalysis {
+export function analyzePassword(password: string, config?: PasswordConfig): PasswordAnalysis {
 	const normalized = password.trim();
 	const words = normalized.split(/[-_ ]+/).filter(Boolean);
 	const recommendations: PasswordRecommendation[] = [];
@@ -87,7 +88,7 @@ export function analyzePassword(password: string): PasswordAnalysis {
 		}
 	}
 
-	const entropy = null;
+	const entropy = config ? calculateEntropy(config, normalized) : null;
 
 	return {
 		password: normalized,
