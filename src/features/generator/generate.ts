@@ -57,7 +57,7 @@ export function generatePassword(options: PasswordConfig): PasswordResult {
 		capitalize: options.capitalize,
 	});
 
-	const bits = calculateEntropy(options);
+	const bits = calculateEntropy(options, password);
 	const strength = getStrengthLevel(bits);
 
 	return {
