@@ -57,6 +57,7 @@ function pickTip(
 export function ClippyAssistant() {
 	const currentStep = usePasswordStore((state) => state.currentStep);
 	const currentResult = usePasswordStore((state) => state.currentResult);
+	const historyOpen = usePasswordStore((state) => state.historyOpen);
 	const [dismissed, setDismissed] = useState(false);
 	const [showAllFavorites, setShowAllFavorites] = useState(false);
 
@@ -207,7 +208,7 @@ export function ClippyAssistant() {
 				</div>
 			)}
 
-			{favorites.length > 0 && (
+			{favorites.length > 0 && !historyOpen && (
 				<>
 					<FavoritesPanel
 						favorites={favorites}
