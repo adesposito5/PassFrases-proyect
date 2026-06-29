@@ -1,10 +1,16 @@
 import type { PasswordAnalysis } from "@/features/generator/types";
+import { STRENGTH_CONFIG } from "@/features/generator/types";
+import { usePasswordStore } from "@/features/generator/store";
 
 interface RecommendationsPanelProps {
 	analysis: PasswordAnalysis;
 }
 
 export function RecommendationsPanel({ analysis }: RecommendationsPanelProps) {
+	const bits = usePasswordStore((state) => state.currentResult?.bits ?? 0);
+	const strength = usePasswordStore((state) => state.currentResult?.strength ?? "medium");
+	const strengthInfo = STRENGTH_CONFIG[strength];
+
 	return (
 		<div
 			style={{
@@ -23,7 +29,7 @@ export function RecommendationsPanel({ analysis }: RecommendationsPanelProps) {
 				<div>
 					<p style={{ margin: 0, fontSize: "0.95rem", fontWeight: 700 }}>Análisis de seguridad</p>
 					<p style={{ margin: "0.35rem 0 0", fontSize: "0.85rem", color: "var(--color-text-tertiary)" }}>
-						Recomendaciones basadas en la contraseña generada.
+						{bits} bits de entropía — Nivel <span style={{ color: strengthInfo.color, fontWeight: 700 }}>{strengthInfo.label}</span>
 					</p>
 				</div>
 				<span style={{ padding: "0.45rem 0.75rem", borderRadius: "999px", background: "rgba(34,197,94,0.12)", color: "var(--color-success)", fontSize: "0.8rem", fontWeight: 700, whiteSpace: "nowrap" }}>

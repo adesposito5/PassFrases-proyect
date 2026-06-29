@@ -90,6 +90,17 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 
 	const entropy = config ? calculateEntropy(config, normalized) : null;
 
+	if (entropy !== null && entropy < 60) {
+		recommendations.push({
+			id: 'low-entropy',
+			title: 'Entropía baja',
+			detail: 'La entropía de la contraseña está por debajo de un umbral seguro. Considera agregar más palabras, mayúsculas, números o símbolos para mejorar la resistencia.',
+			severity: 'high',
+			icon: 'shield',
+			applicable: 'symbols',
+		});
+	}
+
 	return {
 		password: normalized,
 		recommendations,

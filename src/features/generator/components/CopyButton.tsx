@@ -2,15 +2,18 @@ import { useState, useCallback } from 'react'
 import { Copy, Check } from 'lucide-react'
 
 interface CopyButtonProps {
-  text: string
+  text?: string
   full?: boolean
+  label?: string
+  getText?: () => Promise<string>
 }
 
-export function CopyButton({ text, full }: CopyButtonProps) {
+export function CopyButton({ text, full, label, getText }: CopyButtonProps) {
   const [copied, setCopied] = useState(false)
 
   const handleCopy = useCallback(async () => {
-    if (!text) {
+    const value = text ?? (getText ? await getText() : undefined)
+    if (!value) {
       return
     }
 
@@ -19,7 +22,7 @@ export function CopyButton({ text, full }: CopyButtonProps) {
         throw new Error("Portapapeles no disponible en este navegador")
       }
 
-      await navigator.clipboard.writeText(text)
+      await navigator.clipboard.writeText(value)
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch (error) {
@@ -31,14 +34,14 @@ export function CopyButton({ text, full }: CopyButtonProps) {
       alert(message)
       setCopied(false)
     }
-  }, [text])
+  }, [text, getText])
 
   return (
     <button
       type="button"
       onClick={handleCopy}
-      disabled={!text}
-      aria-label={copied ? 'Contraseña copiada' : 'Copiar contraseña al portapapeles'}
+      disabled={!text && !getText}
+      aria-label={copied ? 'Copiado' : 'Copiar'}
       style={{
         all: 'unset',
         cursor: 'pointer',
@@ -57,11 +60,10 @@ export function CopyButton({ text, full }: CopyButtonProps) {
         fontWeight: 600,
         fontFamily: 'var(--font-sans)',
         transition: 'border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)',
-        opacity: !text ? 0.5 : 1,
+        opacity: !text && !getText ? 0.5 : 1,
       }}
-      
       onMouseEnter={(e) => {
-        if (text) {
+        if (text || getText) {
           e.currentTarget.style.borderColor = 'var(--color-accent)'
           e.currentTarget.style.background = 'var(--color-accent-soft)'
         }
@@ -72,7 +74,7 @@ export function CopyButton({ text, full }: CopyButtonProps) {
       }}
     >
       {copied ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-      {copied ? 'Copiado' : 'Copiar'}
+      {copied ? 'Copiado' : label ?? 'Copiar'}
     </button>
   )
 }
