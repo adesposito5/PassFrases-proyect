@@ -8,7 +8,7 @@ const GeneratorPage = lazy(
   () => import('@/features/generator/pages/GeneratorPage'),
 )
 const BatchPage = lazy(
-  () => import('@/features/batch/pages/BatchPage'),
+  () => import('@/features/generator/pages/BatchPage'),
 )
 
 const LoadingFallback = (
