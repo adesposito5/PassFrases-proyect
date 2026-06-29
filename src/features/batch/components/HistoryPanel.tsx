@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { usePasswordStore } from "@/features/generator/store";
+import { useFavorites } from "@/features/favorites/hooks/useFavorites";
+import { FavoritesPanel } from "@/features/favorites/components/FavoritesPanel";
 
 function timeAgo(date: number): string {
 	const sec = Math.floor((Date.now() - date) / 1000);
@@ -15,9 +17,13 @@ function timeAgo(date: number): string {
 export default function HistoryPanel() {
 	const sessionHistory = usePasswordStore((state) => state.sessionHistory);
 	const clearHistory = usePasswordStore((state) => state.clearHistory);
+	const removeFromHistory = usePasswordStore((state) => state.removeFromHistory);
 	const historyOpen = usePasswordStore((state) => state.historyOpen);
 	const toggleHistory = usePasswordStore((state) => state.toggleHistory);
 	const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
+	const [view, setView] = useState<"history" | "favorites">("history");
+
+	const { favorites, removeFavorite, copyToClipboard } = useFavorites();
 
 	async function handleCopy(password: string, id: string) {
 		try {
@@ -51,20 +57,22 @@ export default function HistoryPanel() {
 					display: "grid",
 					placeItems: "center",
 					boxShadow: "0 4px 24px var(--color-pink-glow)",
-					transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
+					transition:
+						"transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
 					zIndex: 999,
 				}}
 				onMouseEnter={(e) => {
 					e.currentTarget.style.transform = "scale(1.1)";
-					e.currentTarget.style.boxShadow = "0 6px 32px var(--color-pink-glow)";
+					e.currentTarget.style.boxShadow =
+						"0 6px 32px var(--color-pink-glow)";
 				}}
 				onMouseLeave={(e) => {
 					e.currentTarget.style.transform = "";
 					e.currentTarget.style.boxShadow = "";
 				}}
 			>
-				📜
-				{sessionHistory.length > 0 && (
+				{view === "favorites" ? "⭐" : "📜"}
+				{sessionHistory.length > 0 && view === "history" && (
 					<span
 						style={{
 							position: "absolute",
@@ -84,6 +92,28 @@ export default function HistoryPanel() {
 						}}
 					>
 						{sessionHistory.length}
+					</span>
+				)}
+				{favorites.length > 0 && view === "favorites" && (
+					<span
+						style={{
+							position: "absolute",
+							top: "-4px",
+							right: "-4px",
+							background: "var(--color-pink)",
+							color: "#fff",
+							fontSize: "0.65rem",
+							fontWeight: 700,
+							fontFamily: "var(--font-mono)",
+							width: "20px",
+							height: "20px",
+							borderRadius: "50%",
+							display: "grid",
+							placeItems: "center",
+							border: "2px solid var(--color-surface)",
+						}}
+					>
+						{favorites.length}
 					</span>
 				)}
 			</button>
@@ -109,7 +139,9 @@ export default function HistoryPanel() {
 						animation: "fadeIn var(--duration-normal) var(--ease-out)",
 					}}
 					role="dialog"
-					aria-label="Historial de sesión"
+					aria-label={
+						view === "favorites" ? "Favoritos" : "Historial de sesión"
+					}
 				>
 					<div
 						style={{
@@ -130,7 +162,9 @@ export default function HistoryPanel() {
 								gap: "0.5rem",
 							}}
 						>
-							📜 Historial de sesión
+							{view === "favorites"
+								? "⭐ Favoritos"
+								: "📜 Historial de sesión"}
 							<span
 								style={{
 									fontSize: "0.7rem",
@@ -138,11 +172,33 @@ export default function HistoryPanel() {
 									fontWeight: 500,
 								}}
 							>
-								({sessionHistory.length})
+								({view === "favorites" ? favorites.length : sessionHistory.length})
 							</span>
 						</h3>
 						<div style={{ display: "flex", gap: "0.35rem" }}>
-							{sessionHistory.length > 0 && (
+							<button
+								type="button"
+								onClick={() =>
+									setView(view === "favorites" ? "history" : "favorites")
+								}
+								aria-label={
+									view === "favorites"
+										? "Ver historial"
+										: "Ver favoritos"
+								}
+								style={{
+									all: "unset",
+									cursor: "pointer",
+									fontSize: "0.75rem",
+									color: "var(--color-accent)",
+									padding: "0.25rem 0.5rem",
+									borderRadius: "var(--radius-sm)",
+									border: "1px solid var(--color-border)",
+								}}
+							>
+								{view === "favorites" ? "📜 Historial" : "⭐ Favoritos"}
+							</button>
+							{view === "history" && sessionHistory.length > 0 && (
 								<button
 									type="button"
 									onClick={clearHistory}
@@ -155,15 +211,19 @@ export default function HistoryPanel() {
 										padding: "0.25rem 0.5rem",
 										borderRadius: "var(--radius-sm)",
 										border: "1px solid var(--color-border)",
-										transition: "color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out)",
+										transition:
+											"color var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out)",
 									}}
 									onMouseEnter={(e) => {
 										e.currentTarget.style.color = "var(--color-error)";
-										e.currentTarget.style.borderColor = "var(--color-error)";
+										e.currentTarget.style.borderColor =
+											"var(--color-error)";
 									}}
 									onMouseLeave={(e) => {
-										e.currentTarget.style.color = "var(--color-text-tertiary)";
-										e.currentTarget.style.borderColor = "var(--color-border)";
+										e.currentTarget.style.color =
+											"var(--color-text-tertiary)";
+										e.currentTarget.style.borderColor =
+											"var(--color-border)";
 									}}
 								>
 									🗑 Limpiar
@@ -172,7 +232,7 @@ export default function HistoryPanel() {
 							<button
 								type="button"
 								onClick={toggleHistory}
-								aria-label="Cerrar historial"
+								aria-label="Cerrar"
 								style={{
 									all: "unset",
 									cursor: "pointer",
@@ -180,14 +240,17 @@ export default function HistoryPanel() {
 									fontSize: "1.1rem",
 									padding: "0.25rem 0.5rem",
 									borderRadius: "var(--radius-sm)",
-									transition: "color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
+									transition:
+										"color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
 								}}
 								onMouseEnter={(e) => {
 									e.currentTarget.style.color = "var(--color-text)";
-									e.currentTarget.style.background = "var(--color-accent-soft)";
+									e.currentTarget.style.background =
+										"var(--color-accent-soft)";
 								}}
 								onMouseLeave={(e) => {
-									e.currentTarget.style.color = "var(--color-text-tertiary)";
+									e.currentTarget.style.color =
+										"var(--color-text-tertiary)";
 									e.currentTarget.style.background = "transparent";
 								}}
 							>
@@ -203,7 +266,34 @@ export default function HistoryPanel() {
 							padding: "0.75rem 1.25rem",
 						}}
 					>
-						{sessionHistory.length === 0 ? (
+						{view === "favorites" ? (
+							favorites.length === 0 ? (
+								<div
+									style={{
+										textAlign: "center",
+										padding: "2rem 0",
+										color: "var(--color-text-tertiary)",
+										fontSize: "0.8rem",
+									}}
+								>
+									<div
+										style={{
+											fontSize: "2rem",
+											marginBottom: "0.5rem",
+										}}
+									>
+										⭐
+									</div>
+									<p>No tenés favoritos guardados</p>
+								</div>
+							) : (
+								<FavoritesPanel
+									favorites={favorites}
+									onRemove={removeFavorite}
+									onCopy={(id) => copyToClipboard(id, "")}
+								/>
+							)
+						) : sessionHistory.length === 0 ? (
 							<div
 								style={{
 									textAlign: "center",
@@ -212,7 +302,12 @@ export default function HistoryPanel() {
 									fontSize: "0.8rem",
 								}}
 							>
-								<div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
+								<div
+									style={{
+										fontSize: "2rem",
+										marginBottom: "0.5rem",
+									}}
+								>
 									📭
 								</div>
 								<p>Todavía no generaste ninguna frase</p>
@@ -226,15 +321,19 @@ export default function HistoryPanel() {
 											display: "flex",
 											alignItems: "center",
 											gap: "0.5rem",
-											padding: i === 0 ? "0.6rem 0.5rem" : "0.6rem 0",
+											padding:
+												i === 0 ? "0.6rem 0.5rem" : "0.6rem 0",
 											borderBottom:
 												i < sessionHistory.length - 1
 													? "1px solid rgba(99,102,241,0.06)"
 													: "none",
 											background:
-												i === 0 ? "rgba(99,102,241,0.04)" : "transparent",
+												i === 0
+													? "rgba(99,102,241,0.04)"
+													: "transparent",
 											margin: i === 0 ? "0 -0.5rem" : "0",
-											borderRadius: i === 0 ? "var(--radius-sm)" : undefined,
+											borderRadius:
+												i === 0 ? "var(--radius-sm)" : undefined,
 										}}
 									>
 										<span
@@ -275,7 +374,9 @@ export default function HistoryPanel() {
 
 										<button
 											type="button"
-											onClick={() => handleCopy(entry.password, entry.id)}
+											onClick={() =>
+												handleCopy(entry.password, entry.id)
+											}
 											aria-label={`Copiar frase ${sessionHistory.length - i}`}
 											style={{
 												all: "unset",
@@ -285,11 +386,37 @@ export default function HistoryPanel() {
 													copiedIndex === entry.id
 														? "var(--color-success)"
 														: "var(--color-text-tertiary)",
-												transition: "color var(--duration-fast) var(--ease-out)",
+												transition:
+													"color var(--duration-fast) var(--ease-out)",
 												flexShrink: 0,
 											}}
 										>
 											{copiedIndex === entry.id ? "✅" : "📋"}
+										</button>
+
+										<button
+											type="button"
+											onClick={() => removeFromHistory(entry.id)}
+											aria-label="Eliminar del historial"
+											style={{
+												all: "unset",
+												cursor: "pointer",
+												fontSize: "0.7rem",
+												color: "var(--color-text-tertiary)",
+												transition:
+													"color var(--duration-fast) var(--ease-out)",
+												flexShrink: 0,
+											}}
+											onMouseEnter={(e) => {
+												e.currentTarget.style.color =
+													"var(--color-error)";
+											}}
+											onMouseLeave={(e) => {
+												e.currentTarget.style.color =
+													"var(--color-text-tertiary)";
+											}}
+										>
+											🗑️
 										</button>
 									</div>
 								))}
@@ -306,7 +433,9 @@ export default function HistoryPanel() {
 							textAlign: "center",
 						}}
 					>
-						El historial vive solo en memoria · No se persiste
+						{view === "history"
+							? "El historial vive solo en memoria · No se persiste"
+							: "Favoritos guardados de forma cifrada · Solo vos podés verlos"}
 					</div>
 				</div>
 			)}

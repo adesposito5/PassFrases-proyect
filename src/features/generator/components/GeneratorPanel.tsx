@@ -79,10 +79,13 @@ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.35))",
 
 <ClippyAssistant />
 
-<PasswordActions
-password={currentResult?.password ?? ""}
-onRegenerate={handleGenerate}
-/>
+		<PasswordActions
+				password={currentResult?.password ?? ""}
+				bits={currentResult?.bits ?? 0}
+				strength={currentResult?.strength ?? "medium"}
+				wordCount={config.wordCount}
+				onRegenerate={handleGenerate}
+			/>
 
 {currentResult && (
 <>

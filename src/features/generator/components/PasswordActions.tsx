@@ -1,11 +1,41 @@
+import { useState } from "react";
 import { CopyButton } from "@/features/generator/components/CopyButton";
+import { useFavorites } from "@/features/favorites/hooks/useFavorites";
 
 interface PasswordActionsProps {
 	password: string;
+	bits: number;
+	strength: string;
+	wordCount: number;
 	onRegenerate: () => void;
 }
 
-export function PasswordActions({ password, onRegenerate }: PasswordActionsProps) {
+export function PasswordActions({
+	password,
+	bits,
+	strength,
+	wordCount,
+	onRegenerate,
+}: PasswordActionsProps) {
+	const [saved, setSaved] = useState(false);
+	const { addFavorite } = useFavorites();
+
+	async function handleSaveFavorite() {
+		try {
+			await addFavorite(password, password, {
+				bits,
+				strength: strength as "weak" | "medium" | "strong" | "very-strong",
+				wordCount,
+				createdAt: Date.now(),
+				updatedAt: Date.now(),
+			});
+			setSaved(true);
+			setTimeout(() => setSaved(false), 2000);
+		} catch {
+			// silent
+		}
+	}
+
 	return (
 		<>
 			<div
@@ -51,10 +81,12 @@ export function PasswordActions({ password, onRegenerate }: PasswordActionsProps
 						fontSize: "0.9rem",
 						fontWeight: 600,
 						fontFamily: "var(--font-sans)",
-						transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
+						transition:
+							"transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
 					}}
 					onMouseEnter={(e) => {
-						e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)";
+						e.currentTarget.style.boxShadow =
+							"0 4px 20px rgba(99,102,241,0.3)";
 						e.currentTarget.style.transform = "translateY(-1px)";
 					}}
 					onMouseLeave={(e) => {
@@ -64,6 +96,47 @@ export function PasswordActions({ password, onRegenerate }: PasswordActionsProps
 				>
 					🔄 Generar nueva
 				</button>
+
+				<button
+					type="button"
+					onClick={handleSaveFavorite}
+					disabled={!password || saved}
+					aria-label="Guardar como favorita"
+					style={{
+						all: "unset",
+						cursor: "pointer",
+						padding: "0.85rem 1rem",
+						borderRadius: "12px",
+						border: "1px solid var(--color-border)",
+						background: saved ? "var(--color-success-soft)" : "transparent",
+						color: saved
+							? "var(--color-success)"
+							: "var(--color-text)",
+						fontSize: "0.9rem",
+						fontWeight: 600,
+						fontFamily: "var(--font-sans)",
+						opacity: !password ? 0.5 : 1,
+						transition:
+							"border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)",
+					}}
+					onMouseEnter={(e) => {
+						if (password && !saved) {
+							e.currentTarget.style.borderColor =
+								"var(--color-accent)";
+							e.currentTarget.style.background =
+								"var(--color-accent-soft)";
+						}
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.borderColor = "var(--color-border)";
+						e.currentTarget.style.background = saved
+							? "var(--color-success-soft)"
+							: "transparent";
+					}}
+				>
+					{saved ? "⭐ Guardada" : "⭐ Guardar"}
+				</button>
+
 				<CopyButton text={password ?? ""} full />
 			</div>
 		</>
