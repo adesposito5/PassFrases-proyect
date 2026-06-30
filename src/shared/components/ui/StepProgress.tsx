@@ -6,7 +6,6 @@ const STEPS = [
   { number: 3, label: 'Resultado' },
 ]
 
-// Ancho de la línea de progreso según el paso actual
 const PROGRESS_WIDTH: Record<number, string> = {
   1: '0%',
   2: '50%',
@@ -28,12 +27,11 @@ export function StepProgress() {
         position: 'relative',
       }}
     >
-      {/* Línea base (gris) */}
       <div
         aria-hidden="true"
         style={{
           position: 'absolute',
-          top: '20px', // mitad del círculo (40px / 2)
+          top: '20px',
           left: 'calc(50% - 160px)',
           right: 'calc(50% - 160px)',
           height: '2px',
@@ -42,7 +40,6 @@ export function StepProgress() {
         }}
       />
 
-      {/* Línea de progreso (gradiente animado) */}
       <div
         aria-hidden="true"
         style={{
@@ -58,7 +55,6 @@ export function StepProgress() {
         }}
       />
 
-      {/* Pasos */}
       {STEPS.map((step) => {
         const isActive = currentStep === step.number
         const isDone   = currentStep > step.number
@@ -81,7 +77,6 @@ export function StepProgress() {
               width: '100px',
             }}
           >
-            {/* Círculo */}
             <div
               aria-hidden="true"
               style={{
@@ -94,7 +89,6 @@ export function StepProgress() {
                 fontWeight: 700,
                 backdropFilter: 'blur(8px)',
                 transition: `all var(--duration-normal) var(--ease-out)`,
-                // Estados
                 background: isActive
                   ? 'var(--gradient-cta)'
                   : isDone
@@ -114,7 +108,6 @@ export function StepProgress() {
               {step.number}
             </div>
 
-            {/* Label */}
             <span
               style={{
                 fontSize: '0.7rem',

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { WizardLayout } from "@/features/controls/components/WizardLayout";
+import { WizardLayout } from "@/shared/components/ui/WizardLayout";
 import { usePasswordStore } from "@/features/generator/store";
 
 const BENEFITS = [

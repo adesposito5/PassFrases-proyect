@@ -7,8 +7,6 @@ export function useFavorites() {
   const addFavorite = useFavoriteStore((s) => s.addFavorite)
   const removeFavorite = useFavoriteStore((s) => s.removeFavorite)
   const copyToClipboard = useFavoriteStore((s) => s.copyToClipboard)
-  const getAllFavorites = useFavoriteStore((s) => s.getAllFavorites)
-
   const handleAdd = useCallback(
     async (password: string, passphrase: string, metadata: FavoriteMetadata) => {
       await addFavorite(password, passphrase, metadata)
@@ -35,6 +33,5 @@ export function useFavorites() {
     addFavorite: handleAdd,
     removeFavorite: handleRemove,
     copyToClipboard: handleCopy,
-    getAllFavorites,
   }
 }

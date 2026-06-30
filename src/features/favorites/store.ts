@@ -79,14 +79,6 @@ export const useFavoriteStore = create<FavoritesStore>()(
         }
       },
 
-      getAllFavorites: () => get().favorites,
-
-      reorderFavorites: (ids: string[]) => {
-        const favMap = new Map(get().favorites.map((f) => [f.id, f]))
-        set({
-          favorites: ids.map((id) => favMap.get(id)).filter(Boolean) as FavoriteEntry[],
-        })
-      },
     }),
     {
       name: STORAGE_KEY,

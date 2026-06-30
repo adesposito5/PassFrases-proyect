@@ -1,10 +1,5 @@
 import type { StrengthLevel } from "@/features/generator/types"
-
-export interface EncryptedPayload {
-  ciphertext: string
-  iv: string
-  salt: string
-}
+import type { EncryptedPayload } from "@/shared/types/crypto.types"
 
 export interface FavoriteMetadata {
   bits: number
@@ -34,6 +29,4 @@ export interface FavoritesStore extends FavoriteState {
   ) => Promise<void>
   removeFavorite: (id: string) => void
   copyToClipboard: (id: string, passphrase: string) => Promise<string | null>
-  getAllFavorites: () => FavoriteEntry[]
-  reorderFavorites: (ids: string[]) => void
 }

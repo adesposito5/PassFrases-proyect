@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { usePasswordStore } from '@/features/generator/store'
-import { WizardLayout } from '@/features/generator/components/WizardLayout'
+import { WizardLayout } from '@/shared/components/ui/WizardLayout'
 import GeneratorPanel from '@/features/generator/components/GeneratorPanel'
 
 export default function GeneratorPage() {
