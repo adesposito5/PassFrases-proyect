@@ -79,25 +79,67 @@ export function ClippyAssistant() {
 	return (
 		<div
 			role="status"
-			className="flex flex-col gap-3 rounded-[14px] border border-indigo-500/15 bg-[linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.08))] px-4 py-[0.85rem] text-[0.85rem]"
+			style={{
+				display: "flex",
+				flexDirection: "column",
+				gap: "0.75rem",
+				padding: "0.85rem 1rem",
+				borderRadius: "14px",
+				background: "var(--color-accent-soft)",
+				border: "1px solid var(--color-border)",
+				fontSize: "0.85rem",
+				transition: "all var(--duration-fast) var(--ease-out)",
+			}}
 		>
-			<div className="flex items-start gap-3">
-				<span aria-hidden="true" className="mt-px shrink-0 text-[1.2rem]">
+			<div style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem" }}>
+				<div
+					aria-hidden="true"
+					style={{
+						width: "44px",
+						height: "44px",
+						borderRadius: "12px",
+						display: "grid",
+						placeItems: "center",
+						background: "var(--color-accent-soft)",
+						flexShrink: 0,
+						fontSize: "1.3rem",
+					}}
+				>
 					{tip.icon}
-				</span>
-				<div className="min-w-0 flex-1">
-					<p className="text-[0.85rem] font-semibold text-text">
+				</div>
+				<div>
+					<strong
+						style={{
+							display: "block",
+							fontSize: "0.9rem",
+							marginBottom: "0.1rem",
+						}}
+					>
 						{tip.title}
-					</p>
-					<p className="mt-1 text-[0.8rem] leading-[1.4] text-text-tertiary">
+					</strong>
+					<span
+						style={{
+							fontSize: "0.8rem",
+							color: "var(--color-text-secondary)",
+						}}
+					>
 						{tip.text}
-					</p>
+					</span>
 				</div>
 				<button
 					type="button"
 					onClick={() => setDismissed(true)}
 					aria-label="Descartar consejo"
-					className="-mt-0.5 shrink-0 cursor-pointer p-0.5 text-base leading-none text-text-tertiary"
+					style={{
+						all: "unset",
+						cursor: "pointer",
+						flexShrink: 0,
+						fontSize: "1rem",
+						lineHeight: 1,
+						color: "var(--color-text-tertiary)",
+						padding: "2px",
+						marginTop: "-2px",
+					}}
 				>
 					✕
 				</button>
