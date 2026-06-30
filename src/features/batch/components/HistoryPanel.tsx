@@ -136,18 +136,31 @@ export default function HistoryPanel() {
 							<div className="flex flex-col">
 								{currentResult?.analysis?.recommendations &&
 									currentResult.analysis.recommendations.length > 0 && (
-										<div className="mb-3 rounded-(--radius-sm) border border-[rgba(236,72,153,0.15)] bg-[linear-gradient(135deg,rgba(236,72,153,0.08),rgba(129,140,248,0.08))] p-3">
-											<p className="mb-2 flex items-center gap-1.5 text-xs font-bold text-(--color-text)">
-												🛡️ Recomendaciones
-												<span className="text-[0.65rem] font-medium text-(--color-text-tertiary)">
+										<div
+											style={{
+												display: "flex",
+												flexDirection: "column",
+												gap: "0.75rem",
+												marginBottom: "0.75rem",
+												padding: "0.85rem 1rem",
+												borderRadius: "14px",
+												background: "var(--color-accent-soft)",
+												border: "1px solid var(--color-border)",
+												transition: "all var(--duration-fast) var(--ease-out)",
+											}}
+										>
+											<div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)" }}>
+												<span style={{ fontSize: "1rem" }}>🛡️</span>
+												<span>Recomendaciones</span>
+												<span style={{ fontSize: "0.65rem", fontWeight: 500, color: "var(--color-text-tertiary)" }}>
 													({currentResult.analysis.recommendations.length})
 												</span>
 												{currentResult.bits != null && (
-													<span className="ml-auto text-[0.65rem] font-medium text-(--color-text-tertiary)">
+													<span style={{ marginLeft: "auto", fontSize: "0.65rem", fontWeight: 500, color: "var(--color-text-tertiary)" }}>
 														{currentResult.bits} bits ·{" "}
 														<span
-															className="font-bold"
 															style={{
+																fontWeight: 700,
 																color:
 																	STRENGTH_CONFIG[currentResult.strength ?? "medium"]?.color ?? "var(--color-text)",
 															}}
@@ -156,34 +169,63 @@ export default function HistoryPanel() {
 														</span>
 													</span>
 												)}
-											</p>
+											</div>
 											<div className="flex flex-col gap-2">
 												{currentResult.analysis.recommendations.map((rec) => (
 													<div
 														key={rec.id}
-														className={`rounded-(--radius-sm) border border-(--color-border) p-2.5 ${
-															rec.severity === "high"
-																? "bg-[rgba(239,68,68,0.08)]"
-																: rec.severity === "medium"
-																	? "bg-[rgba(245,158,11,0.08)]"
-																	: "bg-[rgba(34,197,94,0.08)]"
-														}`}
+														style={{
+															display: "flex",
+															alignItems: "flex-start",
+															gap: "0.75rem",
+															padding: "0.75rem 1rem",
+															borderRadius: "12px",
+															background: "var(--color-accent-soft)",
+															border: "1px solid var(--color-border)",
+															transition: "all var(--duration-fast) var(--ease-out)",
+														}}
 													>
-														<p className="flex items-center gap-1.5 text-[0.72rem] font-bold text-(--color-text)">
-															<span className="text-[0.85rem]">
-																{rec.icon === "shield"
-																	? "🛡️"
-																	: rec.icon === "warning"
-																		? "⚠️"
-																		: "ℹ️"}
-															</span>
-															{rec.title}
-														</p>
-														{rec.detail && (
-															<p className="mt-1 text-[0.68rem] leading-snug text-(--color-text-tertiary)">
-																{rec.detail}
+														<div
+															style={{
+																width: "36px",
+																height: "36px",
+																borderRadius: "10px",
+																display: "grid",
+																placeItems: "center",
+																background: "var(--color-accent-soft)",
+																flexShrink: 0,
+																fontSize: "1rem",
+															}}
+														>
+															{rec.icon === "shield"
+																? "🛡️"
+																: rec.icon === "warning"
+																	? "⚠️"
+																	: "ℹ️"}
+														</div>
+														<div>
+															<p
+																style={{
+																	fontSize: "0.8rem",
+																	fontWeight: 700,
+																	color: "var(--color-text)",
+																	marginBottom: "0.1rem",
+																}}
+															>
+																{rec.title}
 															</p>
-														)}
+															{rec.detail && (
+																<p
+																	style={{
+																		fontSize: "0.72rem",
+																		color: "var(--color-text-secondary)",
+																		lineHeight: 1.4,
+																	}}
+																>
+																	{rec.detail}
+																</p>
+															)}
+														</div>
 													</div>
 												))}
 											</div>
