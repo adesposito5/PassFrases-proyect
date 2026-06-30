@@ -18,7 +18,7 @@ export function WizardLayout({ children }: WizardLayoutProps) {
         zIndex: 1,
       }}
     >
-      <div style={{ width: '100%', maxWidth: '700px' }}>
+      <div style={{ width: '100%', maxWidth: '520px' }}>
         <StepProgress />
 
         {/* Glass card */}

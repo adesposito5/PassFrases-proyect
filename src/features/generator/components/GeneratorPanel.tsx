@@ -32,6 +32,7 @@ navigate("/");
 
 if (currentStep === 2) {
 return (
+<div style={{ textAlign: "center" }}>
 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 <ClippyAssistant />
 <GeneratorForm />
@@ -61,11 +62,13 @@ e.currentTarget.style.color = "var(--color-text-tertiary)";
 ← Volver a inicio
 </button>
 </div>
+</div>
 );
 }
 
 return (
-<div style={{ display: "flex", flexDirection: "column", gap: "1.25rem", textAlign: "center" }}>
+<div style={{ textAlign: "center" }}>
+<div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 <div
 style={{
 fontSize: "2.8rem",
@@ -126,6 +129,7 @@ e.currentTarget.style.color = "var(--color-text-tertiary)";
 >
 ← Personalizar
 </button>
+</div>
 </div>
 );
 }
