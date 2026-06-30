@@ -60,18 +60,52 @@ export function GeneratorForm() {
 	return (
 		<>
 			<style>{btnStyles}</style>
-		<div className="rounded-(--radius-lg) border border-(--color-border) bg-(--color-card) p-7 shadow-[var(--glass-shadow)]">
-			<h2 className="mb-6 font-sans text-lg font-semibold text-(--color-text)">
+		<div
+			style={{
+				borderRadius: "var(--radius-lg)",
+				border: "1px solid var(--color-border)",
+				background: "var(--color-card)",
+				padding: "1.75rem",
+				boxShadow: "var(--glass-shadow)",
+			}}
+		>
+			<h2
+				style={{
+					fontSize: "1.125rem",
+					fontWeight: 600,
+					color: "var(--color-text)",
+					marginBottom: "1.25rem",
+				}}
+			>
 				Personalizá tu contraseña
 			</h2>
 
-			<div className="mb-6">
+			<div
+				style={{
+					padding: "1rem 1.25rem",
+					borderRadius: "12px",
+					background: "transparent",
+					border: "1px solid var(--color-border)",
+					marginBottom: "0.75rem",
+				}}
+			>
 				<label
 					htmlFor="wordCount"
-					className="mb-2 flex items-center justify-between font-sans text-sm font-medium text-(--color-text-secondary)"
+					style={{
+						display: "flex",
+						alignItems: "center",
+						justifyContent: "space-between",
+						marginBottom: "0.75rem",
+						fontSize: "0.875rem",
+						fontWeight: 500,
+						color: "var(--color-text-secondary)",
+					}}
 				>
-					<span>Cantidad de palabras</span>
-					<span className="font-bold text-(--color-accent)">
+					<span style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+						<span style={{ fontSize: "1rem" }}>📝</span>
+						Cantidad de palabras
+					</span>
+					<span style={{ fontWeight: 700, color: "var(--color-accent)" }}>
 						{config.wordCount}
 					</span>
 				</label>
@@ -83,29 +117,52 @@ export function GeneratorForm() {
 					step={1}
 					value={config.wordCount}
 					onChange={(e) => updateOption("wordCount", Number(e.target.value))}
-					className="w-full cursor-pointer accent-(--color-accent)"
+					className="w-full cursor-pointer"
 				/>
-				<div className="mt-2 flex justify-between font-sans text-xs text-(--color-text-tertiary)">
+				<div
+					style={{
+						display: "flex",
+						justifyContent: "space-between",
+						marginTop: "0.5rem",
+						fontSize: "0.75rem",
+						color: "var(--color-text-tertiary)",
+					}}
+				>
 					<span>2</span>
 					<span>4</span>
 					<span>6</span>
 				</div>
 			</div>
 
-			<div className="my-6 h-px bg-(--color-border)" />
-
-			<div className="mb-6">
+			<div
+				style={{
+					padding: "1rem 1.25rem",
+					borderRadius: "12px",
+					background: "transparent",
+					border: "1px solid var(--color-border)",
+					marginBottom: "0.75rem",
+				}}
+			>
 				<label
 					htmlFor="separator"
-					className="mb-2 block font-sans text-sm font-medium text-(--color-text-secondary)"
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: "0.5rem",
+						marginBottom: "0.75rem",
+						fontSize: "0.875rem",
+						fontWeight: 500,
+						color: "var(--color-text-secondary)",
+					}}
 				>
+					<span style={{ fontSize: "1rem" }}>🔗</span>
 					Separador
 				</label>
 				<select
 					id="separator"
 					value={config.separator}
 					onChange={(e) => updateOption("separator", e.target.value)}
-					className="w-full cursor-pointer rounded-(--radius-md) border border-(--color-border) bg-(--color-card) px-3 py-2.5 font-sans text-sm text-(--color-text) transition-[border-color,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) focus:border-(--color-border-focus) focus:shadow-[0_0_0_1px_var(--color-border-focus)] focus:outline-none"
+					className="w-full cursor-pointer rounded-[12px] border border-(--color-border) bg-(--color-surface) px-3 py-2.5 font-sans text-sm text-(--color-text) transition-[border-color,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) focus:border-(--color-border-focus) focus:shadow-[0_0_0_1px_var(--color-border-focus)] focus:outline-none"
 				>
 					<option value="-">Guión ( - )</option>
 					<option value=".">Punto ( . )</option>
@@ -114,21 +171,45 @@ export function GeneratorForm() {
 				</select>
 			</div>
 
-			<div className="my-6 h-px bg-(--color-border)" />
-
-			<div className="mb-7">
+			<div
+				style={{
+					padding: "1rem 1.25rem",
+					borderRadius: "12px",
+					background: "transparent",
+					border: "1px solid var(--color-border)",
+					marginBottom: "1rem",
+				}}
+			>
 				<button
 					type="button"
 					onClick={() => setShowAdvanced(!showAdvanced)}
-					className="mb-4 cursor-pointer appearance-none border-none bg-transparent p-0 font-sans text-sm font-semibold text-(--color-accent) transition-colors duration-[var(--duration-fast)] ease-(--ease-out) hover:text-(--color-accent-hover)"
+					style={{
+						all: "unset",
+						cursor: "pointer",
+						display: "flex",
+						alignItems: "center",
+						gap: "0.5rem",
+						marginBottom: showAdvanced ? "1rem" : 0,
+						fontSize: "0.875rem",
+						fontWeight: 600,
+						color: "var(--color-accent)",
+						transition: "color var(--duration-fast) var(--ease-out)",
+					}}
+					onMouseEnter={(e) => {
+						e.currentTarget.style.color = "var(--color-accent-hover)";
+					}}
+					onMouseLeave={(e) => {
+						e.currentTarget.style.color = "var(--color-accent)";
+					}}
 				>
+					<span style={{ fontSize: "1rem" }}>⚙️</span>
 					{showAdvanced
 						? "Ocultar opciones avanzadas ↑"
 						: "Ver opciones avanzadas ↓"}
 				</button>
 
 				{showAdvanced && (
-					<div className="flex flex-col gap-5">
+					<div className="flex flex-col gap-3">
 						<ToggleOption
 							id="includeNumbers"
 							label="Incluir números"
@@ -183,15 +264,48 @@ function ToggleOption({
 	onChange,
 }: ToggleOptionProps) {
 	return (
-		<div className="flex items-center justify-between">
+		<div
+			style={{
+				display: "flex",
+				alignItems: "center",
+				justifyContent: "space-between",
+				padding: "0.75rem 1rem",
+				borderRadius: "10px",
+				background: "transparent",
+				border: "1px solid var(--color-border)",
+				transition: "all var(--duration-fast) var(--ease-out)",
+			}}
+		>
 			<div>
 				<label
 					htmlFor={id}
-					className="cursor-pointer font-sans text-sm font-medium text-(--color-text-secondary)"
+					style={{
+						display: "flex",
+						alignItems: "center",
+						gap: "0.5rem",
+						cursor: "pointer",
+						fontSize: "0.875rem",
+						fontWeight: 600,
+						color: "var(--color-text)",
+					}}
 				>
+					<span style={{ fontSize: "0.9rem" }}>
+						{id === "includeNumbers"
+							? "🔢"
+							: id === "includeSymbols"
+								? "🔣"
+								: "🔠"}
+					</span>
 					{label}
 				</label>
-				<p className="mt-0.5 font-sans text-xs text-(--color-text-tertiary)">
+				<p
+					style={{
+						marginTop: "0.15rem",
+						fontSize: "0.75rem",
+						color: "var(--color-text-secondary)",
+						marginLeft: "1.4rem",
+					}}
+				>
 					{description}
 				</p>
 			</div>
