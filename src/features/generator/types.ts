@@ -13,6 +13,7 @@ export interface PasswordConfig {
 	includeNumbers: boolean;
 	includeSymbols: boolean;
 	capitalize: boolean;
+	selectedCategories: string[];
 }
 
 export type RecommendationSeverity = 'low' | 'medium' | 'high';

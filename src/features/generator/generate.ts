@@ -40,7 +40,12 @@ function applyFormatting(
 }
 
 export function generatePassword(options: PasswordConfig): PasswordResult {
-	const allWords = Object.values(wordLists).flat();
+	const selectedLists = options.selectedCategories?.length
+		? options.selectedCategories
+			.map((cat) => (wordLists as Record<string, string[]>)[cat] ?? [])
+			.flat()
+		: Object.values(wordLists).flat();
+	const allWords = selectedLists.length > 0 ? selectedLists : Object.values(wordLists).flat();
 	const selectedWords: string[] = [];
 	for (let i = 0; i < options.wordCount; i++) {
 		let word = pickRandom(allWords);

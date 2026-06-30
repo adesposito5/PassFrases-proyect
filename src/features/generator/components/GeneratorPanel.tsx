@@ -5,7 +5,6 @@ import { EntropyMeter } from "@/features/generator/components/EntropyMeter";
 import { FunStats } from "@/features/generator/components/FunStats";
 import { PasswordActions } from "@/features/generator/components/PasswordActions";
 import { RecommendationsPanel } from "@/features/generator/components/RecommendationsPanel";
-import { CategoryChips } from "@/features/generator/components/CategoryChips";
 import { ClippyAssistant } from "@/features/clippy/components/ClippyAssistant";
 
 export default function GeneratorPanel() {
@@ -34,9 +33,8 @@ if (currentStep === 2) {
 return (
 <div style={{ textAlign: "center" }}>
 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-<ClippyAssistant />
-<GeneratorForm />
-<CategoryChips />
+			<ClippyAssistant />
+			<GeneratorForm />
 
 <button
 					type="button"

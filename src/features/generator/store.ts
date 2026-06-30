@@ -16,6 +16,7 @@ const defaultConfig: PasswordConfig = {
 	includeNumbers: true,
 	includeSymbols: false,
 	capitalize: true,
+	selectedCategories: ["animales", "naturaleza", "verbos", "colores", "lugares"],
 };
 
 interface PasswordState {
@@ -104,12 +105,25 @@ export const usePasswordStore = create<PasswordState>()(
 		}),
 		{
 			name: "passfrases-history-v1",
-			// Solo persistimos el historial y la config — nunca contraseñas en currentResult
 			partialize: (state) => ({
 				sessionHistory: state.sessionHistory,
 				config: state.config,
 				batchCount: state.batchCount,
 			}),
+			merge: (persisted, current) => {
+				const data = persisted as Partial<PasswordState> | undefined
+				if (!data) return current
+				return {
+					...current,
+					...data,
+					config: {
+						...current.config,
+						...(data.config ?? {}),
+						selectedCategories:
+							data.config?.selectedCategories ?? current.config.selectedCategories,
+					},
+				}
+			},
 		},
 	),
 );

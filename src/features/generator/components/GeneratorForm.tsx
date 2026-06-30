@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePasswordStore } from "@/features/generator/store";
 import type { PasswordConfig } from "@/features/generator/types";
+import { CategoryChips } from "@/features/generator/components/CategoryChips";
 
 export function GeneratorForm() {
 	const config = usePasswordStore((state) => state.config);
@@ -233,6 +234,28 @@ export function GeneratorForm() {
 						/>
 					</div>
 				)}
+			</div>
+
+			<div
+				style={{
+					padding: "1rem 1.25rem",
+					borderRadius: "12px",
+					background: "transparent",
+					border: "1px solid var(--color-border)",
+					marginBottom: "0.75rem",
+				}}
+			>
+				<p
+					style={{
+						fontSize: "0.8rem",
+						color: "var(--color-text-secondary)",
+						marginBottom: "0.75rem",
+						fontWeight: 500,
+					}}
+				>
+					Elegí las categorías que quieras incluir:
+				</p>
+				<CategoryChips />
 			</div>
 
 			<button
