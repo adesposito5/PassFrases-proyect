@@ -21,6 +21,30 @@ const BENEFITS = [
 	},
 ];
 
+const styles = `
+.btn-start {
+  all: unset;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ec4899, #818cf8);
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-start:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(236,72,153,0.35);
+}
+`
+
 export default function WizardStartPage() {
 	const navigate = useNavigate();
 	const setStep = usePasswordStore((state) => state.setStep);
@@ -36,45 +60,100 @@ export default function WizardStartPage() {
 
 	return (
 		<WizardLayout>
-			<div className="text-center">
-				{/* Ícono */}
+			<style>{styles}</style>
+			<div style={{ textAlign: "center" }}>
 				<div
 					aria-hidden="true"
-					className="mb-3 inline-block text-[2.5rem] drop-shadow-[0_0_20px_rgba(99,102,241,0.3)]"
+					style={{
+						fontSize: "2.5rem",
+						display: "inline-block",
+						marginBottom: "0.75rem",
+						filter: "drop-shadow(0 0 20px rgba(99,102,241,0.3))",
+					}}
 				>
 					🔐
 				</div>
 
-				{/* Título */}
-				<h1 className="mb-[0.4rem] bg-[linear-gradient(135deg,#e2e2f0,#a78bfa)] bg-clip-text text-[1.8rem] font-extrabold tracking-[-0.03em] text-transparent">
+				<h1
+					style={{
+						fontSize: "1.8rem",
+						fontWeight: 800,
+						letterSpacing: "-0.03em",
+						background: "linear-gradient(135deg, #e2e2f0, #a78bfa)",
+						WebkitBackgroundClip: "text",
+						WebkitTextFillColor: "transparent",
+						backgroundClip: "text",
+						marginBottom: "0.4rem",
+					}}
+				>
 					Tu contraseña perfecta
 				</h1>
 
-				<p className="mb-8 text-[0.95rem] text-text-secondary">
+				<p
+					style={{
+						color: "var(--color-text-secondary)",
+						fontSize: "0.95rem",
+						marginBottom: "2rem",
+					}}
+				>
 					Fácil de recordar, imposible de adivinar. En 3 simples pasos.
 				</p>
 
-				{/* Benefits */}
-				<div className="mb-8 flex flex-col gap-3 text-left">
+				<div
+					style={{
+						display: "flex",
+						flexDirection: "column",
+						gap: "0.75rem",
+						textAlign: "left",
+						marginBottom: "2rem",
+					}}
+				>
 					{BENEFITS.map((b) => (
 						<div
 							key={b.title}
-							className="flex items-start gap-[0.85rem] rounded-[14px] border border-border bg-accent-soft px-4 py-[0.85rem] transition-all duration-150 ease-out"
+							style={{
+								display: "flex",
+								alignItems: "flex-start",
+								gap: "0.85rem",
+								padding: "0.85rem 1rem",
+								background: "var(--color-accent-soft)",
+								border: "1px solid var(--color-border)",
+								borderRadius: "14px",
+								transition: "all var(--duration-fast) var(--ease-out)",
+							}}
 						>
-							{/* Ícono benefit */}
 							<div
 								aria-hidden="true"
-								className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-[1.3rem]"
+								style={{
+									width: "44px",
+									height: "44px",
+									borderRadius: "12px",
+									display: "grid",
+									placeItems: "center",
+									background: "var(--color-accent-soft)",
+									flexShrink: 0,
+									fontSize: "1.3rem",
+								}}
 							>
 								{b.icon}
 							</div>
 
-							{/* Texto */}
 							<div>
-								<strong className="mb-[0.1rem] block text-[0.9rem]">
+								<strong
+									style={{
+										display: "block",
+										fontSize: "0.9rem",
+										marginBottom: "0.1rem",
+									}}
+								>
 									{b.title}
 								</strong>
-								<span className="text-[0.8rem] text-text-secondary">
+								<span
+									style={{
+										fontSize: "0.8rem",
+										color: "var(--color-text-secondary)",
+									}}
+								>
 									{b.desc}
 								</span>
 							</div>
@@ -82,12 +161,11 @@ export default function WizardStartPage() {
 					))}
 				</div>
 
-				{/* CTA */}
 				<button
 					type="button"
 					onClick={handleStart}
 					aria-label="Comenzar a personalizar tu contraseña"
-					className="mx-auto mt-6 flex w-fit items-center justify-center gap-2 rounded-[14px] bg-[image:var(--gradient-cta)] px-8 py-4 font-sans text-[1.05rem] font-bold text-white transition-all duration-150 ease-out hover:-translate-y-0.5 hover:shadow-[0_8px_32px_rgba(236,72,153,0.35)]"
+					className="btn-start"
 				>
 					Comenzar →
 				</button>
