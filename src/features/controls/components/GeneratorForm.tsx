@@ -33,48 +33,18 @@ export function GeneratorForm() {
 	};
 
 	return (
-		<div
-			style={{
-				borderRadius: "var(--radius-lg)",
-				border: "1px solid var(--color-border)",
-				background: "var(--color-card)",
-				padding: "1.5rem",
-				boxShadow: "var(--glass-shadow)",
-			}}
-		>
-			<h2
-				style={{
-					marginBottom: "1rem",
-					fontSize: "1.125rem",
-					fontWeight: 600,
-					color: "var(--color-text)",
-					fontFamily: "var(--font-sans)",
-				}}
-			>
+		<div className="rounded-(--radius-lg) border border-(--color-border) bg-(--color-card) p-7 shadow-[var(--glass-shadow)]">
+			<h2 className="mb-6 font-sans text-lg font-semibold text-(--color-text)">
 				Personalizá tu contraseña
 			</h2>
 
-			<div style={{ marginBottom: "1.25rem" }}>
+			<div className="mb-6">
 				<label
 					htmlFor="wordCount"
-					style={{
-						marginBottom: "0.25rem",
-						display: "flex",
-						alignItems: "center",
-						justifyContent: "space-between",
-						fontSize: "0.875rem",
-						fontWeight: 500,
-						color: "var(--color-text-secondary)",
-						fontFamily: "var(--font-sans)",
-					}}
+					className="mb-2 flex items-center justify-between font-sans text-sm font-medium text-(--color-text-secondary)"
 				>
 					<span>Cantidad de palabras</span>
-					<span
-						style={{
-							fontWeight: 700,
-							color: "var(--color-accent)",
-						}}
-					>
+					<span className="font-bold text-(--color-accent)">
 						{config.wordCount}
 					</span>
 				</label>
@@ -86,43 +56,21 @@ export function GeneratorForm() {
 					step={1}
 					value={config.wordCount}
 					onChange={(e) => updateOption("wordCount", Number(e.target.value))}
-					style={{ width: "100%", cursor: "pointer", accentColor: "var(--color-accent)" }}
+					className="w-full cursor-pointer accent-(--color-accent)"
 				/>
-				<div
-					style={{
-						marginTop: "0.25rem",
-						display: "flex",
-						justifyContent: "space-between",
-						fontSize: "0.75rem",
-						color: "var(--color-text-tertiary)",
-						fontFamily: "var(--font-sans)",
-					}}
-				>
+				<div className="mt-2 flex justify-between font-sans text-xs text-(--color-text-tertiary)">
 					<span>2</span>
 					<span>4</span>
 					<span>6</span>
 				</div>
 			</div>
 
-			<div
-				style={{
-					margin: "1.25rem 0",
-					height: "1px",
-					background: "var(--color-border)",
-				}}
-			/>
+			<div className="my-6 h-px bg-(--color-border)" />
 
-			<div style={{ marginBottom: "1.25rem" }}>
+			<div className="mb-6">
 				<label
 					htmlFor="separator"
-					style={{
-						marginBottom: "0.25rem",
-						display: "block",
-						fontSize: "0.875rem",
-						fontWeight: 500,
-						color: "var(--color-text-secondary)",
-						fontFamily: "var(--font-sans)",
-					}}
+					className="mb-2 block font-sans text-sm font-medium text-(--color-text-secondary)"
 				>
 					Separador
 				</label>
@@ -130,25 +78,7 @@ export function GeneratorForm() {
 					id="separator"
 					value={config.separator}
 					onChange={(e) => updateOption("separator", e.target.value)}
-					style={{
-						width: "100%",
-						borderRadius: "var(--radius-md)",
-						border: "1px solid var(--color-border)",
-						background: "var(--color-card)",
-						color: "var(--color-text)",
-						padding: "0.5rem 0.75rem",
-						fontSize: "0.875rem",
-						fontFamily: "var(--font-sans)",
-						cursor: "pointer",
-					}}
-					onFocus={(e) => {
-						e.currentTarget.style.borderColor = "var(--color-border-focus)";
-						e.currentTarget.style.boxShadow = "0 0 0 1px var(--color-border-focus)";
-					}}
-					onBlur={(e) => {
-						e.currentTarget.style.borderColor = "var(--color-border)";
-						e.currentTarget.style.boxShadow = "none";
-					}}
+					className="w-full cursor-pointer rounded-(--radius-md) border border-(--color-border) bg-(--color-card) px-3 py-2.5 font-sans text-sm text-(--color-text) transition-[border-color,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) focus:border-(--color-border-focus) focus:shadow-[0_0_0_1px_var(--color-border-focus)] focus:outline-none"
 				>
 					<option value="-">Guión ( - )</option>
 					<option value=".">Punto ( . )</option>
@@ -157,34 +87,13 @@ export function GeneratorForm() {
 				</select>
 			</div>
 
-			<div
-				style={{
-					margin: "1.25rem 0",
-					height: "1px",
-					background: "var(--color-border)",
-				}}
-			/>
+			<div className="my-6 h-px bg-(--color-border)" />
 
-			<div style={{ marginBottom: "1.5rem" }}>
+			<div className="mb-7">
 				<button
 					type="button"
 					onClick={() => setShowAdvanced(!showAdvanced)}
-					style={{
-						all: "unset",
-						cursor: "pointer",
-						marginBottom: "0.75rem",
-						fontSize: "0.875rem",
-						fontWeight: 600,
-						color: "var(--color-accent)",
-						fontFamily: "var(--font-sans)",
-						transition: "color var(--duration-fast) var(--ease-out)",
-					}}
-					onMouseEnter={(e) => {
-						e.currentTarget.style.color = "var(--color-accent-hover)";
-					}}
-					onMouseLeave={(e) => {
-						e.currentTarget.style.color = "var(--color-accent)";
-					}}
+					className="mb-4 cursor-pointer appearance-none border-none bg-transparent p-0 font-sans text-sm font-semibold text-(--color-accent) transition-colors duration-[var(--duration-fast)] ease-(--ease-out) hover:text-(--color-accent-hover)"
 				>
 					{showAdvanced
 						? "Ocultar opciones avanzadas ↑"
@@ -192,7 +101,7 @@ export function GeneratorForm() {
 				</button>
 
 				{showAdvanced && (
-					<div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+					<div className="flex flex-col gap-5">
 						<ToggleOption
 							id="includeNumbers"
 							label="Incluir números"
@@ -221,31 +130,7 @@ export function GeneratorForm() {
 			<button
 				type="button"
 				onClick={handleGenerate}
-				style={{
-					all: "unset",
-					cursor: "pointer",
-					width: "100%",
-					boxSizing: "border-box",
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "center",
-					borderRadius: "var(--radius-md)",
-					background: "var(--gradient-cta)",
-					color: "#fff",
-					padding: "0.85rem 1rem",
-					fontSize: "0.875rem",
-					fontWeight: 600,
-					fontFamily: "var(--font-sans)",
-					transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out)",
-				}}
-				onMouseEnter={(e) => {
-					e.currentTarget.style.boxShadow = "0 4px 20px var(--color-pink-glow)";
-					e.currentTarget.style.transform = "translateY(-1px)";
-				}}
-				onMouseLeave={(e) => {
-					e.currentTarget.style.boxShadow = "none";
-					e.currentTarget.style.transform = "";
-				}}
+				className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-(--radius-md) border-none bg-[var(--gradient-cta)] px-4 py-4 font-sans text-base font-semibold text-white shadow-[0_0_14px_var(--color-pink-glow),0_2px_10px_var(--color-pink-glow)] transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) hover:-translate-y-px hover:shadow-[0_0_24px_var(--color-pink-glow),0_4px_20px_var(--color-pink-glow),0_0_6px_var(--color-pink-glow)]"
 				aria-label="Generar contraseña con las opciones seleccionadas"
 			>
 				✨ Generar frase mágica
@@ -270,34 +155,15 @@ function ToggleOption({
 	onChange,
 }: ToggleOptionProps) {
 	return (
-		<div
-			style={{
-				display: "flex",
-				alignItems: "center",
-				justifyContent: "space-between",
-			}}
-		>
+		<div className="flex items-center justify-between">
 			<div>
 				<label
 					htmlFor={id}
-					style={{
-						cursor: "pointer",
-						fontSize: "0.875rem",
-						fontWeight: 500,
-						color: "var(--color-text-secondary)",
-						fontFamily: "var(--font-sans)",
-					}}
+					className="cursor-pointer font-sans text-sm font-medium text-(--color-text-secondary)"
 				>
 					{label}
 				</label>
-				<p
-					style={{
-						fontSize: "0.75rem",
-						color: "var(--color-text-tertiary)",
-						fontFamily: "var(--font-sans)",
-						marginTop: "2px",
-					}}
-				>
+				<p className="mt-0.5 font-sans text-xs text-(--color-text-tertiary)">
 					{description}
 				</p>
 			</div>
@@ -307,37 +173,14 @@ function ToggleOption({
 				role="switch"
 				aria-checked={checked}
 				onClick={() => onChange(!checked)}
-				style={{
-					position: "relative",
-					display: "inline-flex",
-					height: "1.5rem",
-					width: "2.75rem",
-					flexShrink: 0,
-					alignItems: "center",
-					borderRadius: "var(--radius-pill)",
-					border: "none",
-					cursor: "pointer",
-					transition: "background-color var(--duration-fast) var(--ease-out)",
-					background: checked ? "var(--color-accent)" : "var(--color-text-tertiary)",
-				}}
-				onFocus={(e) => {
-					e.currentTarget.style.boxShadow = `0 0 0 2px var(--color-surface), 0 0 0 4px var(--color-accent)`;
-				}}
-				onBlur={(e) => {
-					e.currentTarget.style.boxShadow = "none";
-				}}
+				className={`relative inline-flex h-6 w-11 shrink-0 items-center rounded-(--radius-pill) border-none transition-colors duration-[var(--duration-fast)] ease-(--ease-out) focus:shadow-[0_0_0_2px_var(--color-surface),0_0_0_4px_var(--color-accent)] focus:outline-none ${
+					checked ? "bg-(--color-accent)" : "bg-(--color-text-tertiary)"
+				}`}
 			>
 				<span
-					style={{
-						display: "inline-block",
-						height: "1rem",
-						width: "1rem",
-						borderRadius: "50%",
-						background: "#fff",
-						boxShadow: "0 1px 3px rgba(0,0,0,0.3)",
-						transition: "transform var(--duration-fast) var(--ease-out)",
-						transform: checked ? "translateX(1.5rem)" : "translateX(0.25rem)",
-					}}
+					className={`inline-block h-4 w-4 rounded-full bg-white shadow-[0_1px_3px_rgba(0,0,0,0.3)] transition-transform duration-[var(--duration-fast)] ease-(--ease-out) ${
+						checked ? "translate-x-6" : "translate-x-1"
+					}`}
 				/>
 			</button>
 		</div>
