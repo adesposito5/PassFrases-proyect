@@ -29,7 +29,7 @@ export function FavoritesPanel({
   return (
     <div
       style={{
-        borderTop: compact ? "1px solid rgba(99,102,241,0.12)" : undefined,
+        borderTop: compact ? "1px solid var(--color-border)" : undefined,
         marginTop: compact ? "0.75rem" : undefined,
         paddingTop: compact ? "0.75rem" : undefined,
       }}
@@ -38,7 +38,7 @@ export function FavoritesPanel({
         style={{
           fontSize: "0.75rem",
           fontWeight: 600,
-          color: "var(--color-text-tertiary)",
+          color: "var(--color-text-secondary)",
           margin: "0 0 0.5rem",
           display: "flex",
           alignItems: "center",
@@ -48,28 +48,43 @@ export function FavoritesPanel({
         ⭐ Tus favoritas ({favorites.length})
       </p>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
         {favorites.slice(0, compact ? 3 : undefined).map((fav) => (
           <div
             key={fav.id}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "0.35rem",
-              padding: "0.3rem 0.4rem",
-              borderRadius: "8px",
-              background: "rgba(99,102,241,0.04)",
-              fontSize: "0.75rem",
+              gap: "0.5rem",
+              padding: compact ? "0.5rem 0.75rem" : "0.75rem 1rem",
+              borderRadius: compact ? "10px" : "12px",
+              background: "var(--color-accent-soft)",
+              border: "1px solid var(--color-border)",
+              transition: "all var(--duration-fast) var(--ease-out)",
             }}
           >
-            <span style={{ fontSize: "0.7rem", flexShrink: 0, opacity: 0.6 }}>🔒</span>
+            <div
+              style={{
+                width: compact ? "28px" : "36px",
+                height: compact ? "28px" : "36px",
+                borderRadius: compact ? "8px" : "10px",
+                display: "grid",
+                placeItems: "center",
+                background: "var(--color-accent-soft)",
+                flexShrink: 0,
+                fontSize: compact ? "0.75rem" : "0.9rem",
+              }}
+            >
+              🔒
+            </div>
 
             <span
               style={{
                 flex: 1,
-                color: "var(--color-text-secondary)",
+                color: "var(--color-text)",
                 fontFamily: "var(--font-mono)",
-                fontSize: "0.7rem",
+                fontSize: compact ? "0.7rem" : "0.8rem",
+                fontWeight: 600,
                 overflow: "hidden",
                 textOverflow: "ellipsis",
                 whiteSpace: "nowrap",
@@ -89,7 +104,7 @@ export function FavoritesPanel({
               style={{
                 all: "unset",
                 cursor: "pointer",
-                fontSize: "0.75rem",
+                fontSize: compact ? "0.7rem" : "0.85rem",
                 color:
                   copiedId === fav.id
                     ? "var(--color-success)"
@@ -109,7 +124,7 @@ export function FavoritesPanel({
               style={{
                 all: "unset",
                 cursor: "pointer",
-                fontSize: "0.7rem",
+                fontSize: compact ? "0.65rem" : "0.75rem",
                 color: "var(--color-text-tertiary)",
                 padding: "0.15rem 0.3rem",
                 borderRadius: "4px",
