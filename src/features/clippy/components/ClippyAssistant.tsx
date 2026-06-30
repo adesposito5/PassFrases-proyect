@@ -79,44 +79,17 @@ export function ClippyAssistant() {
 	return (
 		<div
 			role="status"
-			style={{
-				display: "flex",
-				flexDirection: "column",
-				gap: "0.75rem",
-				padding: "0.85rem 1rem",
-				borderRadius: "14px",
-				background:
-					"linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.08))",
-				border: "1px solid rgba(99,102,241,0.15)",
-				fontSize: "0.85rem",
-			}}
+			className="flex flex-col gap-3 rounded-[14px] border border-indigo-500/15 bg-[linear-gradient(135deg,rgba(99,102,241,0.08),rgba(168,85,247,0.08))] px-4 py-[0.85rem] text-[0.85rem]"
 		>
-			<div style={{ display: "flex", alignItems: "flex-start", gap: "0.75rem" }}>
-				<span
-					aria-hidden="true"
-					style={{ fontSize: "1.2rem", flexShrink: 0, marginTop: "1px" }}
-				>
+			<div className="flex items-start gap-3">
+				<span aria-hidden="true" className="mt-px shrink-0 text-[1.2rem]">
 					{tip.icon}
 				</span>
-				<div style={{ flex: 1, minWidth: 0 }}>
-					<p
-						style={{
-							margin: 0,
-							fontWeight: 600,
-							color: "var(--color-text)",
-							fontSize: "0.85rem",
-						}}
-					>
+				<div className="min-w-0 flex-1">
+					<p className="text-[0.85rem] font-semibold text-text">
 						{tip.title}
 					</p>
-					<p
-						style={{
-							margin: "0.25rem 0 0",
-							color: "var(--color-text-tertiary)",
-							fontSize: "0.8rem",
-							lineHeight: 1.4,
-						}}
-					>
+					<p className="mt-1 text-[0.8rem] leading-[1.4] text-text-tertiary">
 						{tip.text}
 					</p>
 				</div>
@@ -124,41 +97,16 @@ export function ClippyAssistant() {
 					type="button"
 					onClick={() => setDismissed(true)}
 					aria-label="Descartar consejo"
-					style={{
-						all: "unset",
-						cursor: "pointer",
-						flexShrink: 0,
-						color: "var(--color-text-tertiary)",
-						fontSize: "1rem",
-						lineHeight: 1,
-						padding: "2px",
-						marginTop: "-2px",
-					}}
+					className="-mt-0.5 shrink-0 cursor-pointer p-0.5 text-base leading-none text-text-tertiary"
 				>
 					✕
 				</button>
 			</div>
 
 			{shouldSuggestSave && (
-				<div
-					style={{
-						display: "flex",
-						alignItems: "center",
-						gap: "0.5rem",
-						padding: "0.5rem 0.75rem",
-						borderRadius: "10px",
-						background: "rgba(34,197,94,0.08)",
-						border: "1px solid rgba(34,197,94,0.15)",
-					}}
-				>
-					<span style={{ fontSize: "1rem" }}>⭐</span>
-					<span
-						style={{
-							flex: 1,
-							fontSize: "0.8rem",
-							color: "var(--color-text)",
-						}}
-					>
+				<div className="flex items-center gap-2 rounded-[10px] border border-success/[0.15] bg-success/[0.08] px-3 py-2">
+					<span className="text-base">⭐</span>
+					<span className="flex-1 text-[0.8rem] text-text">
 						¡Contraseña muy fuerte! Guardala como favorita.
 					</span>
 					<button
@@ -184,24 +132,7 @@ export function ClippyAssistant() {
 								// silent
 							}
 						}}
-						style={{
-							all: "unset",
-							cursor: "pointer",
-							fontSize: "0.75rem",
-							fontWeight: 600,
-							color: "var(--color-success)",
-							padding: "0.25rem 0.75rem",
-							borderRadius: "6px",
-							border: "1px solid var(--color-success)",
-							transition:
-								"background var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out)",
-						}}
-						onMouseEnter={(e) => {
-							e.currentTarget.style.background = "rgba(34,197,94,0.15)";
-						}}
-						onMouseLeave={(e) => {
-							e.currentTarget.style.background = "transparent";
-						}}
+						className="cursor-pointer rounded-md border border-success px-3 py-1 text-[0.75rem] font-semibold text-success transition-colors duration-150 ease-out hover:bg-success/[0.15]"
 					>
 						⭐ Guardar
 					</button>
@@ -219,24 +150,7 @@ export function ClippyAssistant() {
 						<button
 							type="button"
 							onClick={() => setShowAllFavorites(true)}
-							style={{
-								all: "unset",
-								cursor: "pointer",
-								fontSize: "0.75rem",
-								color: "var(--color-accent)",
-								textAlign: "center",
-								padding: "0.25rem",
-								borderRadius: "6px",
-								transition:
-									"background var(--duration-fast) var(--ease-out)",
-							}}
-							onMouseEnter={(e) => {
-								e.currentTarget.style.background =
-									"rgba(99,102,241,0.08)";
-							}}
-							onMouseLeave={(e) => {
-								e.currentTarget.style.background = "transparent";
-							}}
+							className="cursor-pointer rounded-md p-1 text-center text-[0.75rem] text-accent transition-colors duration-150 ease-out hover:bg-accent-soft"
 						>
 							👁️ Ver todos ({favorites.length})
 						</button>

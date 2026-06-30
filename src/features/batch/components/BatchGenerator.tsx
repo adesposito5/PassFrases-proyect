@@ -36,50 +36,26 @@ export default function BatchGenerator() {
 	const warnedIndices = new Set(batchWarnings.map((w) => w.index));
 
 	return (
-		<div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-			<div
-				style={{
-					display: "flex",
-					alignItems: "center",
-					justifyContent: "space-between",
-					gap: "1rem",
-				}}
-			>
-				<div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+		<div className="flex flex-col gap-6">
+			<div className="flex items-center justify-between gap-4">
+				<div className="flex items-center gap-3">
 					<label
 						htmlFor="batchCount"
-						style={{
-							fontSize: "0.85rem",
-							fontWeight: 600,
-							color: "var(--color-text)",
-						}}
+						className="text-[0.85rem] font-semibold text-text"
 					>
 						Cantidad
 					</label>
-					<div style={{ display: "flex", gap: "0.35rem" }}>
+					<div className="flex gap-[0.35rem]">
 						{[3, 5, 10, 20].map((n) => (
 							<button
 								type="button"
 								key={n}
 								onClick={() => setBatchCount(n)}
-								style={{
-									padding: "0.4rem 0.75rem",
-									borderRadius: "var(--radius-sm)",
-									border: `1px solid ${batchCount === n ? "var(--color-accent)" : "var(--color-border)"}`,
-									background:
-										batchCount === n
-											? "var(--color-accent-soft)"
-											: "transparent",
-									color:
-										batchCount === n
-											? "var(--color-accent)"
-											: "var(--color-text-secondary)",
-									fontSize: "0.8rem",
-									fontWeight: 600,
-									cursor: "pointer",
-									fontFamily: "var(--font-mono)",
-									transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
-								}}
+								className={`px-3 py-[0.4rem] rounded-sm border font-mono text-[0.8rem] font-semibold cursor-pointer transition-all duration-150 ease-out ${
+									batchCount === n
+										? "border-accent bg-accent-soft text-accent"
+										: "border-border bg-transparent text-text-secondary"
+								}`}
 							>
 								{n}
 							</button>
@@ -90,50 +66,18 @@ export default function BatchGenerator() {
 				<button
 					type="button"
 					onClick={generateBatch}
-					style={{
-						all: "unset",
-						cursor: "pointer",
-						display: "flex",
-						alignItems: "center",
-						gap: "0.4rem",
-						padding: "0.65rem 1.25rem",
-						borderRadius: "var(--radius-md)",
-						background: "var(--gradient-blue)",
-						color: "#fff",
-						fontSize: "0.9rem",
-						fontWeight: 700,
-						fontFamily: "var(--font-sans)",
-						transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
-						whiteSpace: "nowrap",
-					}}
-					onMouseEnter={(e) => {
-						e.currentTarget.style.transform = "translateY(-1px)";
-						e.currentTarget.style.boxShadow = "0 4px 20px rgba(99,102,241,0.3)";
-					}}
-					onMouseLeave={(e) => {
-						e.currentTarget.style.transform = "";
-						e.currentTarget.style.boxShadow = "";
-					}}
+					className="flex items-center gap-[0.4rem] whitespace-nowrap rounded-md bg-[image:var(--gradient-blue)] px-5 py-[0.65rem] font-sans text-[0.9rem] font-bold text-white cursor-pointer transition-all duration-150 ease-out hover:-translate-y-px hover:shadow-[0_4px_20px_rgba(99,102,241,0.3)]"
 				>
 					✨ Generar {batchCount} frases
 				</button>
 			</div>
 
 			{!batchResults && (
-				<div
-					style={{
-						textAlign: "center",
-						padding: "3rem 1rem",
-						color: "var(--color-text-tertiary)",
-						fontSize: "0.9rem",
-					}}
-				>
-					<div style={{ fontSize: "2.5rem", marginBottom: "0.75rem" }}>📋</div>
+				<div className="px-4 py-12 text-center text-[0.9rem] text-text-tertiary">
+					<div className="mb-3 text-[2.5rem]">📋</div>
 					<p>
 						Hacé clic en{" "}
-						<strong style={{ color: "var(--color-text-secondary)" }}>
-							Generar
-						</strong>{" "}
+						<strong className="text-text-secondary">Generar</strong>{" "}
 						para crear {batchCount} frases
 					</p>
 				</div>
@@ -144,43 +88,15 @@ export default function BatchGenerator() {
 					<button
 						type="button"
 						onClick={handleCopyAll}
-						style={{
-							all: "unset",
-							cursor: "pointer",
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
-							gap: "0.4rem",
-							padding: "0.55rem",
-							borderRadius: "var(--radius-sm)",
-							border: "1px solid var(--color-border)",
-							color: copiedAll
-								? "var(--color-success)"
-								: "var(--color-text-secondary)",
-							fontSize: "0.8rem",
-							fontWeight: 500,
-							fontFamily: "var(--font-sans)",
-							transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
-						}}
+						className={`flex items-center justify-center gap-[0.4rem] rounded-sm border border-border px-2 py-[0.55rem] font-sans text-[0.8rem] font-medium cursor-pointer transition-all duration-150 ease-out ${
+							copiedAll ? "text-success" : "text-text-secondary"
+						}`}
 					>
 						{copiedAll ? "✅ Copiadas todas" : "📋 Copiar todas"}
 					</button>
 
 					{batchWarnings.length > 0 && (
-						<div
-							style={{
-								display: "flex",
-								alignItems: "center",
-								gap: "0.5rem",
-								padding: "0.65rem 1rem",
-								borderRadius: "var(--radius-md)",
-								background: "rgba(249,115,22,0.08)",
-								border: "1px solid rgba(249,115,22,0.2)",
-								color: "var(--color-orange)",
-								fontSize: "0.8rem",
-								fontWeight: 500,
-							}}
-						>
+						<div className="flex items-center gap-2 rounded-md border border-orange-500/20 bg-orange-500/[0.08] px-4 py-[0.65rem] text-[0.8rem] font-medium text-orange-500">
 							<span>⚠️</span>
 							<span>
 								{batchWarnings.length === 1
@@ -190,51 +106,23 @@ export default function BatchGenerator() {
 						</div>
 					)}
 
-					<div
-						style={{ display: "flex", flexDirection: "column", gap: "0.6rem" }}
-					>
+					<div className="flex flex-col gap-[0.6rem]">
 						{batchResults.results.map((result, i) => {
 							const isWarned = warnedIndices.has(i);
 							return (
 								<div
 									key={`${i}-${result.password}`}
-									style={{
-										display: "flex",
-										alignItems: "center",
-										gap: "0.5rem",
-										padding: "0.65rem 0.85rem",
-										borderRadius: "var(--radius-md)",
-										border: `1px solid ${isWarned ? "rgba(249,115,22,0.25)" : "var(--color-border)"}`,
-										background: isWarned
-											? "rgba(249,115,22,0.04)"
-											: "var(--color-accent-soft)",
-										transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
-									}}
+									className={`flex items-center gap-2 rounded-md border px-[0.85rem] py-[0.65rem] transition-all duration-150 ease-out ${
+										isWarned
+											? "border-orange-500/25 bg-orange-500/[0.04]"
+											: "border-border bg-accent-soft"
+									}`}
 								>
-									<span
-										style={{
-											fontSize: "0.75rem",
-											fontWeight: 700,
-											color: "var(--color-text-tertiary)",
-											fontFamily: "var(--font-mono)",
-											minWidth: "1.5rem",
-											textAlign: "right",
-										}}
-									>
+									<span className="min-w-6 text-right font-mono text-[0.75rem] font-bold text-text-tertiary">
 										#{i + 1}
 									</span>
 
-									<span
-										style={{
-											flex: 1,
-											fontFamily: "var(--font-mono)",
-											fontSize: "0.85rem",
-											fontWeight: 600,
-											color: "var(--color-text)",
-											wordBreak: "break-all",
-											userSelect: "all",
-										}}
-									>
+									<span className="flex-1 select-all break-all font-mono text-[0.85rem] font-semibold text-text">
 										{result.password}
 									</span>
 
@@ -242,26 +130,18 @@ export default function BatchGenerator() {
 										type="button"
 										onClick={() => handleCopy(result.password, i)}
 										aria-label={`Copiar frase ${i + 1}`}
-										style={{
-											all: "unset",
-											cursor: "pointer",
-											fontSize: "1rem",
-											padding: "0.2rem 0.4rem",
-											borderRadius: "var(--radius-sm)",
-											color:
-												copiedIndex === i
-													? "var(--color-success)"
-													: "var(--color-text-tertiary)",
-											transition: "transform var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out)",
-											flexShrink: 0,
-										}}
+										className={`shrink-0 cursor-pointer rounded-sm px-[0.4rem] py-[0.2rem] text-base transition-all duration-150 ease-out ${
+											copiedIndex === i
+												? "text-success"
+												: "text-text-tertiary"
+										}`}
 									>
 										{copiedIndex === i ? "✅" : "📋"}
 									</button>
 
 									{isWarned && (
 										<span
-											style={{ fontSize: "0.9rem", flexShrink: 0 }}
+											className="shrink-0 text-[0.9rem]"
 											title="Similar a una frase del historial"
 										>
 											⚠️
