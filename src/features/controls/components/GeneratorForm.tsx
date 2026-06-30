@@ -32,7 +32,34 @@ export function GeneratorForm() {
 		setStep(3);
 	};
 
+	const btnStyles = `
+.btn-generate {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ec4899, #818cf8);
+  color: #fff;
+  font-size: 1.125rem;
+  font-weight: 700;
+  font-family: var(--font-sans);
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-sizing: border-box;
+}
+.btn-generate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(236,72,153,0.35);
+}
+`;
+
 	return (
+		<>
+			<style>{btnStyles}</style>
 		<div className="rounded-(--radius-lg) border border-(--color-border) bg-(--color-card) p-7 shadow-[var(--glass-shadow)]">
 			<h2 className="mb-6 font-sans text-lg font-semibold text-(--color-text)">
 				Personalizá tu contraseña
@@ -130,12 +157,13 @@ export function GeneratorForm() {
 			<button
 				type="button"
 				onClick={handleGenerate}
-				className="flex w-full cursor-pointer items-center justify-center gap-2 rounded-(--radius-md) border-none bg-[var(--gradient-cta)] px-4 py-4 font-sans text-base font-semibold text-white shadow-[0_0_14px_var(--color-pink-glow),0_2px_10px_var(--color-pink-glow)] transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) hover:-translate-y-px hover:shadow-[0_0_24px_var(--color-pink-glow),0_4px_20px_var(--color-pink-glow),0_0_6px_var(--color-pink-glow)]"
+				className="btn-generate"
 				aria-label="Generar contraseña con las opciones seleccionadas"
 			>
 				✨ Generar frase mágica
 			</button>
 		</div>
+		</>
 	);
 }
 
