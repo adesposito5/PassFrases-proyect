@@ -17,6 +17,17 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 		});
 	}
 
+	if (!/[0-9]/.test(normalized)) {
+		recommendations.push({
+			id: 'numbers',
+			title: 'Agregar números',
+			detail: 'Incluir números al final (ej: 42) suma ~6.5 bits de entropía extra sin complicar el recuerdo.',
+			severity: 'low',
+			icon: 'info',
+			applicable: 'numbers',
+		});
+	}
+
 	if (!/[A-Z]/.test(normalized)) {
 		recommendations.push({
 			id: 'uppercase',
@@ -28,7 +39,7 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 		});
 	}
 
-	if (!/[^a-zA-Z0-9]/.test(normalized)) {
+	if (!/[!@#$%&*?]/.test(normalized)) {
 		recommendations.push({
 			id: 'symbols',
 			title: 'Agregar símbolos',

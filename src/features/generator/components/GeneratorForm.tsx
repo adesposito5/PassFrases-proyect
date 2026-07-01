@@ -216,21 +216,21 @@ export function GeneratorForm({ onSettingChange }: { onSettingChange?: (key: str
 							label="Incluir números"
 							description="Agrega un número al final (ej: 42)"
 							checked={config.includeNumbers}
-							onChange={(val) => { updateOption("includeNumbers", val); if (val) onSettingChange?.("includeNumbers"); }}
+							onChange={(val) => { updateOption("includeNumbers", val); onSettingChange?.(val ? "includeNumbers" : "noNumbers"); }}
 						/>
 						<ToggleOption
 							id="includeSymbols"
 							label="Incluir símbolos"
 							description="Agrega un símbolo especial (ej: !)"
 							checked={config.includeSymbols}
-							onChange={(val) => { updateOption("includeSymbols", val); if (val) onSettingChange?.("includeSymbols"); }}
+							onChange={(val) => { updateOption("includeSymbols", val); onSettingChange?.(val ? "includeSymbols" : "noSymbols"); }}
 						/>
 						<ToggleOption
 							id="capitalize"
 							label="Capitalizar"
 							description="Primera letra en mayúscula"
 							checked={config.capitalize}
-							onChange={(val) => { updateOption("capitalize", val); if (val) onSettingChange?.("capitalize"); }}
+							onChange={(val) => { updateOption("capitalize", val); onSettingChange?.(val ? "capitalize" : "noCapitalize"); }}
 						/>
 					</div>
 				)}

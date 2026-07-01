@@ -7,14 +7,12 @@ import { ClippyAssistant } from '@/features/clippy/components/ClippyAssistant'
 
 export default function GeneratorPage() {
   const navigate = useNavigate()
-  const generate = usePasswordStore((state) => state.generate)
-  const setStep  = usePasswordStore((state) => state.setStep)
+  const setStep = usePasswordStore((state) => state.setStep)
   const [activeTip, setActiveTip] = useState<string | null>(null)
 
   useEffect(() => {
-    generate()
     setStep(2)
-  }, [generate, setStep])
+  }, [setStep])
 
   function handleBack() {
     setStep(1)

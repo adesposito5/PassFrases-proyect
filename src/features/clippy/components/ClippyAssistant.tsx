@@ -61,6 +61,21 @@ const SETTING_TIPS: Record<string, { icon: string; title: string; text: string }
     title: "Capitalizar",
     text: "¡Mayúsculas activadas! Cada inicial mayúscula suma 1 bit por palabra. En 4 palabras son 4 bits regalados sin que cambies tu forma de recordar.",
   },
+  noNumbers: {
+    icon: "🔢",
+    title: "Sin números",
+    text: "Los números suman ~6.5 bits extra sin esfuerzo. Recomendamos activarlos para mayor seguridad.",
+  },
+  noSymbols: {
+    icon: "🔣",
+    title: "Sin símbolos",
+    text: "Agregar un símbolo aporta ~3 bits adicionales. Es una mejora sencilla que fortalece tu contraseña.",
+  },
+  noCapitalize: {
+    icon: "🔠",
+    title: "Sin mayúsculas",
+    text: "Las mayúsculas aportan 1 bit por palabra. Activarlas no afecta la memorabilidad pero sí la seguridad.",
+  },
 };
 
 export function ClippyAssistant({ activeTip, floating = true }: { activeTip?: string | null; floating?: boolean }) {
