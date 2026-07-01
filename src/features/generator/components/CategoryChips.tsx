@@ -7,6 +7,8 @@ const CATEGORY_LABELS: Record<string, string> = {
 	colores: "Colores",
 	lugares: "Lugares",
 	verbos: "Verbos",
+	comida: "Comida",
+	emociones: "Emociones",
 };
 
 export function CategoryChips() {

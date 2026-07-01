@@ -1,9 +1,10 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 import { usePasswordStore } from "@/features/generator/store";
 import { useFavorites } from "@/features/favorites/hooks/useFavorites";
 import { FavoritesPanel } from "@/features/favorites/components/FavoritesPanel";
 import { encryptPassword } from "@/services/crypto.service";
-import { STRENGTH_CONFIG } from "@/features/generator/types";
+import { ConfirmDialog } from "@/shared/components/ui/ConfirmDialog";
 
 function timeAgo(date: number): string {
 	const sec = Math.floor((Date.now() - date) / 1000);
@@ -17,16 +18,40 @@ function timeAgo(date: number): string {
 }
 
 export default function HistoryPanel() {
+	const { pathname } = useLocation();
 	const sessionHistory = usePasswordStore((state) => state.sessionHistory);
 	const clearHistory = usePasswordStore((state) => state.clearHistory);
 	const removeFromHistory = usePasswordStore((state) => state.removeFromHistory);
 	const historyOpen = usePasswordStore((state) => state.historyOpen);
 	const toggleHistory = usePasswordStore((state) => state.toggleHistory);
-	const currentResult = usePasswordStore((state) => state.currentResult);
+	const hideButton = pathname === "/generator";
 	const [copiedIndex, setCopiedIndex] = useState<string | null>(null);
 	const [view, setView] = useState<"history" | "favorites">("history");
+	const [confirmAction, setConfirmAction] = useState<{
+		type: "clear" | "entry" | "favorite";
+		id?: string;
+	} | null>(null);
 
 	const { favorites, removeFavorite } = useFavorites();
+
+	function handleConfirmClear() {
+		clearHistory();
+		setConfirmAction(null);
+	}
+
+	function handleConfirmRemoveEntry() {
+		if (confirmAction?.id) removeFromHistory(confirmAction.id);
+		setConfirmAction(null);
+	}
+
+	function handleConfirmRemoveFavorite() {
+		if (confirmAction?.id) removeFavorite(confirmAction.id);
+		setConfirmAction(null);
+	}
+
+	function handleCancelConfirm() {
+		setConfirmAction(null);
+	}
 
 	async function handleCopy(password: string, id: string) {
 		try {
@@ -48,25 +73,27 @@ export default function HistoryPanel() {
 .history-scroll::-webkit-scrollbar-thumb:hover { background: var(--color-border); }
 .history-scroll { scrollbar-width: thin; scrollbar-color: var(--color-accent-soft) transparent; }
 `}</style>
-			<button
-				type="button"
-				onClick={toggleHistory}
-				aria-label="Abrir historial de sesión"
-				aria-expanded={historyOpen}
-				className="fixed bottom-6 right-6 z-[999] grid h-13 w-13 cursor-pointer place-items-center rounded-full border-none bg-[var(--gradient-cta)] text-lg text-white shadow-[0_4px_24px_var(--color-pink-glow)] transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) hover:scale-110 hover:shadow-[0_6px_32px_var(--color-pink-glow)]"
-			>
-				{view === "favorites" ? "⭐" : "🤖"}
-				{sessionHistory.length > 0 && view === "history" && (
-					<span className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-(--color-surface) bg-(--color-pink) font-mono text-[0.65rem] font-bold text-white">
-						{sessionHistory.length}
-					</span>
-				)}
-				{favorites.length > 0 && view === "favorites" && (
-					<span className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-(--color-surface) bg-(--color-pink) font-mono text-[0.65rem] font-bold text-white">
-						{favorites.length}
-					</span>
-				)}
-			</button>
+			{!hideButton && (
+				<button
+					type="button"
+					onClick={toggleHistory}
+					aria-label="Abrir historial de sesión"
+					aria-expanded={historyOpen}
+					className="fixed bottom-6 right-6 z-[999] grid h-13 w-13 cursor-pointer place-items-center rounded-full border-none bg-[var(--gradient-cta)] text-lg text-white shadow-[0_4px_24px_var(--color-pink-glow)] transition-[transform,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) hover:scale-110 hover:shadow-[0_6px_32px_var(--color-pink-glow)]"
+				>
+					{view === "favorites" ? "⭐" : "🤖"}
+					{sessionHistory.length > 0 && view === "history" && (
+						<span className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-(--color-surface) bg-(--color-pink) font-mono text-[0.65rem] font-bold text-white">
+							{sessionHistory.length}
+						</span>
+					)}
+					{favorites.length > 0 && view === "favorites" && (
+						<span className="absolute -top-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-2 border-(--color-surface) bg-(--color-pink) font-mono text-[0.65rem] font-bold text-white">
+							{favorites.length}
+						</span>
+					)}
+				</button>
+			)}
 
 			{historyOpen && (
 				<div
@@ -158,7 +185,7 @@ export default function HistoryPanel() {
 							{view === "history" && sessionHistory.length > 0 && (
 								<button
 									type="button"
-									onClick={clearHistory}
+									onClick={() => setConfirmAction({ type: "clear" })}
 									aria-label="Limpiar historial"
 									style={{
 										all: "unset",
@@ -236,7 +263,7 @@ export default function HistoryPanel() {
 							) : (
 								<FavoritesPanel
 									favorites={favorites}
-									onRemove={removeFavorite}
+									onRemove={(id: string) => setConfirmAction({ type: "favorite", id })}
 								/>
 							)
 						) : sessionHistory.length === 0 ? (
@@ -256,103 +283,6 @@ export default function HistoryPanel() {
 							</div>
 						) : (
 							<div className="flex flex-col">
-								{currentResult?.analysis?.recommendations &&
-									currentResult.analysis.recommendations.length > 0 && (
-										<div
-											style={{
-												display: "flex",
-												flexDirection: "column",
-												gap: "0.75rem",
-												marginBottom: "0.75rem",
-												padding: "0.85rem 1rem",
-												borderRadius: "14px",
-												background: "var(--color-accent-soft)",
-												border: "1px solid var(--color-border)",
-												transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
-																			}}
-																		>
-											<div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)" }}>
-												<span style={{ fontSize: "1rem" }}>🛡️</span>
-												<span>Recomendaciones</span>
-												<span style={{ fontSize: "0.65rem", fontWeight: 500, color: "var(--color-text-tertiary)" }}>
-													({currentResult.analysis.recommendations.length})
-												</span>
-												{currentResult.bits != null && (
-													<span style={{ marginLeft: "auto", fontSize: "0.65rem", fontWeight: 500, color: "var(--color-text-tertiary)" }}>
-														{currentResult.bits} bits ·{" "}
-														<span
-															style={{
-																fontWeight: 700,
-																color:
-																	STRENGTH_CONFIG[currentResult.strength ?? "medium"]?.color ?? "var(--color-text)",
-															}}
-														>
-															{STRENGTH_CONFIG[currentResult.strength ?? "medium"]?.label ?? "Media"}
-														</span>
-													</span>
-												)}
-											</div>
-											<div className="flex flex-col gap-2">
-												{currentResult.analysis.recommendations.map((rec) => (
-													<div
-														key={rec.id}
-														style={{
-															display: "flex",
-															alignItems: "flex-start",
-															gap: "0.75rem",
-															padding: "0.75rem 1rem",
-															borderRadius: "12px",
-															background: "var(--color-accent-soft)",
-															border: "1px solid var(--color-border)",
-												transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
-																			}}
-																		>
-																			<div
-																				style={{
-																					width: "36px",
-																height: "36px",
-																borderRadius: "10px",
-																display: "grid",
-																placeItems: "center",
-																background: "var(--color-accent-soft)",
-																flexShrink: 0,
-																fontSize: "1rem",
-															}}
-														>
-															{rec.icon === "shield"
-																? "🛡️"
-																: rec.icon === "warning"
-																	? "⚠️"
-																	: "ℹ️"}
-														</div>
-														<div>
-															<p
-																style={{
-																	fontSize: "0.8rem",
-																	fontWeight: 700,
-																	color: "var(--color-text)",
-																	marginBottom: "0.1rem",
-																}}
-															>
-																{rec.title}
-															</p>
-															{rec.detail && (
-																<p
-																	style={{
-																		fontSize: "0.72rem",
-																		color: "var(--color-text-secondary)",
-																		lineHeight: 1.4,
-																	}}
-																>
-																	{rec.detail}
-																</p>
-															)}
-														</div>
-													</div>
-												))}
-											</div>
-										</div>
-									)}
 								{sessionHistory.map((entry, i) => (
 									<div
 										key={entry.id}
@@ -427,7 +357,7 @@ export default function HistoryPanel() {
 
 										<button
 											type="button"
-											onClick={() => removeFromHistory(entry.id)}
+											onClick={() => setConfirmAction({ type: "entry", id: entry.id })}
 											aria-label="Eliminar del historial"
 											style={{
 												all: "unset",
@@ -466,6 +396,34 @@ export default function HistoryPanel() {
 							: "Favoritos guardados de forma cifrada · Solo vos podés verlos"}
 					</div>
 				</div>
+			)}
+
+			{confirmAction?.type === "clear" && (
+				<ConfirmDialog
+					open
+					title="Limpiar historial"
+					message="¿Estás seguro que deseas borrar todo el historial de sesión? Esta acción no se puede deshacer."
+					onConfirm={handleConfirmClear}
+					onCancel={handleCancelConfirm}
+				/>
+			)}
+			{confirmAction?.type === "entry" && (
+				<ConfirmDialog
+					open
+					title="Eliminar entrada"
+					message="¿Estás seguro que deseas borrar esta entrada del historial? Esta acción no se puede deshacer."
+					onConfirm={handleConfirmRemoveEntry}
+					onCancel={handleCancelConfirm}
+				/>
+			)}
+			{confirmAction?.type === "favorite" && (
+				<ConfirmDialog
+					open
+					title="Eliminar favorita"
+					message="¿Estás seguro que deseas borrar esta contraseña de tus favoritos? Esta acción no se puede deshacer."
+					onConfirm={handleConfirmRemoveFavorite}
+					onCancel={handleCancelConfirm}
+				/>
 			)}
 		</>
 	);

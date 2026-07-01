@@ -3,7 +3,7 @@ import { calculateEntropy } from "./entropy";
 
 export function analyzePassword(password: string, config?: PasswordConfig): PasswordAnalysis {
 	const normalized = password.trim();
-	const words = normalized.split(/[-_ ]+/).filter(Boolean);
+	const words = normalized.split(/[-_. ]+/).filter(Boolean);
 	const recommendations: PasswordRecommendation[] = [];
 
 	if (normalized.length < 24) {
@@ -91,10 +91,11 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 	const entropy = config ? calculateEntropy(config, normalized) : null;
 
 	if (entropy !== null && entropy < 60) {
+		const addWords = words.length < 4 ? ' más palabras,' : '';
 		recommendations.push({
 			id: 'low-entropy',
 			title: 'Entropía baja',
-			detail: 'La entropía de la contraseña está por debajo de un umbral seguro. Considera agregar más palabras, mayúsculas, números o símbolos para mejorar la resistencia.',
+			detail: `La entropía de la contraseña está por debajo de un umbral seguro. Considera agregar${addWords} mayúsculas, números o símbolos para mejorar la resistencia.`,
 			severity: 'high',
 			icon: 'shield',
 			applicable: 'low-entropy',

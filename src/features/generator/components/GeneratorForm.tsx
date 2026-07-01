@@ -3,7 +3,7 @@ import { usePasswordStore } from "@/features/generator/store";
 import type { PasswordConfig } from "@/features/generator/types";
 import { CategoryChips } from "@/features/generator/components/CategoryChips";
 
-export function GeneratorForm() {
+export function GeneratorForm({ onSettingChange }: { onSettingChange?: (key: string) => void }) {
 	const config = usePasswordStore((state) => state.config);
 	const generate = usePasswordStore((state) => state.generate);
 	const setStep = usePasswordStore((state) => state.setStep);
@@ -117,7 +117,7 @@ export function GeneratorForm() {
 					max={6}
 					step={1}
 					value={config.wordCount}
-					onChange={(e) => updateOption("wordCount", Number(e.target.value))}
+					onChange={(e) => { updateOption("wordCount", Number(e.target.value)); onSettingChange?.("wordCount"); }}
 					className="w-full cursor-pointer"
 				/>
 				<div
@@ -162,7 +162,7 @@ export function GeneratorForm() {
 				<select
 					id="separator"
 					value={config.separator}
-					onChange={(e) => updateOption("separator", e.target.value)}
+					onChange={(e) => { updateOption("separator", e.target.value); onSettingChange?.("separator"); }}
 					className="w-full cursor-pointer rounded-[12px] border border-(--color-border) bg-(--color-surface) px-3 py-2.5 font-sans text-sm text-(--color-text) transition-[border-color,box-shadow] duration-[var(--duration-fast)] ease-(--ease-out) focus:border-(--color-border-focus) focus:shadow-[0_0_0_1px_var(--color-border-focus)] focus:outline-none"
 				>
 					<option value="-">Guión ( - )</option>
@@ -216,21 +216,21 @@ export function GeneratorForm() {
 							label="Incluir números"
 							description="Agrega un número al final (ej: 42)"
 							checked={config.includeNumbers}
-							onChange={(val) => updateOption("includeNumbers", val)}
+							onChange={(val) => { updateOption("includeNumbers", val); if (val) onSettingChange?.("includeNumbers"); }}
 						/>
 						<ToggleOption
 							id="includeSymbols"
 							label="Incluir símbolos"
 							description="Agrega un símbolo especial (ej: !)"
 							checked={config.includeSymbols}
-							onChange={(val) => updateOption("includeSymbols", val)}
+							onChange={(val) => { updateOption("includeSymbols", val); if (val) onSettingChange?.("includeSymbols"); }}
 						/>
 						<ToggleOption
 							id="capitalize"
 							label="Capitalizar"
 							description="Primera letra en mayúscula"
 							checked={config.capitalize}
-							onChange={(val) => updateOption("capitalize", val)}
+							onChange={(val) => { updateOption("capitalize", val); if (val) onSettingChange?.("capitalize"); }}
 						/>
 					</div>
 				)}

@@ -5,8 +5,7 @@
 [![React Doctor](https://img.shields.io/badge/react--doctor-70%2F100-yellow)]()
 
 Aplicación web progresiva para generar frases de seguridad (passphrases) con entropía configurable.
-Cada frase combina palabras al azar de 5 categorías del español, con opciones de personalización, análisis de fortaleza en tiempo real, y almacenamiento cifrado de favoritos.
-Proyecto integrador académico — Universidad Argentina de la Empresa.
+Cada frase combina palabras al azar de 7 categorías del español, con opciones de personalización, análisis de fortaleza en tiempo real, y almacenamiento cifrado de favoritos.
 
 ---
 
@@ -29,7 +28,7 @@ Proyecto integrador académico — Universidad Argentina de la Empresa.
 ## Funcionalidades
 
 ### Generación de passphrases (D1)
-- Combinación aleatoria de 75 palabras distribuidas en 5 categorías: animales, naturaleza, verbos, colores, lugares
+- Combinación aleatoria de 165 palabras distribuidas en 7 categorías: animales, naturaleza, verbos, colores, lugares, comida, emociones
 - Selección criptográficamente segura via `crypto.getRandomValues()`
 - Filtro por categorías mediante chips interactivos
 - Resultado mostrado con tipografía monoespaciada y selección fácil (`user-select: all`)
@@ -49,16 +48,19 @@ Proyecto integrador académico — Universidad Argentina de la Empresa.
 
 ### Recomendaciones y usabilidad (D4)
 - Botón "Copiar" con feedback visual (✅) y `navigator.clipboard.writeText()`
-- Panel de recomendaciones contextuales basadas en análisis de la contraseña
-- Tips del asistente ClippyAssistant según el paso del wizard
+- Tips del asistente ClippyAssistant según el paso del wizard, con tips progresivos por interacción
+- Recomendaciones de refuerzo inline en paso 3 (fusionadas en ClippyAssistant)
 - Detección de frases cortas, falta de mayúsculas/símbolos, palabras repetidas, entropía baja
 
 ### Opciones avanzadas e historial (D5)
 - **Batch**: generación simultánea de 3, 5, 10 o 20 frases con copiado individual o masivo
-- **Historial de sesión**: almacena hasta 50 entradas con timestamp, visible en panel flotante con solapa "Historial / Favoritos"
+- **Historial de sesión**: almacena hasta 50 entradas con timestamp, visible en panel flotante con solapa "Historial / Favoritos" 🤖 global
 - **Advertencias de reutilización**: detecta frases similares a las del historial y muestra alertas
 - **Favoritos cifrados**: guardado con AES-GCM-256, derivación PBKDF2 (600k iteraciones, SHA-256), sal e IV aleatorios por entrada
-- **Asistente contextual**: ClippyAssistant muestra tips aleatorios según el paso, sugiere guardar cuando la entropía ≥80 bits
+- **Asistente contextual**: ClippyAssistant como burbuja flotante 🤖 (esquina inferior derecha) con tips automáticos según el setting en paso 2 y recomendaciones de seguridad en paso 3; al clickear abre historial + favoritos vía HistoryPanel
+- **Confirm dialogs**: nativos `<dialog>` con `showModal()` para confirmar borrados en historial y favoritos
+- **Word list expandida**: 165 palabras en 7 categorías (comida, emociones agregadas)
+- **Análisis inteligente**: recomendaciones de entropía que detectan separadores y no sugieren más palabras si ya hay 4+
 
 ---
 
@@ -88,13 +90,12 @@ src/
 │   ├── generator/     → store, types, utils (generate, entropy, analysis)
 │   │   ├── pages/     → WizardStartPage, GeneratorPage
 │   │   └── components/→ GeneratorForm, GeneratorPanel, PasswordActions,
-│   │                    EntropyMeter, FunStats, CategoryChips, CopyButton,
-│   │                    RecommendationsPanel
+│   │                    EntropyMeter, FunStats, CategoryChips, CopyButton
 │   ├── batch/         → BatchPage, BatchGenerator, HistoryPanel
 │   ├── favorites/     → store (AES-GCM persist), hooks, FavoritesPanel
 │   └── clippy/        → ClippyAssistant (tips contextuales)
 ├── shared/
-│   ├── components/ui/ → AppLayout, WizardLayout, StepProgress
+│   ├── components/ui/ → AppLayout, WizardLayout, StepProgress, ConfirmDialog
 │   └── lib/           → cn() utility (clsx + tailwind-merge)
 ├── services/          → crypto.service.ts (Web Crypto API)
 ├── main.tsx
