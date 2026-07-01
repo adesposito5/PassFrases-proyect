@@ -17,7 +17,7 @@ export function AppLayout({ children }: AppLayoutProps) {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '1rem 1.5rem',
+        padding: '0.75rem 1.25rem',
         borderBottom: '1px solid var(--color-border)',
         backdropFilter: 'blur(8px)',
         WebkitBackdropFilter: 'blur(8px)',
@@ -71,7 +71,7 @@ export function AppLayout({ children }: AppLayoutProps) {
       {/* Footer */}
       <footer style={{
         textAlign: 'center',
-        padding: '1.25rem',
+        padding: '0.75rem',
         borderTop: '1px solid var(--color-border)',
         background: 'rgba(6,11,24,0.85)',
         fontSize: '0.75rem',

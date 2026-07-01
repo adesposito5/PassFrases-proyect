@@ -23,7 +23,7 @@ export function StepProgress() {
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: '2.5rem',
+        marginBottom: '1.5rem',
         position: 'relative',
       }}
     >

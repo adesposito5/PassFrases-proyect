@@ -14,7 +14,7 @@ export function WizardLayout({ children, glow = true }: WizardLayoutProps) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        padding: '2rem 1.5rem',
+        padding: '1.25rem 1.5rem',
         position: 'relative',
         zIndex: 1,
       }}
@@ -31,7 +31,7 @@ export function WizardLayout({ children, glow = true }: WizardLayoutProps) {
             border: glow ? '1px solid var(--glass-border)' : '1px solid var(--color-border)',
             borderRadius: 'var(--radius-xl)',
             boxShadow: 'var(--glass-shadow)',
-            padding: '2.5rem',
+            padding: '1.75rem',
             position: 'relative',
             overflow: 'hidden',
           }}

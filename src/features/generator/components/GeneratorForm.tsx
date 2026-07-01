@@ -66,7 +66,7 @@ export function GeneratorForm() {
 				borderRadius: "var(--radius-lg)",
 				border: "1px solid var(--color-border)",
 				background: "var(--color-card)",
-				padding: "1.75rem",
+				padding: "1.25rem",
 				boxShadow: "var(--glass-shadow)",
 			}}
 		>
@@ -75,7 +75,7 @@ export function GeneratorForm() {
 					fontSize: "1.125rem",
 					fontWeight: 600,
 					color: "var(--color-text)",
-					marginBottom: "1.25rem",
+					marginBottom: "0.75rem",
 				}}
 			>
 				Personalizá tu contraseña
@@ -83,11 +83,11 @@ export function GeneratorForm() {
 
 			<div
 				style={{
-					padding: "1rem 1.25rem",
+					padding: "0.75rem 1rem",
 					borderRadius: "12px",
 					background: "transparent",
 					border: "1px solid var(--color-border)",
-					marginBottom: "0.75rem",
+					marginBottom: "0.5rem",
 				}}
 			>
 				<label
@@ -96,7 +96,7 @@ export function GeneratorForm() {
 						display: "flex",
 						alignItems: "center",
 						justifyContent: "space-between",
-						marginBottom: "0.75rem",
+						marginBottom: "0.5rem",
 						fontSize: "0.875rem",
 						fontWeight: 500,
 						color: "var(--color-text-secondary)",
@@ -137,11 +137,11 @@ export function GeneratorForm() {
 
 			<div
 				style={{
-					padding: "1rem 1.25rem",
+					padding: "0.75rem 1rem",
 					borderRadius: "12px",
 					background: "transparent",
 					border: "1px solid var(--color-border)",
-					marginBottom: "0.75rem",
+					marginBottom: "0.5rem",
 				}}
 			>
 				<label
@@ -150,7 +150,7 @@ export function GeneratorForm() {
 						display: "flex",
 						alignItems: "center",
 						gap: "0.5rem",
-						marginBottom: "0.75rem",
+						marginBottom: "0.5rem",
 						fontSize: "0.875rem",
 						fontWeight: 500,
 						color: "var(--color-text-secondary)",
@@ -174,11 +174,11 @@ export function GeneratorForm() {
 
 			<div
 				style={{
-					padding: "1rem 1.25rem",
+					padding: "0.75rem 1rem",
 					borderRadius: "12px",
 					background: "transparent",
 					border: "1px solid var(--color-border)",
-					marginBottom: "1rem",
+					marginBottom: "0.5rem",
 				}}
 			>
 				<button
@@ -238,18 +238,18 @@ export function GeneratorForm() {
 
 			<div
 				style={{
-					padding: "1rem 1.25rem",
+					padding: "0.75rem 1rem",
 					borderRadius: "12px",
 					background: "transparent",
 					border: "1px solid var(--color-border)",
-					marginBottom: "0.75rem",
+					marginBottom: "0.5rem",
 				}}
 			>
 				<p
 					style={{
 						fontSize: "0.8rem",
 						color: "var(--color-text-secondary)",
-						marginBottom: "0.75rem",
+						marginBottom: "0.5rem",
 						fontWeight: 500,
 					}}
 				>
@@ -292,7 +292,7 @@ function ToggleOption({
 				display: "flex",
 				alignItems: "center",
 				justifyContent: "space-between",
-				padding: "0.75rem 1rem",
+				padding: "0.5rem 0.85rem",
 				borderRadius: "10px",
 				background: "transparent",
 				border: "1px solid var(--color-border)",
