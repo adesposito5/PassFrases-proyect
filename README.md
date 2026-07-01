@@ -129,7 +129,7 @@ src/
 |---------|------------|-------------|
 | D1 | Base — scaffold, wordLists.json, generador de frases | Agustina D'Esposito |
 | D2 | Personalización — longitud, separadores, toggles | Axel Figueredo |
-| D3 | Seguridad — entropía, medidor visual, análisis | Alison Gamboa |
+| D3 | Seguridad — entropía, medidor visual, análisis | Alizon Gamboa |
 | D4 | Recomendaciones — copiar, tips, recomendaciones | Luz Vásquez |
 | D5 | Opciones e historial — batch, historial, favoritos cifrados, asistente | Matías Sousa |
 
