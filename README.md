@@ -1,41 +1,64 @@
-# 🔐 PassFrases
+# PassFrases — Generador de Passphrases
 
-Generador de contraseñas basado en frases — fácil de recordar, difícil de adivinar.
+[![Build](https://img.shields.io/badge/build-%E2%9C%93%20exitosa-brightgreen)]()
+[![Lint](https://img.shields.io/badge/lint-0%20errores-brightgreen)]()
+[![React Doctor](https://img.shields.io/badge/react--doctor-70%2F100-yellow)]()
 
-> Proyecto integrador · Tecnicatura en Desarrollo de Software · 2026
+Aplicación web progresiva para generar frases de seguridad (passphrases) con entropía configurable.
+Cada frase combina palabras al azar de 5 categorías del español, con opciones de personalización, análisis de fortaleza en tiempo real, y almacenamiento cifrado de favoritos.
 
----
-
-## 🌐 Deploy
-
-<!-- URL del deploy pendiente -->
-_Próximamente_
 
 ---
 
-## ¿Qué es PassFrases?
+## Stack
 
-PassFrases genera frases de seguridad (passphrases) combinando palabras al azar de 5 categorías del español, con opciones de personalización, análisis de fortaleza en tiempo real y almacenamiento cifrado de favoritos. El resultado es una contraseña con alta entropía que cualquier persona puede recordar sin anotarla.
-
-Ejemplo: `Niebla-Aldea-Tormenta-42`
-
-Todo el procesamiento ocurre 100% en el navegador. Ninguna contraseña se envía a ningún servidor.
+| Capa | Tecnología |
+|------|-----------|
+| Framework | React 19 + TypeScript 6 |
+| Bundler | Vite 8 |
+| Enrutamiento | React Router v7 (lazy routes + Suspense) |
+| Estado global | Zustand v5 con persist middleware |
+| Estilos | Tailwind CSS v4 (via `@tailwindcss/vite`) |
+| Iconos | lucide-react |
+| Utilidades CSS | clsx + tailwind-merge |
+| Calidad | ESLint + Biome |
+| Criptografía | Web Crypto API (AES-GCM-256, PBKDF2) |
 
 ---
 
 ## Funcionalidades
 
-- **Generador con wizard** — flujo guiado en 3 pasos: bienvenida, personalización y resultado
-- **Generación de passphrases** — combinación aleatoria de 75 palabras distribuidas en 5 categorías (animales, naturaleza, verbos, colores, lugares), usando `crypto.getRandomValues()` para selección criptográficamente segura
-- **Controles de personalización** — cantidad de palabras (slider 2 a 6), separador (`-`, `.`, `_`, espacio), números aleatorios, símbolos especiales, capitalización de primera letra
-- **Medidor de entropía** — cálculo en bits según diccionario, cantidad de palabras, capitalización, números, símbolos y patrones. Barra progresiva con umbrales: <20 débil, 20–39 moderada, 40–59 fuerte, ≥60 muy fuerte
-- **Recomendaciones contextuales** — detección de frases cortas, falta de mayúsculas/símbolos, palabras repetidas y entropía baja
-- **Generación en lote** — creación simultánea de 3, 5, 10 o 20 frases, con copiado individual o masivo
-- **Historial de sesión** — hasta 50 entradas con timestamp, visible en panel flotante con solapa "Historial / Favoritos", y advertencias de reutilización cuando una frase se parece a una anterior
-- **Favoritos cifrados** — guardado con AES-GCM-256 y derivación PBKDF2 (600k iteraciones, SHA-256), sal e IV aleatorios por entrada
-- **Copiado seguro** — botón "Copiar" con feedback visual y `navigator.clipboard.writeText()` nativo, sin librerías externas
-- **Asistente interactivo (Clippy)** — tips contextuales según el paso del wizard, sugiere guardar como favorito cuando la entropía ≥80 bits
-- **100% local** — sin backend, sin telemetría, sin cuentas
+### Generación de passphrases (D1)
+- Combinación aleatoria de 75 palabras distribuidas en 5 categorías: animales, naturaleza, verbos, colores, lugares
+- Selección criptográficamente segura via `crypto.getRandomValues()`
+- Filtro por categorías mediante chips interactivos
+- Resultado mostrado con tipografía monoespaciada y selección fácil (`user-select: all`)
+
+### Personalización (D2)
+- **Cantidad de palabras**: slider de 2 a 6
+- **Separador**: guión (`-`), punto (`.`), guión bajo (`_`) o espacio
+- **Opciones avanzadas**: números aleatorios (10–99), símbolos especiales (`!@#$%&*?`), capitalización de primera letra
+- Toggle switches animados con estados aria‑checked
+
+### Seguridad y entropía (D3)
+- Cálculo de entropía en bits según: tamaño del diccionario, cantidad de palabras, capitalización, números, símbolos, diversidad, y patrones
+- Barra de fortaleza progresiva con gradiente rojo → naranja → amarillo → verde
+- Umbrales: <20 débil, 20–39 moderada, 40–59 fuerte, ≥60 muy fuerte
+- Penalizaciones por: palabras repetidas, patrones secuenciales, patrones de teclado, años, sufijos numéricos predecibles
+- Estadísticas adicionales: badges con palabras, bits, toggles activos
+
+### Recomendaciones y usabilidad (D4)
+- Botón "Copiar" con feedback visual (✅) y `navigator.clipboard.writeText()`
+- Panel de recomendaciones contextuales basadas en análisis de la contraseña
+- Tips del asistente ClippyAssistant según el paso del wizard
+- Detección de frases cortas, falta de mayúsculas/símbolos, palabras repetidas, entropía baja
+
+### Opciones avanzadas e historial (D5)
+- **Batch**: generación simultánea de 3, 5, 10 o 20 frases con copiado individual o masivo
+- **Historial de sesión**: almacena hasta 50 entradas con timestamp, visible en panel flotante con solapa "Historial / Favoritos"
+- **Advertencias de reutilización**: detecta frases similares a las del historial y muestra alertas
+- **Favoritos cifrados**: guardado con AES-GCM-256, derivación PBKDF2 (600k iteraciones, SHA-256), sal e IV aleatorios por entrada
+- **Asistente contextual**: ClippyAssistant muestra tips aleatorios según el paso, sugiere guardar cuando la entropía ≥80 bits
 
 ---
 
@@ -56,23 +79,7 @@ Inicio (/)  ──[Comenzar]──▶  Personalizar (/generator)  ──[Generar
 
 ---
 
-## Stack tecnológico
-
-| Tecnología | Rol |
-|---|---|
-| React 19 + TypeScript 6 | UI y tipado estático |
-| Vite 8 | Bundler y dev server |
-| Tailwind CSS v4 (`@tailwindcss/vite`) | Estilos y design tokens |
-| Zustand v5 (persist middleware) | Estado global |
-| React Router v7 (lazy routes + Suspense) | Navegación |
-| Lucide React | Íconos |
-| clsx + tailwind-merge | Utilidades CSS |
-| ESLint + Biome | Calidad de código |
-| Web Crypto API (AES-GCM-256, PBKDF2) | Criptografía de favoritos |
-
----
-
-## Estructura del proyecto
+## Arquitectura
 
 ```
 src/
@@ -107,7 +114,6 @@ src/
 ---
 
 ## Accesibilidad
-
 - Skip link para navegación por teclado
 - Roles ARIA (tablist, tab, switch, status, dialog)
 - Focus visible personalizado
@@ -117,54 +123,7 @@ src/
 
 ---
 
-## Instalación y uso local
-
-**Requisitos:** Node.js 18+ y pnpm
-
-```bash
-# Clonar el repositorio
-git clone https://github.com/<org>/PassFrases-proyect.git
-cd PassFrases-proyect
-
-# Instalar dependencias
-pnpm install
-
-# Iniciar el servidor de desarrollo
-pnpm dev
-```
-
-La app estará disponible en `http://localhost:5173`
-
-### Otros comandos
-
-```bash
-pnpm build      # TypeScript check + build de producción
-pnpm lint       # ESLint + Biome — 0 errores requerido
-pnpm preview    # Preview del build de producción
-pnpm doctor     # npx react-doctor@latest .
-```
-
----
-
-## Estado del proyecto
-
-| Verificación | Resultado |
-|-------------|-----------|
-| Build (`tsc -b && vite build`) | ✅ Sin errores |
-| Lint (`eslint .`) | ✅ 0 errores, 0 warnings |
-| React Doctor | ✅ 70/100 (Needs work) |
-| Score original | 50/100 (Critical) — mejora de +20 puntos |
-
----
-
 ## Equipo
-
-<!--
-⚠️ NOTA: el esquema de Desafíos (D1–D5) difiere entre el README del archivo subido
-y el que pegaste en el chat. Se usó acá la versión del archivo subido (más detallada
-y con apellidos), pero conviene confirmar con el equipo cuál es la asignación real
-antes de dar esto por definitivo.
--->
 
 | Desafío | Descripción | Responsable |
 |---------|------------|-------------|
@@ -176,16 +135,22 @@ antes de dar esto por definitivo.
 
 ---
 
-## Flujo de trabajo Git
+## Desarrollo
 
-```
-main
- └── develop
-      ├── feat/base-d1
-      ├── feat/controls-d2
-      ├── feat/batch-d3
-      ├── feat/favorites-d4
-      └── feat/clippy-d5
+```bash
+pnpm install          # Instalar dependencias
+pnpm dev              # Servidor de desarrollo (Vite)
+pnpm build            # TypeScript check + build production
+pnpm lint             # ESLint — 0 errores requerido
+pnpm preview          # Preview del build production
+pnpm doctor           # npx react-doctor@latest .
 ```
 
-Cada integrante trabaja en su rama de feature y abre un PR hacia `develop`. Los merges a `main` se hacen al final del sprint.
+## Estado del proyecto
+
+| Verificación | Resultado |
+|-------------|-----------|
+| Build (`tsc -b && vite build`) | ✅ Sin errores |
+| Lint (`eslint .`) | ✅ 0 errores, 0 warnings |
+| React Doctor | ✅ 70/100 (Needs work) |
+| Score original | 50/100 (Critical) — mejora de +20 puntos |
