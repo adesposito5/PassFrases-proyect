@@ -9,6 +9,11 @@ Cada frase combina palabras al azar de 5 categorías del español, con opciones 
 
 
 ---
+## Delopy 
+
+https://pass-frases-proyect.vercel.app/
+
+---
 
 ## Stack
 
@@ -130,7 +135,7 @@ src/
 | D1 | Base — scaffold, wordLists.json, generador de frases | Agustina D'Esposito |
 | D2 | Personalización — longitud, separadores, toggles | Axel Figueredo |
 | D3 | Seguridad — entropía, medidor visual, análisis | Alizon Gamboa |
-| D4 | Recomendaciones — copiar, tips, recomendaciones | Luz Vásquez |
+| D4 | Recomendaciones — copiar, tips, recomendaciones | Luz Vázquez |
 | D5 | Opciones e historial — batch, historial, favoritos cifrados, asistente | Matías Sousa |
 
 ---
