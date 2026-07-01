@@ -91,6 +91,7 @@ wordCount={config.wordCount}
 bits={currentResult.bits}
 hasNumbers={config.includeNumbers}
 hasSymbols={config.includeSymbols}
+hasCapitalize={config.capitalize}
 />
 </>
 )}

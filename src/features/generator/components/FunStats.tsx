@@ -6,6 +6,7 @@ interface FunStatsProps {
 	bits: number;
 	hasNumbers: boolean;
 	hasSymbols: boolean;
+	hasCapitalize: boolean;
 }
 
 export function FunStats({
@@ -13,6 +14,7 @@ export function FunStats({
 	bits,
 	hasNumbers,
 	hasSymbols,
+	hasCapitalize,
 }: FunStatsProps) {
 	const strength = getStrengthLevel(bits);
 	const config = STRENGTH_CONFIG[strength];
@@ -60,43 +62,34 @@ export function FunStats({
 				{bits.toFixed(1)} bits
 			</span>
 
-			{hasNumbers && (
-				<span
-					style={{
-						display: "inline-flex",
-						alignItems: "center",
-						gap: "0.35rem",
-						padding: "0.4rem 0.9rem",
-						borderRadius: "99px",
-						fontSize: "0.75rem",
-						fontWeight: 500,
-						background: "rgba(34,197,94,0.08)",
-						border: "1px solid rgba(34,197,94,0.2)",
-						color: "var(--color-success)",
-					}}
-				>
-					✓ números
-				</span>
-			)}
-
-			{hasSymbols && (
-				<span
-					style={{
-						display: "inline-flex",
-						alignItems: "center",
-						gap: "0.35rem",
-						padding: "0.4rem 0.9rem",
-						borderRadius: "99px",
-						fontSize: "0.75rem",
-						fontWeight: 500,
-						background: "rgba(34,197,94,0.08)",
-						border: "1px solid rgba(34,197,94,0.2)",
-						color: "var(--color-success)",
-					}}
-				>
-					✓ símbolos
-				</span>
-			)}
+			<Bubble active={hasNumbers} label="números" />
+			<Bubble active={hasSymbols} label="símbolos" />
+			<Bubble active={hasCapitalize} label="mayúsculas" />
 		</div>
+	);
+}
+
+function Bubble({ active, label }: { active: boolean; label: string }) {
+	const color = active ? "var(--color-success)" : "#ef4444";
+	const bg = active ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)";
+	const border = active ? "1px solid rgba(34,197,94,0.2)" : "1px solid rgba(239,68,68,0.2)";
+
+	return (
+		<span
+			style={{
+				display: "inline-flex",
+				alignItems: "center",
+				gap: "0.35rem",
+				padding: "0.4rem 0.9rem",
+				borderRadius: "99px",
+				fontSize: "0.75rem",
+				fontWeight: 500,
+				background: bg,
+				border: border,
+				color: color,
+			}}
+		>
+			{active ? "✓" : "✗"} {label}
+		</span>
 	);
 }
