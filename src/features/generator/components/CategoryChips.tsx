@@ -40,7 +40,7 @@ export function CategoryChips() {
 							background: active ? "var(--gradient-cta)" : "var(--color-accent-soft)",
 							border: active ? "1px solid var(--color-pink)" : "1px solid var(--color-border)",
 							color: active ? "#fff" : "var(--color-text-secondary)",
-							transition: "all var(--duration-fast) var(--ease-out)",
+							transition: "background, border-color, color var(--duration-fast) var(--ease-out)",
 							fontFamily: "var(--font-sans)",
 						}}
 					>

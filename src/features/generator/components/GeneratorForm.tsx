@@ -296,7 +296,7 @@ function ToggleOption({
 				borderRadius: "10px",
 				background: "transparent",
 				border: "1px solid var(--color-border)",
-				transition: "all var(--duration-fast) var(--ease-out)",
+				transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
 			}}
 		>
 			<div>

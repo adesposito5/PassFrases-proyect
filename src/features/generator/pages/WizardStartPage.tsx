@@ -119,7 +119,7 @@ export default function WizardStartPage() {
 								background: "var(--color-accent-soft)",
 								border: "1px solid var(--color-border)",
 								borderRadius: "14px",
-								transition: "all var(--duration-fast) var(--ease-out)",
+								transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
 							}}
 						>
 							<div

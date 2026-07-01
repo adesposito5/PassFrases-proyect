@@ -60,7 +60,7 @@ export function FavoritesPanel({
               borderRadius: compact ? "10px" : "12px",
               background: "var(--color-accent-soft)",
               border: "1px solid var(--color-border)",
-              transition: "all var(--duration-fast) var(--ease-out)",
+              transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
             }}
           >
             <div

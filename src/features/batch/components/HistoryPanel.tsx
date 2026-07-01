@@ -168,7 +168,7 @@ export default function HistoryPanel() {
 										border: "1px solid var(--color-border)",
 										fontSize: "0.75rem",
 										color: "var(--color-text-tertiary)",
-										transition: "all var(--duration-fast) var(--ease-out)",
+										transition: "color, border-color var(--duration-fast) var(--ease-out)",
 									}}
 									onMouseEnter={(e) => {
 										e.currentTarget.style.borderColor = "var(--color-error)";
@@ -193,7 +193,7 @@ export default function HistoryPanel() {
 									borderRadius: "var(--radius-sm)",
 									fontSize: "1.1rem",
 									color: "var(--color-text-tertiary)",
-									transition: "all var(--duration-fast) var(--ease-out)",
+									transition: "color, background-color var(--duration-fast) var(--ease-out)",
 								}}
 								onMouseEnter={(e) => {
 									e.currentTarget.style.background = "var(--color-accent-soft)";
@@ -268,9 +268,9 @@ export default function HistoryPanel() {
 												borderRadius: "14px",
 												background: "var(--color-accent-soft)",
 												border: "1px solid var(--color-border)",
-												transition: "all var(--duration-fast) var(--ease-out)",
-											}}
-										>
+												transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
+																			}}
+																		>
 											<div style={{ display: "flex", alignItems: "center", gap: "0.5rem", fontSize: "0.8rem", fontWeight: 700, color: "var(--color-text)" }}>
 												<span style={{ fontSize: "1rem" }}>🛡️</span>
 												<span>Recomendaciones</span>
@@ -304,12 +304,12 @@ export default function HistoryPanel() {
 															borderRadius: "12px",
 															background: "var(--color-accent-soft)",
 															border: "1px solid var(--color-border)",
-															transition: "all var(--duration-fast) var(--ease-out)",
-														}}
-													>
-														<div
-															style={{
-																width: "36px",
+												transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
+																			}}
+																		>
+																			<div
+																				style={{
+																					width: "36px",
 																height: "36px",
 																borderRadius: "10px",
 																display: "grid",
@@ -365,7 +365,7 @@ export default function HistoryPanel() {
 											background: "var(--color-accent-soft)",
 											border: "1px solid var(--color-border)",
 											marginBottom: "0.5rem",
-											transition: "all var(--duration-fast) var(--ease-out)",
+											transition: "color, background-color, border-color, box-shadow var(--duration-fast) var(--ease-out)",
 										}}
 									>
 										<span
