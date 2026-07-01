@@ -71,6 +71,29 @@ export function ClippyAssistant() {
 
 	if (dismissed) return null;
 
+	async function handleSave() {
+		if (!currentResult) return;
+		const now = Date.now();
+		try {
+			await addFavorite(
+				currentResult.password,
+				currentResult.password,
+				{
+					bits: currentResult.bits,
+					strength: currentResult.strength,
+					wordCount: currentResult.words.length,
+					label: currentResult.password.length > 30
+						? currentResult.password.slice(0, 27) + "..."
+						: currentResult.password,
+					createdAt: now,
+					updatedAt: now,
+				},
+			);
+		} catch {
+			// silent
+		}
+	}
+
 	const shouldSuggestSave =
 		currentStep === 3 &&
 		currentResult &&
@@ -88,7 +111,7 @@ export function ClippyAssistant() {
 				background: "var(--color-accent-soft)",
 				border: "1px solid var(--color-border)",
 				fontSize: "0.85rem",
-				transition: "all var(--duration-fast) var(--ease-out)",
+				transition: "color, background-color, border-color var(--duration-fast) var(--ease-out)",
 			}}
 		>
 			<div style={{ display: "flex", alignItems: "flex-start", gap: "0.85rem" }}>
@@ -153,27 +176,7 @@ export function ClippyAssistant() {
 					</span>
 					<button
 						type="button"
-						onClick={async () => {
-							if (!currentResult) return;
-							try {
-								await addFavorite(
-									currentResult.password,
-									currentResult.password,
-									{
-										bits: currentResult.bits,
-										strength: currentResult.strength,
-										wordCount: currentResult.words.length,
-										label: currentResult.password.length > 30
-											? currentResult.password.slice(0, 27) + "..."
-											: currentResult.password,
-										createdAt: Date.now(),
-										updatedAt: Date.now(),
-									},
-								);
-							} catch {
-								// silent
-							}
-						}}
+						onClick={handleSave}
 						className="cursor-pointer rounded-md border border-success px-3 py-1 text-[0.75rem] font-semibold text-success transition-colors duration-150 ease-out hover:bg-success/[0.15]"
 					>
 						⭐ Guardar

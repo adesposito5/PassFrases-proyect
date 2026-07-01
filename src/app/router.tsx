@@ -1,5 +1,5 @@
-import { Routes, Route, useNavigate } from 'react-router-dom'
-import { lazy, Suspense, useEffect } from 'react'
+import { Routes, Route } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 
 const WizardStartPage = lazy(
   () => import('@/features/generator/pages/WizardStartPage'),
@@ -18,12 +18,6 @@ const LoadingFallback = (
 )
 
 export function AppRouter() {
-  const navigate = useNavigate()
-
-  useEffect(() => {
-    navigate('/', { replace: true })
-  }, [])
-
   return (
     <Suspense fallback={LoadingFallback}>
       <Routes>

@@ -22,6 +22,7 @@ export default function GeneratorPage() {
     <WizardLayout>
       {/* Botón volver */}
       <button
+        type="button"
         onClick={handleBack}
         aria-label="Volver al inicio"
         style={{
