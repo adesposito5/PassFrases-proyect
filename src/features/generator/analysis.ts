@@ -24,7 +24,7 @@ export function analyzePassword(password: string, config?: PasswordConfig): Pass
 			detail: 'Incluir números al final (ej: 42) suma ~6.5 bits de entropía extra sin complicar el recuerdo.',
 			severity: 'low',
 			icon: 'info',
-			applicable: 'numbers',
+			applicable: 'numberSuffix',
 		});
 	}
 
